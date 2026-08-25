@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ALote — Find Work That Fits You</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="container navbar-container">
+
+            <a href="index.html" class="logo">
+                ALote
+            </a>
+
+            <nav class="nav-links">
+                <a href="jobs.html" data-i18n="findJobs">Find Jobs</a>
+                <a href="#categories" data-i18n="categories">Categories</a>
+                <a href="#why-alote" data-i18n="whyAlote">Why ALote</a>
+            </nav>
+
+            <div class="language-switcher">
+                <button class="language-button active" data-lang="en">
+                    EN
+                </button>
+
+                <span>|</span>
+
+                <button class="language-button" data-lang="my">
+                    မြန်မာ
+                </button>
+            </div>
+
+            <a href="admin/login.html" class="employer-link" data-i18n="employer">
+                Employer
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero">
+
+            <div class="container hero-container">
+
+                <span class="hero-badge" data-i18n="heroBadge">
+                    Myanmar's job discovery platform
+                </span>
+
+                <h1 data-i18n="heroTitle">
+                    Find work that fits you.
+                </h1>
+
+                <p class="hero-description" data-i18n="heroDescription">
+                    Discover opportunities from across Myanmar,
+                    all in one place.
+                </p>
+
+
+                <!-- Search -->
+
+                <form class="search-box" id="searchForm">
+
+                    <div class="search-input-container">
+
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="text"
+                            id="jobSearch"
+                            placeholder="Search jobs, skills or companies..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                    <button type="submit">
+                        Search Jobs
+                    </button>
+
+                </form>
+
+
+                <!-- Quick Filters -->
+
+                <div class="quick-filters">
+
+                    <span>Popular:</span>
+
+                    <a href="jobs.html?mode=wfh">
+                        WFH
+                    </a>
+
+                    <a href="jobs.html?mode=hybrid">
+                        Hybrid
+                    </a>
+
+                    <a href="jobs.html?mode=onsite">
+                        On-site
+                    </a>
+
+                    <a href="jobs.html?type=internship">
+                        Internship
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             WORK MODES
+        ========================== -->
+
+        <section class="work-modes-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-label" data-i18n="exploreOpportunities">
+                        Explore opportunities
+                    </span>
+
+                    <h2 data-i18n="workStyleTitle">
+                        Work the way you want.
+                    </h2>
+
+                    <p data-i18n="workStyleDescription">
+                        Find opportunities that match your preferred working style.
+                    </p>
+
+                </div>
+
+
+                <div class="work-mode-grid">
+
+                    <a href="jobs.html?mode=wfh" class="work-mode-card">
+
+                        <div class="mode-icon">
+                            ↗
+                        </div>
+
+                        <div>
+                            <h3 data-i18n="workFromHome">
+                                Work From Home
+                            </h3>
+
+                            <p data-i18n="workFromHomeDescription">
+                                Work remotely from anywhere.
+                            </p>
+                        </div>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a href="jobs.html?mode=hybrid" class="work-mode-card">
+
+                        <div class="mode-icon">
+                            ◫
+                        </div>
+
+                        <div>
+                            <h3 data-i18n="hybrid">Hybrid</h3>
+                            <p data-i18n="hybridDescription">
+                                Balance remote and office work.
+                            </p>
+                        </div>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a href="jobs.html?mode=onsite" class="work-mode-card">
+
+                        <div class="mode-icon">
+                            ◉
+                        </div>
+
+                        <div>
+                            <h3 data-i18n="onsite">On-site</h3>
+                            <p data-i18n="onsiteDescription">
+                                Find opportunities near you.
+                            </p>
+                        </div>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a href="jobs.html?type=internship" class="work-mode-card">
+
+                        <div class="mode-icon">
+                            ✦
+                        </div>
+
+                        <div>
+                            <h3 data-i18n="internships">Internships</h3>
+                            <p data-i18n="internshipsDescription">
+                                Start building your career.
+                            </p>
+                        </div>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CATEGORIES
+        ========================== -->
+
+        <section class="categories-section" id="categories">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-label" data-i18n="browseByCategory">
+                        Browse by category
+                    </span>
+
+                    <h2 data-i18n="categoryTitle">
+                        Find your field.
+                    </h2>
+
+                </div>
+
+
+                <div class="category-grid">
+
+                    <a href="jobs.html?category=software" data-i18n="itSoftware">
+                        IT & Software
+                    </a>
+
+                    <a href="jobs.html?category=marketing" data-i18n="marketing">
+                        Marketing
+                    </a>
+
+                    <a href="jobs.html?category=design" data-i18n="design">
+                        Design
+                    </a>
+
+                    <a href="jobs.html?category=finance" data-i18n="financeAccounting">
+                        Finance & Accounting
+                    </a>
+
+                    <a href="jobs.html?category=sales" data-i18n="sales">
+                        Sales
+                    </a>
+
+                    <a href="jobs.html?category=education" data-i18n="education">
+                        Education
+                    </a>
+
+                    <a href="jobs.html?category=engineering" data-i18n="engineering">
+                        Engineering
+                    </a>
+
+                    <a href="jobs.html?category=administration" data-i18n="administration">
+                        Administration
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LATEST JOBS
+        ========================== -->
+
+        <section class="latest-jobs">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label" data-i18n="latestOpportunities">
+                            Latest opportunities
+                        </span>
+
+                        <h2 data-i18n="recentlyPostedJobs">
+                            Recently posted jobs
+                        </h2>
+
+                    </div>
+
+                    <a href="jobs.html" data-i18n="viewAllJobs">
+                            View all jobs →
+                    </a>
+
+                </div>
+
+
+                <div class="job-grid">
+
+                    <!-- Job Card -->
+
+                    <article class="job-card">
+
+                        <div class="job-card-top">
+
+                            <div class="company-logo">
+                                ABC
+                            </div>
+
+                            <span class="job-badge remote">
+                                WFH
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Backend Developer
+                        </h3>
+
+                        <p class="company-name">
+                            ABC Technology
+                        </p>
+
+                        <div class="job-info">
+
+                            <span>
+                                Full-time
+                            </span>
+
+                            <span>
+                                800K – 1.2M MMK
+                            </span>
+
+                        </div>
+
+                        <div class="job-card-footer">
+
+                            <span>
+                                Posted 2 days ago
+                            </span>
+
+                            <a href="job-details.html">
+                                View job →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Job Card -->
+
+                    <article class="job-card">
+
+                        <div class="job-card-top">
+
+                            <div class="company-logo">
+                                XYZ
+                            </div>
+
+                            <span class="job-badge hybrid">
+                                Hybrid
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            UI/UX Designer
+                        </h3>
+
+                        <p class="company-name">
+                            XYZ Creative
+                        </p>
+
+                        <div class="job-info">
+
+                            <span>
+                                Full-time
+                            </span>
+
+                            <span>
+                                700K – 1M MMK
+                            </span>
+
+                        </div>
+
+                        <div class="job-card-footer">
+
+                            <span>
+                                Posted 3 days ago
+                            </span>
+
+                            <a href="job-details.html">
+                                View job →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Job Card -->
+
+                    <article class="job-card">
+
+                        <div class="job-card-top">
+
+                            <div class="company-logo">
+                                MTC
+                            </div>
+
+                            <span class="job-badge onsite">
+                                On-site
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Marketing Executive
+                        </h3>
+
+                        <p class="company-name">
+                            Myanmar Tech Co.
+                        </p>
+
+                        <div class="job-info">
+
+                            <span>
+                                Full-time
+                            </span>
+
+                            <span>
+                                600K – 900K MMK
+                            </span>
+
+                        </div>
+
+                        <div class="job-card-footer">
+
+                            <span>
+                                Posted 4 days ago
+                            </span>
+
+                            <a href="job-details.html">
+                                View job →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             WHY ALOTE
+        ========================== -->
+
+        <section class="why-alote" id="why-alote">
+
+            <div class="container why-container">
+
+                <div class="why-content">
+
+                    <span class="section-label" data-i18n="whyAloteLabel">
+                        Why ALote?
+                    </span>
+
+                    <h2 data-i18n="whyAloteTitle">
+                        Job hunting, made simpler.
+                    </h2>
+
+                    <p data-i18n="whyAloteDescription">
+                        Stop scrolling through endless social media posts and Telegram channels.
+                        ALote brings opportunities together in one organized place.
+                    </p>
+
+                    <a href="jobs.html"
+                    class="explore-jobs-button"
+                    data-i18n="exploreJobs">
+                        <span>Explore Jobs</span>
+                        <span class="explore-arrow">→</span>
+                    </a>
+
+                </div>
+
+
+                <div class="benefits">
+
+                    <div class="benefit">
+
+                        <span class="benefit-number">
+                            01
+                        </span>
+
+                        <div>
+                            <h3 data-i18n="searchSmarter">
+                                Search smarter
+                            </h3>
+
+                            <p data-i18n="searchSmarterDescription">
+                                Find relevant jobs using powerful search and filters.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <span class="benefit-number">
+                            02
+                        </span>
+
+                        <div>
+                            <h3 data-i18n="everythingOrganized">
+                                Everything organized
+                            </h3>
+
+                            <p data-i18n="everythingOrganizedDescription">
+                                Jobs are categorized by field, location and work style.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <span class="benefit-number">
+                            03
+                        </span>
+
+                        <div>
+                            <h3 data-i18n="applyWithEase">
+                                Apply with ease
+                            </h3>
+
+                            <p data-i18n="applyWithEaseDescription">
+                                Submit your application without unnecessary steps.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+
+            <a href="index.html" class="footer-logo">
+                ALote
+            </a>
+
+            <p class="footer-tagline">
+                <span data-i18n="footerTagline">
+                    Find work that fits you.
+                </span>
+            </p>
+
+            <p class="footer-description"
+               data-i18n="footerDescription">
+                အလုပ်အကိုင်ရှာဖွေသူများနှင့် အလုပ်ရှင်များကို
+                တစ်နေရာတည်းမှာ ချိတ်ဆက်ပေးပါသည်။
+            </p>
+
+            <div class="footer-socials">
+
+                <a href="#" aria-label="Facebook">
+                    f
+                </a>
+
+                <a href="#" aria-label="Telegram">
+                    ➤
+                </a>
+
+                <a href="#" aria-label="LinkedIn">
+                    in
+                </a>
+
+                <a href="#" aria-label="Email">
+                    ✉
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Job Categories -->
+        <div class="footer-column">
+
+            <h3 data-i18n="footerJobs">
+                အလုပ်အကိုင်
+            </h3>
+
+            <a href="jobs.html?mode=wfh"
+               data-i18n="footerWfh">
+                WFH အလုပ်များ
+            </a>
+
+            <a href="jobs.html?mode=onsite"
+               data-i18n="footerOnsite">
+                On-site အလုပ်များ
+            </a>
+
+            <a href="jobs.html?mode=hybrid"
+               data-i18n="footerHybrid">
+                Hybrid အလုပ်များ
+            </a>
+
+            <a href="jobs.html?mode=internship"
+               data-i18n="footerInternship">
+                Internship များ
+            </a>
+
+            <a href="jobs.html?mode=part-time"
+               data-i18n="footerPartTime">
+                Part-time အလုပ်များ
+            </a>
+
+        </div>
+
+
+        <!-- Useful Links -->
+        <div class="footer-column">
+
+            <h3 data-i18n="footerLinks">
+                အသုံးဝင်သော လင့်များ
+            </h3>
+
+            <a href="jobs.html"
+               data-i18n="findJobs">
+                အလုပ်အကိုင်များ
+            </a>
+
+            <a href="#categories"
+               data-i18n="categories">
+                အမျိုးအစားများ
+            </a>
+
+            <a href="#why-alote"
+               data-i18n="whyAlote">
+                ALote ကို ဘာကြောင့်သုံးမလဲ
+            </a>
+
+            <a href="#">
+                Blog
+            </a>
+
+            <a href="#">
+                Contact Us
+            </a>
+
+        </div>
+
+
+        <!-- Contact -->
+        <div class="footer-column footer-contact">
+
+            <h3 data-i18n="footerContact">
+                ဆက်သွယ်ရန်
+            </h3>
+
+            <a href="mailto:hello@alote.com">
+                <span class="contact-icon">✉</span>
+                hello@alote.com
+            </a>
+
+            <a href="#">
+                <span class="contact-icon">➤</span>
+                t.me/alotejobs
+            </a>
+
+            <a href="#">
+                <span class="contact-icon">◎</span>
+                www.alote.com
+            </a>
+
+            <a href="#">
+                <span class="contact-icon">⌖</span>
+                Yangon, Myanmar
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bottom -->
+    <div class="footer-bottom container">
+
+        <p class="copyright"
+           data-i18n="copyright">
+            © 2026 ALote. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+    <script src="js/home.js"></script>
+
+</body>
+
+</html>

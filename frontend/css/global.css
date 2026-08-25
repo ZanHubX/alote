@@ -1,0 +1,1713 @@
+/* ==================================================
+   DESIGN SYSTEM
+================================================== */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #eef2ff;
+
+    --text-primary: #111827;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #ffffff;
+    --background-soft: #f8fafc;
+
+    --border: #e2e8f0;
+
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+
+    --shadow-sm:
+        0 1px 2px rgba(15, 23, 42, 0.04);
+
+    --shadow-md:
+        0 10px 30px rgba(15, 23, 42, 0.07);
+
+    --shadow-lg:
+        0 20px 50px rgba(15, 23, 42, 0.10);
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--text-primary);
+    background: var(--background);
+
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* ==================================================
+   GLOBAL CONTAINER
+================================================== */
+
+.container {
+    width: min(1180px, calc(100% - 48px));
+    margin-inline: auto;
+}
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid #e8ecf3;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.navbar-container {
+    max-width: 1180px;
+    height: 72px;
+
+    margin: 0 auto;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* ==================================================
+   LOGO
+================================================== */
+
+.logo {
+    color: var(--primary);
+
+    font-size: 25px;
+    font-weight: 750;
+
+    letter-spacing: -1px;
+    text-decoration: none;
+
+    transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+
+/* ==================================================
+   MAIN NAVIGATION
+================================================== */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.nav-links a {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    height: 40px;
+    padding: 0 14px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* Hover */
+
+.nav-links a:hover {
+    color: #111827;
+    background: #f5f7fb;
+}
+
+
+/* ==================================================
+   ACTIVE PAGE
+================================================== */
+
+.nav-links a.active {
+    color: #4f46e5;
+
+    font-weight: 600;
+
+    background: #f1f2ff;
+}
+
+
+/* Small premium indicator */
+
+.nav-links a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 4px;
+
+    width: 18px;
+    height: 2px;
+
+    transform: translateX(-50%);
+
+    background: #4f46e5;
+
+    border-radius: 999px;
+}
+
+
+/* ==================================================
+   LANGUAGE SWITCHER
+================================================== */
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-left: 20px;
+}
+
+.language-button {
+    border: 0;
+    background: transparent;
+
+    padding: 7px 6px;
+
+    color: #94a3b8;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    border-radius: 7px;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.language-button:hover {
+    color: #475569;
+    background: #f5f7fb;
+}
+
+.language-button.active {
+    color: #4f46e5;
+}
+
+
+/* Separator between languages */
+
+.language-separator {
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   EMPLOYER BUTTON
+================================================== */
+
+.employer-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+
+    padding: 0 18px;
+
+    color: #1e293b;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    border: 1px solid #dce2eb;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.employer-link:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+
+    transform: translateY(-1px);
+}
+/* ==================================================
+   HERO
+================================================== */
+.hero {
+    position: relative;
+    overflow: hidden;
+
+    padding: 125px 0 105px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(79, 70, 229, 0.10),
+            transparent 48%
+        );
+}
+
+.hero-container {
+    position: relative;
+
+    width: min(900px, calc(100% - 48px));
+    margin-inline: auto;
+
+    text-align: center;
+}
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: -250px;
+
+    border-radius: 50%;
+
+    background: rgba(79, 70, 229, 0.035);
+
+    pointer-events: none;
+}
+
+/* Badge */
+
+.hero-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 13px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    margin-bottom: 22px;
+}
+
+
+/* Heading */
+
+.hero h1 {
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    font-size: clamp(46px, 6vw, 76px);
+
+    line-height: 1.02;
+
+    letter-spacing: -4px;
+
+    font-weight: 750;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+
+/* Description */
+
+.hero-description {
+    max-width: 580px;
+
+    margin: 25px auto 38px;
+
+    color: var(--text-secondary);
+
+    font-size: 17px;
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+.search-box {
+    width: min(100%, 780px);
+
+    margin: 0 auto;
+
+    padding: 7px;
+
+    display: flex;
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-box:focus-within {
+    border-color: rgba(79, 70, 229, 0.45);
+
+    box-shadow:
+        0 0 0 4px rgba(79, 70, 229, 0.08),
+        var(--shadow-md);
+}
+
+.search-input-container {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+
+    padding-left: 15px;
+}
+
+.search-icon {
+    margin-right: 10px;
+
+    color: var(--text-muted);
+
+    font-size: 24px;
+
+    line-height: 1;
+}
+
+.search-input-container input {
+    width: 100%;
+
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-size: 14px;
+}
+
+.search-input-container input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-box button {
+    flex-shrink: 0;
+
+    padding: 14px 22px;
+
+    border: none;
+
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.search-box button:hover {
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   QUICK FILTERS
+================================================== */
+
+.quick-filters {
+    margin-top: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    flex-wrap: wrap;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+.quick-filters a {
+    padding: 5px 10px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    color: var(--text-secondary);
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.quick-filters a:hover {
+    border-color: var(--primary);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+
+/* ==================================================
+   WORK MODES
+================================================== */
+
+.work-modes-section {
+    padding: 95px 0;
+
+    background: var(--background-soft);
+}
+
+.work-mode-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+}
+.work-mode-card {
+    min-height: 205px;
+    padding: 26px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid rgba(226, 232, 240, 0.9);
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.work-mode-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(79, 70, 229, 0.25);
+
+    box-shadow: var(--shadow-lg);
+}
+
+.work-mode-card {
+    position: relative;
+
+    min-height: 180px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.work-mode-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(79, 70, 229, 0.3);
+
+    box-shadow: var(--shadow-md);
+}
+
+.mode-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    border-radius: 12px;
+
+    font-size: 20px;
+}
+
+.work-mode-card h3 {
+    margin-top: 18px;
+
+    font-size: 16px;
+
+    letter-spacing: -0.2px;
+}
+
+.work-mode-card p {
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.arrow {
+    position: absolute;
+
+    top: 24px;
+    right: 24px;
+
+    color: var(--text-muted);
+
+    font-size: 18px;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.work-mode-card:hover .arrow {
+    color: var(--primary);
+
+    transform: translateX(3px);
+}
+
+
+/* ==================================================
+   CATEGORIES
+================================================== */
+.categories-section {
+    padding: 110px 0;
+    background: #ffffff;
+}
+
+.category-grid {
+    width: min(1180px, calc(100% - 48px));
+    margin-inline: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.category-grid a {
+    padding: 20px 22px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    color: var(--text-primary);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.category-grid a:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(79, 70, 229, 0.25);
+
+    background: #ffffff;
+
+    box-shadow: var(--shadow-md);
+}
+
+/* ==================================================
+   LATEST JOBS
+================================================== */
+
+.latest-jobs {
+    padding: 100px 0;
+
+    background: var(--background-soft);
+}
+.section-heading {
+    margin-bottom: 38px;
+}
+
+.section-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+.section-heading h2 {
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.section-heading p {
+    margin-top: 10px;
+
+    color: var(--text-secondary);
+
+    font-size: 15px;
+}
+.section-header {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 35px;
+}
+
+.section-header h2 {
+    margin-top: 8px;
+
+    font-size: 34px;
+
+    letter-spacing: -1px;
+}
+
+.view-all {
+    color: var(--primary);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+/* Job grid */
+
+.job-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+/* Job card */
+
+.job-card {
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(226, 232, 240, 0.9);
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(79, 70, 229, 0.22);
+
+    box-shadow: var(--shadow-lg);
+}
+
+/* Card top */
+
+.job-card-top {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+/* Company logo placeholder */
+
+.company-logo {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    border-radius: 12px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* Job badges */
+
+.job-badge {
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.job-badge.remote {
+    background: var(--success-bg);
+
+    color: var(--success);
+}
+
+.job-badge.hybrid {
+    background: var(--warning-bg);
+
+    color: var(--warning);
+}
+
+.job-badge.onsite {
+    background: #f1f5f9;
+
+    color: #475569;
+}
+
+
+/* Job title */
+
+.job-card h3 {
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    letter-spacing: -0.3px;
+}
+
+.company-name {
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* Job information */
+
+.job-info {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 20px;
+}
+
+.job-info span {
+    padding: 5px 8px;
+
+    background: var(--background-soft);
+
+    border-radius: 6px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+/* Card footer */
+
+.job-card-footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 24px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.job-card-footer a {
+    color: var(--primary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* ==================================================
+   WHY ALOTE
+================================================== */
+
+.why-alote {
+    padding: 110px 0;
+
+    background: #111827;
+
+    color: #ffffff;
+}
+
+.why-container {
+    width: min(1180px, calc(100% - 48px));
+    margin-inline: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 90px;
+    align-items: center;
+}
+
+.why-content .section-label {
+    color: #a5b4fc;
+}
+
+.why-content h2 {
+    max-width: 500px;
+
+    margin-top: 12px;
+
+    font-size: 42px;
+
+    line-height: 1.15;
+
+    letter-spacing: -1.5px;
+}
+
+.why-content h2 span {
+    color: #a5b4fc;
+}
+
+.why-content > p {
+    max-width: 500px;
+
+    margin: 20px 0 28px;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+}
+
+.why-content .primary-button {
+    background: #ffffff;
+
+    color: var(--primary);
+}
+
+.why-content .primary-button:hover {
+    background: #eef2ff;
+}
+
+
+/* Benefits */
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0;
+}
+
+.benefit {
+    display: grid;
+
+    grid-template-columns: 45px 1fr;
+
+    gap: 18px;
+
+    padding: 25px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.benefit:first-child {
+    padding-top: 0;
+}
+
+.benefit:last-child {
+    border-bottom: none;
+}
+
+.benefit-number {
+    color: #6366f1;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.benefit h3 {
+    font-size: 16px;
+}
+
+.benefit p {
+    margin-top: 5px;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+/* ==================================================
+   EXPLORE JOBS CTA
+================================================== */
+
+.explore-jobs-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    margin-top: 28px;
+
+    padding: 14px 20px 14px 22px;
+
+    min-width: 165px;
+
+    border-radius: 10px;
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 24px rgba(79, 70, 229, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Arrow */
+
+.explore-arrow {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    font-size: 17px;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Hover */
+
+.explore-jobs-button:hover {
+    background: #4338ca;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(79, 70, 229, 0.25);
+}
+
+
+.explore-jobs-button:hover .explore-arrow {
+    transform: translateX(3px);
+
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Active */
+
+.explore-jobs-button:active {
+    transform: translateY(0);
+}
+
+
+/* Burmese */
+
+html[lang="my"] .explore-jobs-button {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    font-size: 13px;
+}
+.footer {
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+
+    padding-top: 52px;
+}
+
+
+/* Main footer layout */
+
+.footer-container {
+    width: min(1180px, calc(100% - 48px));
+
+    margin-inline: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr
+        1fr;
+
+    gap: 60px;
+
+    padding-bottom: 42px;
+}
+
+
+/* ==================================================
+   BRAND
+================================================== */
+
+.footer-brand {
+    max-width: 300px;
+}
+
+
+.footer-logo {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: var(--primary);
+
+    font-size: 30px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    letter-spacing: -1px;
+}
+
+
+.footer-tagline {
+    margin: 0 0 14px;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+}
+
+
+.footer-description {
+    max-width: 280px;
+
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   SOCIAL
+================================================== */
+
+.footer-socials {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.footer-socials a {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+
+    border-radius: 50%;
+
+    color: var(--text-primary);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.footer-socials a:hover {
+    background: var(--primary);
+
+    border-color: var(--primary);
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* ==================================================
+   FOOTER COLUMNS
+================================================== */
+
+.footer-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.footer-column h3 {
+    margin: 0 0 4px;
+
+    color: var(--text-primary);
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.footer-column a {
+    width: fit-content;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.footer-column a:hover {
+    color: var(--primary);
+
+    transform: translateX(2px);
+}
+
+
+/* ==================================================
+   CONTACT
+================================================== */
+
+.footer-contact a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.contact-icon {
+    width: 18px;
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    color: var(--text-primary);
+
+    font-size: 16px;
+}
+
+
+/* ==================================================
+   BOTTOM
+================================================== */
+
+.footer-bottom {
+    width: min(1180px, calc(100% - 48px));
+
+    margin-inline: auto;
+
+    border-top: 1px solid var(--border);
+
+    padding: 18px 0 20px;
+
+    text-align: center;
+}
+
+
+.footer-bottom .copyright {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   BURMESE
+================================================== */
+
+html[lang="my"] .footer {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+
+html[lang="my"] .footer-logo {
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+}
+
+
+html[lang="my"] .footer-column h3 {
+    font-size: 15px;
+}
+
+
+html[lang="my"] .footer-column a,
+html[lang="my"] .footer-description,
+html[lang="my"] .footer-tagline,
+html[lang="my"] .footer-bottom .copyright {
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 900px) {
+
+    .footer-container {
+        grid-template-columns:
+            1.5fr
+            1fr
+            1fr;
+
+        gap: 40px;
+    }
+
+    .footer-contact {
+        grid-column: span 1;
+    }
+
+}
+
+
+@media (max-width: 640px) {
+
+    .footer {
+        padding-top: 40px;
+    }
+
+    .footer-container {
+        width: min(100% - 32px, 480px);
+
+        grid-template-columns: 1fr;
+
+        gap: 34px;
+    }
+
+    .footer-brand {
+        max-width: none;
+    }
+
+    .footer-description {
+        max-width: 100%;
+    }
+
+    .footer-bottom {
+        width: min(100% - 32px, 480px);
+    }
+
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 1000px) {
+
+    .work-mode-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .job-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-container {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .navbar-container {
+        height: 64px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        padding: 80px 0 65px;
+    }
+
+    .hero h1 {
+        font-size: 46px;
+
+        letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .search-box {
+        flex-direction: column;
+
+        padding: 8px;
+    }
+
+    .search-input-container {
+        width: 100%;
+
+        padding: 12px;
+    }
+
+    .search-box button {
+        width: 100%;
+    }
+
+    .work-modes-section,
+    .categories-section,
+    .latest-jobs,
+    .why-alote {
+        padding: 70px 0;
+    }
+
+    .work-mode-grid,
+    .category-grid,
+    .job-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .section-header h2,
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .why-content h2 {
+        font-size: 34px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+    }
+}
+/* =========================
+   LANGUAGE SWITCHER
+========================= */
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.language-switcher span {
+    color: var(--border);
+}
+
+.language-button {
+    border: none;
+    background: transparent;
+
+    color: var(--text-muted);
+
+    padding: 4px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.language-button:hover,
+.language-button.active {
+    color: var(--primary);
+}
+/* ==================================================
+   BURMESE LANGUAGE TYPOGRAPHY
+================================================== */
+
+html[lang="my"] {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+html[lang="my"] .hero h1 {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.45;
+    letter-spacing: 0;
+    font-weight: 700;
+    max-width: 760px;
+}
+
+html[lang="my"] .hero-badge {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+html[lang="my"] .hero-description {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+html[lang="my"] .search-input-container input {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+html[lang="my"] .search-input-container input::placeholder {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
