@@ -22,7 +22,11 @@
         <div class="container navbar-container">
 
             <a href="index.html" class="logo">
-                ALote
+                <img
+                    src="assets/logo/ALotelogo.png"
+                    alt="ALote"
+                    class="logo-image"
+                >
             </a>
 
             <nav class="nav-links">
@@ -31,8 +35,13 @@
                 data-i18n="findJobs">
                     Find Jobs
                 </a>
-                <a href="#categories" data-i18n="categories">Categories</a>
-                <a href="#why-alote" data-i18n="whyAlote">Why ALote</a>
+                <a href="categories.html" data-i18n="categories">Categories</a>
+                <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+                >
+                Why ALote
+            </a>
             </nav>
 
             <div class="language-switcher">
@@ -54,10 +63,6 @@
         </div>
 
     </header>
-
-
-    <main>
-
 
     <!-- =========================
          JOBS HERO
@@ -354,6 +359,37 @@
 
                         </label>
 
+                        <!-- Sales -->
+
+                        <label class="filter-option">
+
+                            <input
+                                type="checkbox"
+                                name="category"
+                                value="Sales">
+
+                            <span data-i18n="sales">
+                                Sales
+                            </span>
+
+                        </label>
+
+
+                        <!-- Administration -->
+
+                        <label class="filter-option">
+
+                            <input
+                                type="checkbox"
+                                name="category"
+                                value="Administration">
+
+                            <span data-i18n="administration">
+                                Administration
+                            </span>
+
+                        </label>
+
                     </div>
 
 
@@ -403,6 +439,38 @@
                 <div class="jobs-results">
 
                     <div class="results-header">
+
+                        <div
+                        id="categoryContext"
+                        class="category-context hidden">
+
+                        <div>
+
+                            <span
+                                class="category-context-label"
+                                data-i18n="categoryResults">
+                                CATEGORY RESULTS
+                            </span>
+
+                            <h2 id="categoryContextTitle">
+                                Engineering Jobs
+                            </h2>
+
+                            <p id="categoryContextDescription">
+                                Showing jobs in Engineering.
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="jobs.html"
+                            class="category-context-clear"
+                            data-i18n="viewAllJobs">
+                            View all jobs
+                        </a>
+
+                    </div>
 
                         <div>
 
@@ -484,48 +552,72 @@
 
     </main>
 
-    <!-- =========================
+<!-- ==================================================
      FOOTER
-========================== -->
+================================================== -->
 
 <footer class="footer">
 
     <div class="container footer-container">
 
+
         <!-- Brand -->
+
         <div class="footer-brand">
 
-            <a href="index.html" class="footer-logo">
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
                 ALote
             </a>
 
+
             <p class="footer-tagline">
+
                 <span data-i18n="footerTagline">
                     Find work that fits you.
                 </span>
+
             </p>
 
-            <p class="footer-description"
-               data-i18n="footerDescription">
-                အလုပ်အကိုင်ရှာဖွေသူများနှင့် အလုပ်ရှင်များကို
-                တစ်နေရာတည်းမှာ ချိတ်ဆက်ပေးပါသည်။
+
+            <p
+                class="footer-description"
+                data-i18n="footerDescription"
+            >
+                Connecting job seekers and employers
+                in one organized place.
             </p>
+
 
             <div class="footer-socials">
 
-                <a href="#" aria-label="Facebook">
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
                     f
                 </a>
 
-                <a href="#" aria-label="Telegram">
+                <a
+                    href="#"
+                    aria-label="Telegram"
+                >
                     ➤
                 </a>
 
-                <a href="#" aria-label="LinkedIn">
+                <a
+                    href="#"
+                    aria-label="LinkedIn"
+                >
                     in
                 </a>
 
-                <a href="#" aria-label="Email">
+                <a
+                    href="#"
+                    aria-label="Email"
+                >
                     ✉
                 </a>
 
@@ -534,99 +626,153 @@
         </div>
 
 
+
         <!-- Job Categories -->
+
         <div class="footer-column">
 
             <h3 data-i18n="footerJobs">
-                အလုပ်အကိုင်
+                Jobs
             </h3>
 
-            <a href="jobs.html?mode=wfh"
-               data-i18n="footerWfh">
-                WFH အလုပ်များ
+
+            <a
+                href="jobs.html?mode=wfh"
+                data-i18n="footerWfh"
+            >
+                WFH Jobs
             </a>
 
-            <a href="jobs.html?mode=onsite"
-               data-i18n="footerOnsite">
-                On-site အလုပ်များ
+
+            <a
+                href="jobs.html?mode=onsite"
+                data-i18n="footerOnsite"
+            >
+                On-site Jobs
             </a>
 
-            <a href="jobs.html?mode=hybrid"
-               data-i18n="footerHybrid">
-                Hybrid အလုပ်များ
+
+            <a
+                href="jobs.html?mode=hybrid"
+                data-i18n="footerHybrid"
+            >
+                Hybrid Jobs
             </a>
 
-            <a href="jobs.html?mode=internship"
-               data-i18n="footerInternship">
-                Internship များ
+
+            <a
+                href="jobs.html?mode=internship"
+                data-i18n="footerInternship"
+            >
+                Internships
             </a>
 
-            <a href="jobs.html?mode=part-time"
-               data-i18n="footerPartTime">
-                Part-time အလုပ်များ
+
+            <a
+                href="jobs.html?mode=part-time"
+                data-i18n="footerPartTime"
+            >
+                Part-time Jobs
             </a>
 
         </div>
+
 
 
         <!-- Useful Links -->
+
         <div class="footer-column">
 
             <h3 data-i18n="footerLinks">
-                အသုံးဝင်သော လင့်များ
+                Useful Links
             </h3>
 
-            <a href="jobs.html"
-               data-i18n="findJobs">
-                အလုပ်အကိုင်များ
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
             </a>
 
-            <a href="#categories"
-               data-i18n="categories">
-                အမျိုးအစားများ
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
             </a>
 
-            <a href="#why-alote"
-               data-i18n="whyAlote">
-                ALote ကို ဘာကြောင့်သုံးမလဲ
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
             </a>
 
-            <a href="#">
-                Blog
-            </a>
 
-            <a href="#">
-                Contact Us
+            <a
+                href="employer.html"
+                data-i18n="employer"
+            >
+                Employer
             </a>
 
         </div>
 
 
+
         <!-- Contact -->
+
         <div class="footer-column footer-contact">
 
             <h3 data-i18n="footerContact">
-                ဆက်သွယ်ရန်
+                Contact
             </h3>
 
+
             <a href="mailto:hello@alote.com">
-                <span class="contact-icon">✉</span>
+
+                <span class="contact-icon">
+                    ✉
+                </span>
+
                 hello@alote.com
+
             </a>
 
+
             <a href="#">
-                <span class="contact-icon">➤</span>
+
+                <span class="contact-icon">
+                    ➤
+                </span>
+
                 t.me/alotejobs
+
             </a>
 
+
             <a href="#">
-                <span class="contact-icon">◎</span>
+
+                <span class="contact-icon">
+                    ◎
+                </span>
+
                 www.alote.com
+
             </a>
 
+
             <a href="#">
-                <span class="contact-icon">⌖</span>
+
+                <span class="contact-icon">
+                    ⌖
+                </span>
+
                 Yangon, Myanmar
+
             </a>
 
         </div>
@@ -634,11 +780,12 @@
     </div>
 
 
-    <!-- Bottom -->
     <div class="footer-bottom container">
 
-        <p class="copyright"
-           data-i18n="copyright">
+        <p
+            class="copyright"
+            data-i18n="copyright"
+        >
             © 2026 ALote. All rights reserved.
         </p>
 

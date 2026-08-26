@@ -1,0 +1,1025 @@
+/* ==================================================
+   APPLICATION SUCCESS PAGE
+================================================== */
+
+.success-page {
+
+    min-height: calc(100vh - 72px);
+
+    padding: 90px 0 100px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(79, 70, 229, 0.08),
+            transparent 38%
+        ),
+        #f8fafc;
+}
+
+
+.success-container {
+
+    width: min(
+        700px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+}
+
+
+
+/* ==================================================
+   SUCCESS CARD
+================================================== */
+
+.success-card {
+
+    padding: 58px 55px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 25px 65px
+        rgba(15, 23, 42, 0.08);
+}
+
+
+
+/* ==================================================
+   SUCCESS ICON
+================================================== */
+
+.success-icon {
+
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 24px;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    box-shadow:
+        0 0 0 9px
+        rgba(220, 252, 231, 0.55);
+
+    animation:
+        successPop 0.45s ease-out;
+}
+
+
+.success-icon span {
+
+    font-size: 30px;
+
+    font-weight: 800;
+}
+
+
+@keyframes successPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.65);
+
+    }
+
+    70% {
+
+        transform:
+            scale(1.08);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+
+/* ==================================================
+   LABEL
+================================================== */
+
+.success-label {
+
+    display: block;
+
+    color: #4f46e5;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.success-card h1 {
+
+    max-width: 580px;
+
+    margin:
+        12px auto 16px;
+
+    color: #0f172a;
+
+    font-size:
+        clamp(32px, 4vw, 44px);
+
+    line-height: 1.12;
+
+    letter-spacing: -0.04em;
+}
+
+
+
+/* ==================================================
+   DESCRIPTION
+================================================== */
+
+.success-description {
+
+    max-width: 540px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+
+/* ==================================================
+   JOB SUMMARY
+================================================== */
+
+.success-job {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 34px;
+
+    padding: 20px;
+
+    text-align: left;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #f5f7ff
+        );
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 17px;
+}
+
+
+.company-avatar {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.success-job-info {
+
+    min-width: 0;
+}
+
+
+.success-job-info h2 {
+
+    margin: 0 0 4px;
+
+    color: #0f172a;
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+
+.success-job-info p {
+
+    margin: 0 0 4px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.success-job-info span {
+
+    color: #94a3b8;
+
+    font-size: 12px;
+
+}
+
+
+
+/* ==================================================
+   APPLICATION PROGRESS
+================================================== */
+
+.application-progress {
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    text-align: left;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 18px;
+}
+
+
+.progress-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.progress-heading .section-label {
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+}
+
+
+.progress-status {
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+
+/* ==================================================
+   TIMELINE
+================================================== */
+
+.progress-timeline {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.timeline-step {
+
+    display: grid;
+
+    grid-template-columns:
+        38px 1fr;
+
+    gap: 15px;
+
+    position: relative;
+}
+
+
+.timeline-marker {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    border:
+        1px solid #e2e8f0;
+}
+
+
+.timeline-step.completed
+.timeline-marker {
+
+    background: #dcfce7;
+
+    border-color: #bbf7d0;
+
+    color: #15803d;
+}
+
+
+.timeline-step.current
+.timeline-marker {
+
+    background: #eef2ff;
+
+    border-color: #c7d2fe;
+
+    color: #4f46e5;
+
+    box-shadow:
+        0 0 0 5px
+        rgba(79, 70, 229, 0.07);
+}
+
+
+.timeline-content {
+
+    padding-bottom: 22px;
+}
+
+
+.timeline-content strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #1e293b;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+
+.timeline-content p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+.timeline-line {
+
+    width: 1px;
+
+    height: 23px;
+
+    margin-left: 17px;
+
+    background: #e2e8f0;
+}
+
+
+.timeline-line.active {
+
+    background: #a5b4fc;
+}
+
+
+
+/* ==================================================
+   WHAT HAPPENS NEXT
+================================================== */
+
+.next-step-card {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-top: 14px;
+
+    padding: 20px;
+
+    text-align: left;
+
+    background:
+        rgba(79, 70, 229, 0.035);
+
+    border:
+        1px solid
+        rgba(79, 70, 229, 0.12);
+
+    border-radius: 16px;
+}
+
+
+.next-step-icon {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.next-step-content strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #334155;
+
+    font-size: 13px;
+}
+
+
+.next-step-content p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+}
+
+
+
+/* ==================================================
+   EMAIL NOTICE
+================================================== */
+
+.email-notice {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-top: 14px;
+
+    padding: 20px;
+
+    text-align: left;
+
+    background: #fafbff;
+
+    border:
+        1px solid #e5e7ff;
+
+    border-radius: 16px;
+}
+
+
+.email-icon {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+.email-content {
+
+    min-width: 0;
+}
+
+
+.email-notice strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+}
+
+
+.email-notice p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+}
+
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.success-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+.primary-button,
+.secondary-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 45px;
+
+    padding:
+        0 21px;
+
+    border-radius: 11px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.primary-button {
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px
+        rgba(79, 70, 229, 0.18);
+}
+
+
+.primary-button:hover {
+
+    background: #4338ca;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(79, 70, 229, 0.24);
+}
+
+
+.secondary-button {
+
+    background: #ffffff;
+
+    color: #475569;
+
+    border:
+        1px solid #dbe2ea;
+}
+
+
+.secondary-button:hover {
+
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+
+    transform:
+        translateY(-2px);
+}
+
+
+
+/* ==================================================
+   FOOTER MESSAGE
+================================================== */
+
+.success-footer {
+
+    margin: 20px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+
+/* ==================================================
+   BURMESE TYPOGRAPHY
+================================================== */
+
+html[lang="my"] .success-card,
+html[lang="my"] .success-card h1,
+html[lang="my"] .success-description,
+html[lang="my"] .success-job,
+html[lang="my"] .application-progress,
+html[lang="my"] .next-step-card,
+html[lang="my"] .email-notice {
+
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+
+/* Burmese H1 */
+
+html[lang="my"] .success-card h1 {
+
+    font-size:
+        clamp(28px, 4vw, 38px);
+
+    line-height: 1.55;
+
+    letter-spacing: -0.02em;
+
+    max-width: 580px;
+}
+
+
+/* Burmese description */
+
+html[lang="my"] .success-description {
+
+    font-size: 14px;
+
+    line-height: 1.9;
+}
+
+
+/* Burmese job information */
+
+html[lang="my"] .success-job-info h2 {
+
+    line-height: 1.5;
+}
+
+
+html[lang="my"] .success-job-info p {
+
+    line-height: 1.7;
+}
+
+
+html[lang="my"] .success-job-info span {
+
+    line-height: 1.7;
+}
+
+
+/* Burmese timeline */
+
+html[lang="my"] .timeline-content strong {
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+html[lang="my"] .timeline-content p {
+
+    font-size: 13px;
+
+    line-height: 1.9;
+}
+
+
+/* Burmese next step */
+
+html[lang="my"] .next-step-content strong {
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+html[lang="my"] .next-step-content p {
+
+    font-size: 13px;
+
+    line-height: 1.9;
+}
+
+
+/* Burmese email */
+
+html[lang="my"] .email-notice strong {
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+html[lang="my"] .email-notice p {
+
+    font-size: 13px;
+
+    line-height: 1.9;
+}
+
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 600px) {
+
+    .success-page {
+
+        padding:
+            50px 0 70px;
+    }
+
+
+    .success-container {
+
+        width:
+            min(
+                calc(100% - 30px),
+                700px
+            );
+    }
+
+
+    .success-card {
+
+        padding:
+            42px 22px;
+
+        border-radius: 21px;
+    }
+
+
+    .success-icon {
+
+        width: 66px;
+        height: 66px;
+    }
+
+
+    .success-card h1 {
+
+        font-size: 32px;
+    }
+
+
+    .success-description {
+
+        font-size: 14px;
+    }
+
+
+    .success-job {
+
+        padding: 16px;
+    }
+
+
+    .application-progress {
+
+        padding: 20px 17px;
+    }
+
+
+    .progress-heading {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .progress-status {
+
+        font-size: 9px;
+    }
+
+
+    .timeline-step {
+
+        grid-template-columns:
+            34px 1fr;
+
+        gap: 12px;
+    }
+
+
+    .timeline-marker {
+
+        width: 31px;
+        height: 31px;
+    }
+
+
+    .timeline-line {
+
+        margin-left: 15px;
+
+        height: 20px;
+    }
+
+
+    .next-step-card,
+    .email-notice {
+
+        padding: 17px;
+    }
+
+
+    .success-actions {
+
+        flex-direction: column;
+
+        gap: 9px;
+    }
+
+
+    .primary-button,
+    .secondary-button {
+
+        width: 100%;
+    }
+
+}
+
+
+
+/* ==================================================
+   VERY SMALL SCREENS
+================================================== */
+
+@media (max-width: 380px) {
+
+    .success-card {
+
+        padding:
+            36px 17px;
+    }
+
+
+    .success-card h1 {
+
+        font-size: 29px;
+    }
+
+
+    .success-job {
+
+        gap: 11px;
+    }
+
+
+    .company-avatar {
+
+        width: 45px;
+        height: 45px;
+    }
+
+}

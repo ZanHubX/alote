@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Backend Developer | ALote
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/global.css">
+
+    <link
+        rel="stylesheet"
+        href="css/job-details.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         NAVIGATION
+    ================================== -->
+
+    <header class="navbar">
+
+        <div class="container navbar-container">
+
+            <a href="index.html" class="logo">
+                <img
+                    src="assets/logo/ALotelogo.png"
+                    alt="ALote"
+                    class="logo-image"
+                >
+            </a>
+
+            <nav class="nav-links">
+                <a href="jobs.html"
+                class="nav-link active"
+                data-i18n="findJobs">
+                    Find Jobs
+                </a>
+                <a href="#categories" data-i18n="categories">Categories</a>
+                <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+                >
+                    Why ALote
+                </a>
+            </nav>
+
+            <div class="language-switcher">
+                <button class="language-button active" data-lang="en">
+                    EN
+                </button>
+
+                <span>|</span>
+
+                <button class="language-button" data-lang="my">
+                    မြန်မာ
+                </button>
+            </div>
+
+            <a href="admin/login.html" class="employer-link" data-i18n="employer">
+                Employer
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         MAIN
+    ================================== -->
+
+    <main>
+
+
+        <section class="job-details-page">
+
+            <div class="job-details-container">
+
+
+                <!-- Back -->
+
+                <a
+                    href="jobs.html"
+                    class="back-link">
+
+                    ←
+                    <span data-i18n="backToJobs">
+                        Back to jobs
+                    </span>
+
+                </a>
+
+
+                <!-- =================================
+                     JOB HEADER
+                ================================== -->
+
+                <div class="job-header">
+
+
+                    <div class="company-avatar-large">
+                        ABC
+                    </div>
+
+
+                    <div class="job-header-content">
+
+                        <span class="company-name"
+                              id="companyName">
+                            ABC Technology
+                        </span>
+
+
+                        <h1 id="jobTitle">
+                            Backend Developer
+                        </h1>
+
+
+                        <div class="job-header-meta">
+
+                            <span id="jobLocation">
+                                Yangon
+                            </span>
+
+                            <span>•</span>
+
+                            <span id="workStyleValue">
+                                Remote
+                            </span>
+
+                            <span>•</span>
+
+                            <span id="employmentTypeValue">
+                                Full-time
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="job-header-action">
+
+                        <div class="salary-large"
+                             id="salaryValue">
+                            800K – 1.2M MMK
+                        </div>
+
+
+                        <a
+                            href="#"
+                            id="applyButton"
+                            class="apply-button"
+                            data-i18n="applyNow">
+
+                            Apply for this job
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     CONTENT
+                ================================== -->
+
+                <div class="job-details-layout">
+
+
+                    <!-- LEFT -->
+
+                    <div class="job-main-content">
+
+
+                        <section class="detail-section">
+
+                            <h2 data-i18n="aboutRole">
+                                About the role
+                            </h2>
+
+                            <p id="description">
+                                We are looking for a motivated
+                                Backend Developer to join our
+                                development team and build reliable,
+                                scalable web applications.
+                            </p>
+
+                        </section>
+
+
+                        <section class="detail-section">
+
+                            <h2 data-i18n="responsibilities">
+                                Responsibilities
+                            </h2>
+
+                            <ul
+                                id="responsibilitiesList"
+                                class="detail-list">
+                            </ul>
+
+                        </section>
+
+
+                        <section class="detail-section">
+
+                            <h2 data-i18n="requirements">
+                                Requirements
+                            </h2>
+
+                            <ul
+                                id="requirementsList"
+                                class="detail-list">
+                            </ul>
+
+                        </section>
+
+
+                        <!-- =================================
+                             APPLICATION
+                        ================================== -->
+
+                        <section
+                            id="apply"
+                            class="apply-section">
+
+                            <div>
+
+                                <span class="section-label">
+                                    ALote
+                                </span>
+
+                                <h2 data-i18n="applyNow">
+                                    Apply for this job
+                                </h2>
+
+                                <p>
+                                    Submit your application
+                                    and let the company
+                                    contact you by email.
+                                </p>
+
+                            </div>
+
+
+                            <a
+                                href="#"
+                                id="applyButton"
+                                class="apply-button"
+                                data-i18n="applyNow">
+
+                                Apply now →
+
+                            </a>
+
+                        </section>
+
+
+                    </div>
+
+
+                    <!-- RIGHT -->
+
+                    <aside class="job-sidebar">
+
+
+                        <div class="overview-card">
+
+                            <h2 data-i18n="jobOverview">
+                                Job overview
+                            </h2>
+
+
+                            <div class="overview-item">
+
+                                <span class="overview-label"
+                                      data-i18n="location">
+                                    Location
+                                </span>
+
+                                <strong id="sidebarLocation">
+                                    Yangon
+                                </strong>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <span class="overview-label"
+                                      data-i18n="workStyle">
+                                    Work style
+                                </span>
+
+                                <strong id="sidebarWorkStyle">
+                                    Remote
+                                </strong>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <span class="overview-label"
+                                      data-i18n="employmentType">
+                                    Employment type
+                                </span>
+
+                                <strong id="sidebarEmploymentType">
+                                    Full-time
+                                </strong>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <span class="overview-label"
+                                      data-i18n="salary">
+                                    Salary
+                                </span>
+
+                                <strong id="sidebarSalary">
+                                    800K – 1.2M MMK
+                                </strong>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <span class="overview-label"
+                                      data-i18n="category">
+                                    Category
+                                </span>
+
+                                <strong id="categoryValue">
+                                    IT & Software
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Dates -->
+
+                        <div class="dates-card">
+
+                            <div class="date-item">
+
+                                <span
+                                    data-i18n="posted">
+                                    Posted
+                                </span>
+
+                                <strong id="postedDate">
+                                    August 20, 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div class="date-item">
+
+                                <span
+                                    data-i18n="applicationDeadline">
+                                    Application deadline
+                                </span>
+
+                                <strong id="deadlineDate">
+                                    September 15, 2026
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
+                ALote
+            </a>
+
+
+            <p class="footer-tagline">
+
+                <span data-i18n="footerTagline">
+                    Find work that fits you.
+                </span>
+
+            </p>
+
+
+            <p
+                class="footer-description"
+                data-i18n="footerDescription"
+            >
+                Connecting job seekers and employers
+                in one organized place.
+            </p>
+
+
+            <div class="footer-socials">
+
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
+                    f
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Telegram"
+                >
+                    ➤
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="LinkedIn"
+                >
+                    in
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Email"
+                >
+                    ✉
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Job Categories -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerJobs">
+                Jobs
+            </h3>
+
+
+            <a
+                href="jobs.html?mode=wfh"
+                data-i18n="footerWfh"
+            >
+                WFH Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=onsite"
+                data-i18n="footerOnsite"
+            >
+                On-site Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=hybrid"
+                data-i18n="footerHybrid"
+            >
+                Hybrid Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=internship"
+                data-i18n="footerInternship"
+            >
+                Internships
+            </a>
+
+
+            <a
+                href="jobs.html?mode=part-time"
+                data-i18n="footerPartTime"
+            >
+                Part-time Jobs
+            </a>
+
+        </div>
+
+
+
+        <!-- Useful Links -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerLinks">
+                Useful Links
+            </h3>
+
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+
+            <a
+                href="employer.html"
+                data-i18n="employer"
+            >
+                Employer
+            </a>
+
+        </div>
+
+
+
+        <!-- Contact -->
+
+        <div class="footer-column footer-contact">
+
+            <h3 data-i18n="footerContact">
+                Contact
+            </h3>
+
+
+            <a href="mailto:hello@alote.com">
+
+                <span class="contact-icon">
+                    ✉
+                </span>
+
+                hello@alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ➤
+                </span>
+
+                t.me/alotejobs
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ◎
+                </span>
+
+                www.alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ⌖
+                </span>
+
+                Yangon, Myanmar
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom container">
+
+        <p
+            class="copyright"
+            data-i18n="copyright"
+        >
+            © 2026 ALote. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+    <script src="js/job-details.js"></script>
+
+</body>
+
+</html>

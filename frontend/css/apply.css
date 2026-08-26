@@ -1,0 +1,1095 @@
+/* ==================================================
+   APPLICATION PAGE
+================================================== */
+
+.apply-page {
+
+    min-height: calc(100vh - 72px);
+
+    padding: 65px 0 100px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(79, 70, 229, 0.06),
+            transparent 38%
+        ),
+        #f8fafc;
+}
+
+
+.apply-container {
+
+    width:
+        min(
+            760px,
+            calc(100% - 48px)
+        );
+
+    margin: 0 auto;
+}
+
+
+
+/* ==================================================
+   BACK
+================================================== */
+
+.back-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 34px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.back-link:hover {
+
+    color: #4f46e5;
+
+    transform:
+        translateX(-2px);
+}
+
+
+.back-arrow {
+
+    font-size: 15px;
+
+    line-height: 1;
+}
+
+
+
+/* ==================================================
+   APPLICATION HEADER
+================================================== */
+
+.apply-header {
+
+    margin-bottom: 30px;
+}
+
+
+.section-label {
+
+    display: inline-block;
+
+    color: #4f46e5;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+.apply-header h1 {
+
+    max-width: 650px;
+
+    margin:
+        10px 0 14px;
+
+    color: #0f172a;
+
+    font-size:
+        clamp(34px, 5vw, 48px);
+
+    line-height: 1.1;
+
+    letter-spacing: -0.04em;
+}
+
+
+.apply-header p {
+
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.85;
+}
+
+
+
+/* ==================================================
+   JOB SUMMARY
+================================================== */
+
+.job-summary {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafbff
+        );
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(15, 23, 42, 0.035);
+}
+
+
+.company-avatar {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+.job-summary-info {
+
+    min-width: 0;
+}
+
+
+.job-summary h2 {
+
+    margin:
+        0 0 4px;
+
+    color: #0f172a;
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+
+.job-summary p {
+
+    margin:
+        0 0 4px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.job-summary span {
+
+    color: #94a3b8;
+
+    font-size: 12px;
+
+}
+
+
+
+/* ==================================================
+   APPLICATION FORM
+================================================== */
+
+.application-form {
+
+    padding: 34px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(15, 23, 42, 0.055);
+}
+
+
+
+/* ==================================================
+   FORM SECTION
+================================================== */
+
+.form-section-heading {
+
+    margin-bottom: 28px;
+}
+
+
+.form-section h2 {
+
+    margin:
+        0 0 7px;
+
+    color: #0f172a;
+
+    font-size: 20px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+
+.form-section-heading p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+}
+
+
+
+/* ==================================================
+   FORM GROUP
+================================================== */
+
+.form-group {
+
+    margin-bottom: 24px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+.form-group label > span:first-child {
+
+    color: #ef4444;
+}
+
+
+.form-group label .optional {
+
+    margin-left: 7px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    font-weight: 500;
+}
+
+
+
+/* ==================================================
+   INPUTS
+================================================== */
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid #dbe2ea;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 140px;
+
+    line-height: 1.75;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #818cf8;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.08);
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color: #a0aec0;
+}
+
+
+.form-group small {
+
+    display: block;
+
+    margin-top: 7px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+
+
+/* ==================================================
+   FILE UPLOAD
+================================================== */
+
+.file-input input[type="file"] {
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.file-label {
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 76px;
+
+    padding:
+        12px 16px;
+
+    margin: 0 !important;
+
+    border:
+        1px dashed #cbd5e1;
+
+    border-radius: 12px;
+
+    background: #fafbfc;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.file-label:hover {
+
+    border-color: #818cf8;
+
+    background: #f8f8ff;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.file-icon {
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+.file-label strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #334155;
+
+    font-size: 12px;
+}
+
+
+.file-label small {
+
+    margin: 0;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+
+/* ==================================================
+   APPLICATION REVIEW NOTICE
+================================================== */
+
+.application-review-notice {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-top: 8px;
+
+    padding: 18px;
+
+    background:
+        rgba(79, 70, 229, 0.045);
+
+    border:
+        1px solid
+        rgba(79, 70, 229, 0.13);
+
+    border-radius: 14px;
+}
+
+
+.review-notice-icon {
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.review-notice-content {
+
+    min-width: 0;
+}
+
+
+.review-notice-content strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+
+.review-notice-content p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.75;
+}
+
+
+
+/* ==================================================
+   PRIVACY NOTE
+================================================== */
+
+.privacy-note {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-top: 12px;
+
+    padding: 15px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #eef2f7;
+
+    border-radius: 11px;
+}
+
+
+.privacy-icon {
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+.privacy-note p {
+
+    margin:
+        1px 0 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.75;
+}
+
+
+
+/* ==================================================
+   SUBMIT
+================================================== */
+
+.submit-area {
+
+    margin-top: 27px;
+
+    padding-top: 24px;
+
+    border-top:
+        1px solid #eef2f7;
+
+    text-align: right;
+}
+
+
+.submit-button {
+
+    min-height: 47px;
+
+    padding:
+        0 25px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(79, 70, 229, 0.17);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.submit-button:hover {
+
+    background: #4338ca;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(79, 70, 229, 0.23);
+}
+
+
+.submit-button:active {
+
+    transform:
+        translateY(0);
+}
+
+
+.submit-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+.submit-area p {
+
+    max-width: 450px;
+
+    margin:
+        9px 0 0 auto;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+
+/* ==================================================
+   INPUT VALIDATION
+================================================== */
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group textarea:invalid:not(:placeholder-shown) {
+
+    border-color: #fca5a5;
+}
+
+
+.form-group input:valid,
+.form-group textarea:valid {
+
+    border-color: #dbe2ea;
+}
+
+
+
+/* ==================================================
+   BURMESE TYPOGRAPHY
+================================================== */
+
+html[lang="my"] .apply-page,
+html[lang="my"] .application-form,
+html[lang="my"] .apply-header,
+html[lang="my"] .job-summary,
+html[lang="my"] .application-review-notice,
+html[lang="my"] .privacy-note {
+
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+
+
+/* Burmese heading */
+
+html[lang="my"] .apply-header h1 {
+
+    font-size:
+        clamp(30px, 4vw, 42px);
+
+    line-height: 1.5;
+
+    letter-spacing: -0.02em;
+
+    max-width: 650px;
+}
+
+
+
+/* Burmese header description */
+
+html[lang="my"] .apply-header p {
+
+    font-size: 13px;
+
+    line-height: 2;
+}
+
+
+
+/* Burmese section heading */
+
+html[lang="my"] .form-section h2 {
+
+    font-size: 19px;
+
+    line-height: 1.6;
+}
+
+
+html[lang="my"] .form-section-heading p {
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+
+
+/* Burmese job summary */
+
+html[lang="my"] .job-summary h2 {
+
+    line-height: 1.5;
+}
+
+
+html[lang="my"] .job-summary p,
+html[lang="my"] .job-summary span {
+
+    line-height: 1.7;
+}
+
+
+
+/* Burmese labels */
+
+html[lang="my"] .form-group label {
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+
+/* Burmese inputs */
+
+html[lang="my"]
+.form-group input,
+html[lang="my"]
+.form-group textarea {
+
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    line-height: 1.8;
+}
+
+
+
+/* Burmese review notice */
+
+html[lang="my"]
+.review-notice-content strong {
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+html[lang="my"]
+.review-notice-content p {
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+
+
+/* Burmese privacy */
+
+html[lang="my"]
+.privacy-note p {
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+
+
+/* Burmese submit */
+
+html[lang="my"] .submit-button {
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+html[lang="my"] .submit-area p {
+
+    font-size: 10px;
+
+    line-height: 1.9;
+}
+
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 650px) {
+
+    .apply-container {
+
+        width:
+            min(
+                calc(100% - 30px),
+                760px
+            );
+    }
+
+
+    .apply-page {
+
+        padding:
+            40px 0 70px;
+    }
+
+
+    .application-form {
+
+        padding: 25px 21px;
+
+        border-radius: 17px;
+    }
+
+
+    .apply-header h1 {
+
+        font-size: 36px;
+    }
+
+
+    .job-summary {
+
+        padding: 17px;
+    }
+
+
+    .submit-area {
+
+        text-align: left;
+    }
+
+
+    .submit-button {
+
+        width: 100%;
+    }
+
+
+    .submit-area p {
+
+        max-width: none;
+
+        margin:
+            9px 0 0;
+
+        text-align: center;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .apply-container {
+
+        width:
+            calc(100% - 24px);
+    }
+
+
+    .apply-header h1 {
+
+        font-size: 32px;
+    }
+
+
+    .apply-header p {
+
+        font-size: 13px;
+    }
+
+
+    .application-form {
+
+        padding:
+            22px 17px;
+    }
+
+
+    .job-summary {
+
+        gap: 12px;
+    }
+
+
+    .company-avatar {
+
+        width: 46px;
+        height: 46px;
+
+        border-radius: 12px;
+
+        font-size: 11px;
+    }
+
+
+    .job-summary h2 {
+
+        font-size: 15px;
+    }
+
+
+    .job-summary p {
+
+        font-size: 12px;
+    }
+
+
+    .job-summary span {
+
+        font-size: 11px;
+    }
+
+
+    .application-review-notice,
+    .privacy-note {
+
+        padding: 14px;
+    }
+
+}

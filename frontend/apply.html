@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Apply | ALote</title>
+
+    <link
+        rel="stylesheet"
+        href="css/global.css">
+
+    <link
+        rel="stylesheet"
+        href="css/apply.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         NAVIGATION
+    ================================================== -->
+
+    <header class="navbar">
+
+        <div class="container navbar-container">
+
+            <a href="index.html" class="logo">
+
+                <img
+                    src="assets/logo/ALotelogo.png"
+                    alt="ALote"
+                    class="logo-image">
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a
+                    href="jobs.html"
+                    class="nav-link active"
+                    data-i18n="findJobs">
+
+                    Find Jobs
+
+                </a>
+
+
+                <a
+                    href="categories.html"
+                    data-i18n="categories">
+
+                    Categories
+
+                </a>
+
+
+                <a
+                    href="whyalote.html"
+                    data-i18n="whyAlote">
+
+                    Why ALote
+
+                </a>
+
+            </nav>
+
+
+            <div class="language-switcher">
+
+                <button
+                    class="language-button active"
+                    data-lang="en">
+
+                    EN
+
+                </button>
+
+
+                <span>|</span>
+
+
+                <button
+                    class="language-button"
+                    data-lang="my">
+
+                    မြန်မာ
+
+                </button>
+
+            </div>
+
+
+            <a
+                href="admin/login.html"
+                class="employer-link"
+                data-i18n="employer">
+
+                Employer
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==================================================
+         APPLICATION PAGE
+    ================================================== -->
+
+    <main class="apply-page">
+
+        <div class="apply-container">
+
+
+            <!-- ==================================================
+                 BACK TO JOB
+            ================================================== -->
+
+            <a
+                href="job-details.html"
+                class="back-link">
+
+                <span class="back-arrow">
+                    ←
+                </span>
+
+                <span data-i18n="backToJob">
+                    Back to job
+                </span>
+
+            </a>
+
+
+
+            <!-- ==================================================
+                 APPLICATION HEADER
+            ================================================== -->
+
+            <div class="apply-header">
+
+                <span
+                    class="section-label"
+                    data-i18n="application">
+
+                    APPLICATION
+
+                </span>
+
+
+                <h1 data-i18n="applyForJob">
+
+                    Apply for this job
+
+                </h1>
+
+
+                <p data-i18n="applicationIntro">
+
+                    Take the next step in your career.
+                    Your application will first be reviewed
+                    by ALote before being forwarded to the company.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 JOB SUMMARY
+            ================================================== -->
+
+            <div class="job-summary">
+
+
+                <div class="company-avatar">
+
+                    ABC
+
+                </div>
+
+
+                <div class="job-summary-info">
+
+                    <h2 id="jobTitle">
+
+                        Backend Developer
+
+                    </h2>
+
+
+                    <p id="companyName">
+
+                        ABC Technology
+
+                    </p>
+
+
+                    <span id="jobMeta">
+
+                        Yangon · Remote · Full-time
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 APPLICATION FORM
+            ================================================== -->
+
+            <form
+                id="applicationForm"
+                class="application-form">
+
+
+                <!-- ==================================================
+                     YOUR INFORMATION
+                ================================================== -->
+
+                <div class="form-section">
+
+                    <div class="form-section-heading">
+
+                        <h2 data-i18n="yourInformation">
+
+                            Your information
+
+                        </h2>
+
+
+                        <p data-i18n="yourInformationDescription">
+
+                            Provide the information needed for your
+                            application.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         FULL NAME
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="fullName"
+                            data-i18n="fullName">
+
+                            Full name
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            autocomplete="name"
+                            required
+                            placeholder="Your full name"
+                            data-i18n-placeholder="fullNamePlaceholder">
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         EMAIL
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="email"
+                            data-i18n="email">
+
+                            Email address
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            required
+                            placeholder="you@example.com"
+                            data-i18n-placeholder="emailPlaceholder">
+
+
+                        <small data-i18n="emailNote">
+
+                            We'll use this email to send updates
+                            about your application.
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         PHONE
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="phone"
+                            data-i18n="phone">
+
+                            Phone number
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            autocomplete="tel"
+                            required
+                            placeholder="09xxxxxxxxx"
+                            data-i18n-placeholder="phonePlaceholder">
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         RESUME
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="resume"
+                            data-i18n="resume">
+
+                            CV / Resume
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <div class="file-input">
+
+                            <input
+                                type="file"
+                                id="resume"
+                                name="resume"
+                                accept=".pdf,.doc,.docx"
+                                required>
+
+
+                            <label
+                                for="resume"
+                                class="file-label">
+
+                                <span class="file-icon">
+                                    ↑
+                                </span>
+
+
+                                <span>
+
+                                    <strong
+                                        data-i18n="uploadResume">
+
+                                        Upload your CV
+
+                                    </strong>
+
+
+                                    <small
+                                        data-i18n="resumeFormats">
+
+                                        PDF, DOC or DOCX
+
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         COVER MESSAGE
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="coverMessage"
+                            data-i18n="coverMessage">
+
+                            Cover message
+
+                            <span
+                                class="optional"
+                                data-i18n="optional">
+
+                                Optional
+
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="coverMessage"
+                            name="coverMessage"
+                            rows="6"
+                            placeholder="Tell us why you are a good fit..."
+                            data-i18n-placeholder="coverPlaceholder"></textarea>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     APPLICATION REVIEW NOTICE
+                ================================================== -->
+
+                <div class="application-review-notice">
+
+                    <div class="review-notice-icon">
+                        ✓
+                    </div>
+
+
+                    <div class="review-notice-content">
+
+                        <strong data-i18n="reviewNoticeTitle">
+
+                            Reviewed before reaching the company
+
+                        </strong>
+
+
+                        <p data-i18n="reviewNoticeDescription">
+
+                            Every application is reviewed by ALote first.
+                            If your application meets the requirements,
+                            it will be forwarded to the hiring company.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     PRIVACY NOTE
+                ================================================== -->
+
+                <div class="privacy-note">
+
+                    <span class="privacy-icon">
+                        🔒
+                    </span>
+
+
+                    <p data-i18n="privacyNote">
+
+                        Your information will be used only for this
+                        application and handled according to ALote's
+                        application process.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     SUBMIT
+                ================================================== -->
+
+                <div class="submit-area">
+
+                    <button
+                        type="submit"
+                        id="submitApplicationButton"
+                        class="submit-button"
+                        data-i18n="submitApplication">
+
+                        Submit application
+
+                    </button>
+
+
+                    <p data-i18n="submitNote">
+
+                        By submitting this application, you confirm
+                        that the information you provided is accurate.
+
+                    </p>
+
+                </div>
+
+            </form>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ==================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+
+            <!-- ==================================================
+                 BRAND
+            ================================================== -->
+
+            <div class="footer-brand">
+
+                <a
+                    href="index.html"
+                    class="footer-logo">
+
+                    ALote
+
+                </a>
+
+
+                <p class="footer-tagline">
+
+                    <span data-i18n="footerTagline">
+
+                        Find work that fits you.
+
+                    </span>
+
+                </p>
+
+
+                <p
+                    class="footer-description"
+                    data-i18n="footerDescription">
+
+                    Connecting job seekers and employers
+                    in one organized place.
+
+                </p>
+
+
+                <div class="footer-socials">
+
+                    <a
+                        href="#"
+                        aria-label="Facebook">
+
+                        f
+
+                    </a>
+
+
+                    <a
+                        href="#"
+                        aria-label="Telegram">
+
+                        ➤
+
+                    </a>
+
+
+                    <a
+                        href="#"
+                        aria-label="LinkedIn">
+
+                        in
+
+                    </a>
+
+
+                    <a
+                        href="#"
+                        aria-label="Email">
+
+                        ✉
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 JOBS
+            ================================================== -->
+
+            <div class="footer-column">
+
+                <h3 data-i18n="footerJobs">
+                    Jobs
+                </h3>
+
+
+                <a
+                    href="jobs.html?mode=wfh"
+                    data-i18n="footerWfh">
+
+                    WFH Jobs
+
+                </a>
+
+
+                <a
+                    href="jobs.html?mode=onsite"
+                    data-i18n="footerOnsite">
+
+                    On-site Jobs
+
+                </a>
+
+
+                <a
+                    href="jobs.html?mode=hybrid"
+                    data-i18n="footerHybrid">
+
+                    Hybrid Jobs
+
+                </a>
+
+
+                <a
+                    href="jobs.html?mode=internship"
+                    data-i18n="footerInternship">
+
+                    Internships
+
+                </a>
+
+
+                <a
+                    href="jobs.html?mode=part-time"
+                    data-i18n="footerPartTime">
+
+                    Part-time Jobs
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 USEFUL LINKS
+            ================================================== -->
+
+            <div class="footer-column">
+
+                <h3 data-i18n="footerLinks">
+                    Useful Links
+                </h3>
+
+
+                <a
+                    href="jobs.html"
+                    data-i18n="findJobs">
+
+                    Find Jobs
+
+                </a>
+
+
+                <a
+                    href="categories.html"
+                    data-i18n="categories">
+
+                    Categories
+
+                </a>
+
+
+                <a
+                    href="whyalote.html"
+                    data-i18n="whyAlote">
+
+                    Why ALote
+
+                </a>
+
+
+                <a
+                    href="employer.html"
+                    data-i18n="employer">
+
+                    Employer
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 CONTACT
+            ================================================== -->
+
+            <div class="footer-column footer-contact">
+
+                <h3 data-i18n="footerContact">
+                    Contact
+                </h3>
+
+
+                <a href="mailto:hello@alote.com">
+
+                    <span class="contact-icon">
+                        ✉
+                    </span>
+
+                    hello@alote.com
+
+                </a>
+
+
+                <a href="#">
+
+                    <span class="contact-icon">
+                        ➤
+                    </span>
+
+                    t.me/alotejobs
+
+                </a>
+
+
+                <a href="#">
+
+                    <span class="contact-icon">
+                        ◎
+                    </span>
+
+                    www.alote.com
+
+                </a>
+
+
+                <a href="#">
+
+                    <span class="contact-icon">
+                        ⌖
+                    </span>
+
+                    Yangon, Myanmar
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-bottom container">
+
+            <p
+                class="copyright"
+                data-i18n="copyright">
+
+                © 2026 ALote. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script src="js/apply.js"></script>
+
+</body>
+
+</html>

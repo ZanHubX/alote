@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Application Received | ALote</title>
+
+
+    <!-- Global CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+
+    <!-- Page CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/application-success.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+         NAVIGATION
+    ================================================== -->
+
+    <header class="navbar">
+
+        <div class="container navbar-container">
+
+            <a href="index.html" class="logo">
+
+                <img
+                    src="assets/logo/ALotelogo.png"
+                    alt="ALote"
+                    class="logo-image">
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a
+                    href="jobs.html"
+                    class="nav-link active"
+                    data-i18n="findJobs">
+
+                    Find Jobs
+
+                </a>
+
+
+                <a
+                    href="categories.html"
+                    data-i18n="categories">
+
+                    Categories
+
+                </a>
+
+
+                <a
+                    href="whyalote.html"
+                    data-i18n="whyAlote">
+
+                    Why ALote
+
+                </a>
+
+            </nav>
+
+
+            <div class="language-switcher">
+
+                <button
+                    class="language-button active"
+                    data-lang="en">
+
+                    EN
+
+                </button>
+
+
+                <span>|</span>
+
+
+                <button
+                    class="language-button"
+                    data-lang="my">
+
+                    မြန်မာ
+
+                </button>
+
+            </div>
+
+
+            <a
+                href="admin/login.html"
+                class="employer-link"
+                data-i18n="employer">
+
+                Employer
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+<!-- ==================================================
+     SUCCESS PAGE
+================================================== -->
+
+<main class="success-page">
+
+    <div class="container success-container">
+
+
+        <!-- ==================================================
+             SUCCESS CARD
+        ================================================== -->
+
+        <section class="success-card">
+
+
+            <!-- Success Icon -->
+
+            <div class="success-icon">
+
+                <span>
+                    ✓
+                </span>
+
+            </div>
+
+
+
+            <!-- Eyebrow -->
+
+            <span
+                class="success-label"
+                data-i18n="applicationReceived"
+            >
+                APPLICATION RECEIVED
+            </span>
+
+
+
+            <!-- Main Title -->
+
+            <h1
+                data-i18n="successTitle"
+            >
+                Your application has been submitted.
+            </h1>
+
+
+
+            <!-- Description -->
+
+            <p
+                class="success-description"
+                data-i18n="successDescription"
+            >
+                We've received your application.
+                Our team will review it before
+                forwarding it to the company.
+            </p>
+
+
+
+            <!-- ==================================================
+                 JOB SUMMARY
+            ================================================== -->
+
+            <div class="success-job">
+
+
+                <div class="company-avatar">
+                    ABC
+                </div>
+
+
+                <div class="success-job-info">
+
+                    <h2 id="jobTitle">
+                        Backend Developer
+                    </h2>
+
+
+                    <p id="companyName">
+                        ABC Technology
+                    </p>
+
+
+                    <span id="jobMeta">
+                        Yangon · Remote · Full-time
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 APPLICATION PROGRESS
+            ================================================== -->
+
+            <div class="application-progress">
+
+
+                <div class="progress-heading">
+
+                    <span
+                        class="section-label"
+                        data-i18n="applicationProgress"
+                    >
+                        APPLICATION PROGRESS
+                    </span>
+
+
+                    <span
+                        class="progress-status"
+                        data-i18n="currentStatus"
+                    >
+                        Currently under review
+                    </span>
+
+                </div>
+
+
+
+                <div class="progress-timeline">
+
+
+                    <!-- STEP 1 -->
+
+                    <div class="timeline-step completed">
+
+                        <div class="timeline-marker">
+
+                            <span>
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div class="timeline-content">
+
+                            <strong
+                                data-i18n="submittedTitle"
+                            >
+                                Application submitted
+                            </strong>
+
+
+                            <p
+                                data-i18n="submittedDescription"
+                            >
+                                Your application has been successfully received.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Connector -->
+
+                    <div class="timeline-line active"></div>
+
+
+
+                    <!-- STEP 2 -->
+
+                    <div class="timeline-step current">
+
+                        <div class="timeline-marker">
+
+                            <span>
+                                02
+                            </span>
+
+                        </div>
+
+
+                        <div class="timeline-content">
+
+                            <strong
+                                data-i18n="reviewTitle"
+                            >
+                                ALote review
+                            </strong>
+
+
+                            <p
+                                data-i18n="reviewDescription"
+                            >
+                                Our team is reviewing your application.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Connector -->
+
+                    <div class="timeline-line"></div>
+
+
+
+                    <!-- STEP 3 -->
+
+                    <div class="timeline-step">
+
+                        <div class="timeline-marker">
+
+                            <span>
+                                03
+                            </span>
+
+                        </div>
+
+
+                        <div class="timeline-content">
+
+                            <strong
+                                data-i18n="companyTitle"
+                            >
+                                Company
+                            </strong>
+
+
+                            <p
+                                data-i18n="companyDescription"
+                            >
+                                If approved, your application will be sent to the company.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 WHAT HAPPENS NEXT
+            ================================================== -->
+
+            <div class="next-step-card">
+
+
+                <div class="next-step-icon">
+                    →
+                </div>
+
+
+                <div class="next-step-content">
+
+                    <strong
+                        data-i18n="nextStepTitle"
+                    >
+                        What happens next?
+                    </strong>
+
+
+                    <p
+                        data-i18n="nextStepDescription"
+                    >
+                        ALote will review your application.
+                        If it meets the requirements, we will
+                        forward it to the company for consideration.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 EMAIL NOTICE
+            ================================================== -->
+
+            <div class="email-notice">
+
+
+                <div class="email-icon">
+                    @
+                </div>
+
+
+                <div class="email-content">
+
+                    <strong
+                        data-i18n="emailTitle"
+                    >
+                        Watch your email
+                    </strong>
+
+
+                    <p
+                        data-i18n="emailDescription"
+                    >
+                        We'll use the email address you provided
+                        to send important updates about your application.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="success-actions">
+
+
+                <a
+                    href="jobs.html"
+                    class="primary-button"
+                    data-i18n="backToJobs"
+                >
+                    Back to Jobs
+                </a>
+
+
+                <a
+                    href="index.html"
+                    class="secondary-button"
+                    data-i18n="backHome"
+                >
+                    Back to Home
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Small message -->
+
+        <p
+            class="success-footer"
+            data-i18n="thankYou"
+        >
+            Thank you for using ALote.
+        </p>
+
+    </div>
+
+</main>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
+                ALote
+            </a>
+
+
+            <p class="footer-tagline">
+
+                <span data-i18n="footerTagline">
+                    Find work that fits you.
+                </span>
+
+            </p>
+
+
+            <p
+                class="footer-description"
+                data-i18n="footerDescription"
+            >
+                Connecting job seekers and employers
+                in one organized place.
+            </p>
+
+
+            <div class="footer-socials">
+
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
+                    f
+                </a>
+
+
+                <a
+                    href="#"
+                    aria-label="Telegram"
+                >
+                    ➤
+                </a>
+
+
+                <a
+                    href="#"
+                    aria-label="LinkedIn"
+                >
+                    in
+                </a>
+
+
+                <a
+                    href="#"
+                    aria-label="Email"
+                >
+                    ✉
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Jobs -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerJobs">
+                Jobs
+            </h3>
+
+
+            <a
+                href="jobs.html?mode=wfh"
+                data-i18n="footerWfh"
+            >
+                WFH Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=onsite"
+                data-i18n="footerOnsite"
+            >
+                On-site Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=hybrid"
+                data-i18n="footerHybrid"
+            >
+                Hybrid Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=internship"
+                data-i18n="footerInternship"
+            >
+                Internships
+            </a>
+
+
+            <a
+                href="jobs.html?mode=part-time"
+                data-i18n="footerPartTime"
+            >
+                Part-time Jobs
+            </a>
+
+        </div>
+
+
+
+        <!-- Useful Links -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerLinks">
+                Useful Links
+            </h3>
+
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+
+            <a
+                href="employer.html"
+                data-i18n="employer"
+            >
+                Employer
+            </a>
+
+        </div>
+
+
+
+        <!-- Contact -->
+
+        <div class="footer-column footer-contact">
+
+            <h3 data-i18n="footerContact">
+                Contact
+            </h3>
+
+
+            <a href="mailto:hello@alote.com">
+
+                <span class="contact-icon">
+                    ✉
+                </span>
+
+                hello@alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ➤
+                </span>
+
+                t.me/alotejobs
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ◎
+                </span>
+
+                www.alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ⌖
+                </span>
+
+                Yangon, Myanmar
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Footer Bottom -->
+
+    <div class="footer-bottom container">
+
+        <p
+            class="copyright"
+            data-i18n="copyright"
+        >
+            © 2026 ALote. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="js/application-success.js"></script>
+
+</body>
+
+</html>

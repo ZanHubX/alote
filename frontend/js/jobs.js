@@ -80,6 +80,12 @@ const translations = {
         engineering:
             "Engineering",
 
+        sales: 
+            "Sales",
+
+        administration: 
+            "Administration",
+
         location:
             "Location",
 
@@ -107,6 +113,11 @@ const translations = {
 
 
     my: {
+        categoryResults:
+            "အမျိုးအစားအလိုက် ရှာဖွေမှု",
+
+        viewAllJobs:
+            "အလုပ်အကိုင်အားလုံးကို ကြည့်မည်",
 
         employer:
             "အလုပ်ရှင်",
@@ -189,6 +200,12 @@ const translations = {
         engineering:
             "အင်ဂျင်နီယာ",
 
+        sales: 
+            "အရောင်း",
+
+        administration: 
+            "စီမံခန့်ခွဲရေး",
+
         location:
             "တည်နေရာ",
 
@@ -236,7 +253,8 @@ const jobs = [
         category: "IT & Software",
         location: "Yangon",
         salary: "800K – 1.2M MMK",
-        postedDays: 2
+        postedDays: 2,
+        deadline: "2026-09-15"
     },
 
     {
@@ -249,7 +267,8 @@ const jobs = [
         category: "Design",
         location: "Yangon",
         salary: "700K – 1M MMK",
-        postedDays: 3
+        postedDays: 3,
+        deadline: "2026-09-18"
     },
 
     {
@@ -262,7 +281,8 @@ const jobs = [
         category: "Marketing",
         location: "Mandalay",
         salary: "600K – 900K MMK",
-        postedDays: 4
+        postedDays: 4,
+        deadline: "2026-09-20"
     },
 
     {
@@ -275,7 +295,8 @@ const jobs = [
         category: "IT & Software",
         location: "Yangon",
         salary: "900K – 1.4M MMK",
-        postedDays: 5
+        postedDays: 5,
+        deadline: "2026-09-22"
     },
 
     {
@@ -288,7 +309,8 @@ const jobs = [
         category: "Design",
         location: "Yangon",
         salary: "150K – 250K MMK",
-        postedDays: 6
+        postedDays: 6,
+        deadline: "2026-09-25"
     },
 
     {
@@ -301,7 +323,8 @@ const jobs = [
         category: "Finance & Accounting",
         location: "Naypyidaw",
         salary: "500K – 700K MMK",
-        postedDays: 7
+        postedDays: 7,
+        deadline: "2026-09-28"
     }
 
 ];
@@ -521,6 +544,148 @@ function filterJobs() {
         );
 
     });
+
+}
+
+/* =========================================
+   CATEGORY CONTEXT
+========================================= */
+
+function renderCategoryContext() {
+
+    const context =
+        document.getElementById(
+            "categoryContext"
+        );
+
+    const title =
+        document.getElementById(
+            "categoryContextTitle"
+        );
+
+    const description =
+        document.getElementById(
+            "categoryContextDescription"
+        );
+
+
+    if (
+        !context ||
+        !title ||
+        !description
+    ) {
+        return;
+    }
+
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const categoryId =
+        params.get("category");
+
+
+    if (!categoryId) {
+
+        context.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    const categoryMap = {
+
+        "it-software": {
+            en: "IT & Software",
+            my: "IT နှင့် Software"
+        },
+
+        "marketing": {
+            en: "Marketing",
+            my: "Marketing"
+        },
+
+        "design": {
+            en: "Design",
+            my: "ဒီဇိုင်း"
+        },
+
+        "finance": {
+            en: "Finance & Accounting",
+            my: "ဘဏ္ဍာရေးနှင့် စာရင်းကိုင်"
+        },
+
+        "sales": {
+            en: "Sales",
+            my: "အရောင်း"
+        },
+
+        "education": {
+            en: "Education",
+            my: "ပညာရေး"
+        },
+
+        "engineering": {
+            en: "Engineering",
+            my: "အင်ဂျင်နီယာ"
+        },
+
+        "administration": {
+            en: "Administration",
+            my: "စီမံခန့်ခွဲရေး"
+        }
+
+    };
+
+
+    const category =
+        categoryMap[
+            categoryId.toLowerCase()
+        ];
+
+
+    if (!category) {
+
+        context.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    const language =
+        currentLanguage;
+
+
+    const categoryName =
+        category[language] ||
+        category.en;
+
+
+    if (language === "my") {
+
+        title.textContent =
+            `${categoryName} အလုပ်အကိုင်များ`;
+
+        description.textContent =
+            `${categoryName} အမျိုးအစားရှိ အလုပ်အကိုင်များကိုသာ ပြသနေပါသည်။`;
+
+    } else {
+
+        title.textContent =
+            `${categoryName} Jobs`;
+
+        description.textContent =
+            `Showing jobs in ${categoryName}.`;
+
+    }
+
+
+    context.classList.remove("hidden");
 
 }
 
@@ -805,6 +970,184 @@ function clearFilters() {
 
 
 /* =========================================
+   URL FILTER
+========================================= */
+
+function applyUrlFilter() {
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+
+    /* =========================================
+       SEARCH FROM URL
+    ========================================= */
+
+    const search =
+        params.get("search");
+
+
+    if (search) {
+
+        const searchInput =
+            document.getElementById("jobSearch");
+
+
+        if (searchInput) {
+
+            searchInput.value =
+                search;
+
+        }
+
+    }
+
+
+    /* =========================================
+       CATEGORY FILTER
+    ========================================= */
+
+    const category =
+        params.get("category");
+
+
+    if (category) {
+
+        const categoryMap = {
+
+            "it-software":
+                "IT & Software",
+
+            "marketing":
+                "Marketing",
+
+            "design":
+                "Design",
+
+            "finance":
+                "Finance & Accounting",
+
+            "sales":
+                "Sales",
+
+            "education":
+                "Education",
+
+            "engineering":
+                "Engineering",
+
+            "administration":
+                "Administration"
+
+        };
+
+
+        const categoryValue =
+            categoryMap[
+                category.toLowerCase()
+            ];
+
+
+        if (categoryValue) {
+
+            const checkbox =
+                document.querySelector(
+                    `input[name="category"][value="${categoryValue}"]`
+                );
+
+
+            if (checkbox) {
+
+                checkbox.checked = true;
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================================
+       WORK STYLE / WORK TYPE
+    ========================================= */
+
+    const mode =
+        params.get("mode");
+
+
+    if (!mode) {
+        return;
+    }
+
+
+    const normalizedMode =
+        mode.toLowerCase();
+
+
+    const workStyleMap = {
+
+        wfh: "WFH",
+
+        hybrid: "Hybrid",
+
+        onsite: "On-site"
+
+    };
+
+
+    if (workStyleMap[normalizedMode]) {
+
+        const radio =
+            document.querySelector(
+                `input[name="workStyle"][value="${workStyleMap[normalizedMode]}"]`
+            );
+
+
+        if (radio) {
+
+            radio.checked = true;
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =========================================
+       WORK TYPE
+    ========================================= */
+
+    const workTypeMap = {
+
+        internship: "Internship",
+
+        "part-time": "Part-time"
+
+    };
+
+
+    if (workTypeMap[normalizedMode]) {
+
+        const checkbox =
+            document.querySelector(
+                `input[name="workType"][value="${workTypeMap[normalizedMode]}"]`
+            );
+
+
+        if (checkbox) {
+
+            checkbox.checked = true;
+
+        }
+
+    }
+
+}
+
+/* =========================================
    EVENT LISTENERS
 ========================================= */
 
@@ -896,6 +1239,8 @@ document
 
 document.documentElement.lang =
     currentLanguage;
+
+applyUrlFilter();
 
 changeLanguage(
     currentLanguage

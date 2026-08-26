@@ -1,0 +1,541 @@
+/* =========================================
+   JOB DETAILS PAGE
+========================================= */
+
+.job-details-page {
+    padding: 55px 0 100px;
+    background: #f8fafc;
+    min-height: calc(100vh - 72px);
+}
+
+.job-details-container {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   BACK LINK
+========================================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 30px;
+
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #4f46e5;
+}
+
+
+/* =========================================
+   JOB HEADER
+========================================= */
+
+.job-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+
+    padding: 34px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 35px rgba(15, 23, 42, 0.06);
+}
+
+
+.company-avatar-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 76px;
+    height: 76px;
+
+    border-radius: 18px;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+.company-name {
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.job-header h1 {
+    margin: 7px 0 10px;
+
+    color: #0f172a;
+
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.1;
+
+    letter-spacing: -0.04em;
+}
+
+
+.job-header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+.job-header-action {
+    min-width: 210px;
+
+    text-align: right;
+}
+
+
+.salary-large {
+    margin-bottom: 15px;
+
+    color: #0f172a;
+
+    font-size: 19px;
+    font-weight: 750;
+}
+
+
+.apply-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #4f46e5;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.apply-button:hover {
+    background: #4338ca;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(79, 70, 229, 0.2);
+}
+
+
+/* =========================================
+   CONTENT LAYOUT
+========================================= */
+
+.job-details-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        330px;
+
+    gap: 30px;
+
+    margin-top: 30px;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.job-main-content {
+    padding: 34px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+}
+
+
+.detail-section {
+    padding-bottom: 35px;
+    margin-bottom: 35px;
+
+    border-bottom: 1px solid #eef2f7;
+}
+
+.detail-section:last-of-type {
+    margin-bottom: 0;
+}
+
+
+.detail-section h2 {
+    margin-bottom: 16px;
+
+    color: #0f172a;
+
+    font-size: 21px;
+    letter-spacing: -0.025em;
+}
+
+
+.detail-section p {
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   LISTS
+========================================= */
+
+.detail-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding-left: 20px;
+}
+
+.detail-list li {
+    padding-left: 4px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.detail-list li::marker {
+    color: #4f46e5;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.job-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    align-self: start;
+
+    position: sticky;
+    top: 95px;
+}
+
+
+.overview-card,
+.dates-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+}
+
+
+.overview-card h2 {
+    margin-bottom: 22px;
+
+    color: #0f172a;
+
+    font-size: 17px;
+}
+
+
+.overview-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eef2f7;
+}
+
+
+.overview-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+.overview-label {
+    color: #94a3b8;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+
+.overview-item strong {
+    color: #334155;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   DATES
+========================================= */
+
+.date-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.date-item + .date-item {
+    margin-top: 20px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eef2f7;
+}
+
+.date-item span {
+    color: #94a3b8;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.date-item strong {
+    color: #334155;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   APPLICATION CTA
+========================================= */
+
+.apply-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-top: 35px;
+    padding: 28px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f8fafc
+        );
+
+    border: 1px solid #e0e7ff;
+}
+
+
+.section-label {
+    color: #4f46e5;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    letter-spacing: 0.08em;
+}
+
+
+.apply-section h2 {
+    margin: 6px 0 7px;
+
+    color: #111827;
+
+    font-size: 21px;
+}
+
+
+.apply-section p {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   BURMESE TYPOGRAPHY
+========================================= */
+
+html[lang="my"] .job-header h1 {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+
+    font-size: clamp(29px, 3.5vw, 42px);
+
+    line-height: 1.4;
+
+    letter-spacing: -0.02em;
+}
+
+
+html[lang="my"] .job-header,
+html[lang="my"] .job-main-content,
+html[lang="my"] .job-sidebar {
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+
+html[lang="my"] .apply-button {
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 950px) {
+
+    .job-header {
+        grid-template-columns: auto 1fr;
+    }
+
+    .job-header-action {
+        grid-column: 1 / -1;
+
+        min-width: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding-top: 18px;
+
+        border-top: 1px solid #eef2f7;
+
+        text-align: left;
+    }
+
+    .salary-large {
+        margin-bottom: 0;
+    }
+
+    .job-details-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .job-sidebar {
+        position: static;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .job-details-container {
+        width: min(100% - 30px, 1180px);
+    }
+
+    .job-details-page {
+        padding: 35px 0 70px;
+    }
+
+    .job-header {
+        grid-template-columns: 1fr;
+
+        padding: 24px;
+    }
+
+    .job-header-content {
+        min-width: 0;
+    }
+
+    .job-header h1 {
+        font-size: 34px;
+    }
+
+    .job-header-action {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .salary-large {
+        font-size: 18px;
+    }
+
+    .apply-button {
+        width: 100%;
+    }
+
+    .job-main-content {
+        padding: 24px;
+    }
+
+    .job-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .apply-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+}

@@ -225,6 +225,51 @@ const translations = {
     }
 
 };
+/* =========================================
+   HOME SEARCH
+========================================= */
+
+const searchForm =
+    document.getElementById("searchForm");
+
+if (searchForm) {
+
+    searchForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const searchInput =
+                document.getElementById("jobSearch");
+
+
+            if (!searchInput) {
+                return;
+            }
+
+
+            const searchValue =
+                searchInput.value.trim();
+
+
+            if (!searchValue) {
+
+                window.location.href =
+                    "jobs.html";
+
+                return;
+            }
+
+
+            window.location.href =
+                `jobs.html?search=${encodeURIComponent(searchValue)}`;
+
+        }
+    );
+
+}
 
 
 function changeLanguage(language) {

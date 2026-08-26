@@ -93,6 +93,39 @@ img {
     width: min(1180px, calc(100% - 48px));
     margin-inline: auto;
 }
+/* ==================================================
+   LOGO
+================================================== */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+
+.logo-image {
+    display: block;
+
+    width: auto;
+    height: 38px;
+
+    object-fit: contain;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.logo:hover .logo-image {
+    transform: translateY(-1px);
+
+    opacity: 0.92;
+}
 
 /* ==================================================
    NAVIGATION
