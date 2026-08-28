@@ -1350,3 +1350,151 @@ html[lang="my"] .process-step p {
     }
 
 }
+/* ==================================================
+   MOBILE — 2 × 2 GRIDS
+================================================== */
+
+@media (max-width: 760px) {
+
+    /* ==============================================
+       JOB SEEKERS
+    ============================================== */
+
+    .benefit-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    .benefit-card {
+
+        min-width: 0;
+
+        padding: 20px 16px;
+    }
+
+
+    .benefit-card h3 {
+
+        font-size: 14px;
+
+        line-height: 1.45;
+    }
+
+
+    .benefit-card p {
+
+        font-size: 11px;
+
+        line-height: 1.7;
+    }
+
+
+    .benefit-number {
+
+        font-size: 10px;
+    }
+
+
+    .benefit-icon {
+
+        width: 34px;
+        height: 34px;
+
+        margin-bottom: 13px;
+
+        font-size: 15px;
+    }
+
+
+    /* ==============================================
+       HOW ALOTE WORKS
+    ============================================== */
+
+    .process-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    /*
+       The connectors are useful on desktop
+       but would interfere with the 2 × 2 layout
+       on mobile.
+    */
+
+    .process-connector {
+
+        display: none;
+    }
+
+
+    .process-step {
+
+        min-width: 0;
+
+        padding: 20px 16px;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 14px;
+
+        background: #ffffff;
+    }
+
+
+    .process-number {
+
+        width: 32px;
+        height: 32px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .process-step h3 {
+
+        font-size: 14px;
+
+        line-height: 1.45;
+    }
+
+
+    .process-step p {
+
+        font-size: 11px;
+
+        line-height: 1.7;
+    }
+
+}
+@media (max-width: 760px) {
+
+    html[lang="my"] .benefit-card h3,
+    html[lang="my"] .process-step h3 {
+
+        font-size: 13px;
+
+        line-height: 1.6;
+
+    }
+
+
+    html[lang="my"] .benefit-card p,
+    html[lang="my"] .process-step p {
+
+        font-size: 10px;
+
+        line-height: 1.8;
+
+    }
+
+}

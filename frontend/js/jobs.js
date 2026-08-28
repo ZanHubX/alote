@@ -1,7 +1,11 @@
-/* =========================================
-   ALote Jobs
-========================================= */
+/* ==================================================
+   ALOTE — JOBS PAGE
+================================================== */
 
+
+/* ==================================================
+   TRANSLATIONS
+================================================== */
 
 const translations = {
 
@@ -11,14 +15,16 @@ const translations = {
         findJobs: "Find Jobs",
         categories: "Categories",
         whyAlote: "Why ALote",
+        postJob: "Post a Job",
 
-        jobDiscovery: "JOB DISCOVERY",
+        jobDiscovery:
+            "JOB DISCOVERY",
 
         findNextOpportunity:
             "Find your next opportunity.",
 
         jobsSubtitle:
-            "Search thousands of opportunities and find work that fits your skills and goals.",
+            "Search opportunities and find work that fits your skills and goals.",
 
         searchPlaceholder:
             "Search jobs, skills or companies...",
@@ -31,6 +37,9 @@ const translations = {
 
         clearFilters:
             "Clear",
+
+        filterJobs:
+            "Filter Jobs",
 
         workType:
             "Work Type",
@@ -80,10 +89,10 @@ const translations = {
         engineering:
             "Engineering",
 
-        sales: 
+        sales:
             "Sales",
 
-        administration: 
+        administration:
             "Administration",
 
         location:
@@ -108,16 +117,48 @@ const translations = {
             "No jobs found",
 
         noJobsDescription:
-            "Try changing your search or filters."
+            "Try changing your search or filters.",
+
+        viewJob:
+            "View job →",
+
+        exploreJobs:
+            "Explore jobs",
+
+        posted:
+            "Posted",
+
+        daysAgo:
+            "days ago",
+
+        deadline:
+            "Deadline",
+
+        categoryResults:
+            "CATEGORY RESULTS",
+
+        showingJobs:
+            "Showing jobs in",
+
+        viewAllJobs:
+            "View all jobs",
+
+        clearCategory:
+            "Clear category",
+
+        searchHint:
+            "Search by job title, company, category or location.",
+
+        noResultsEyebrow:
+            "NO RESULTS",
+
+        activeFilters:
+            "Active filters"
+
     },
 
 
     my: {
-        categoryResults:
-            "အမျိုးအစားအလိုက် ရှာဖွေမှု",
-
-        viewAllJobs:
-            "အလုပ်အကိုင်အားလုံးကို ကြည့်မည်",
 
         employer:
             "အလုပ်ရှင်",
@@ -130,6 +171,9 @@ const translations = {
 
         whyAlote:
             "ALote ကို ဘာကြောင့်သုံးမလဲ",
+
+        postJob:
+            "အလုပ်တင်မည်",
 
         jobDiscovery:
             "အလုပ်အကိုင်ရှာဖွေရေး",
@@ -151,6 +195,9 @@ const translations = {
 
         clearFilters:
             "ဖယ်ရှားမည်",
+
+        filterJobs:
+            "အလုပ်များ စစ်ထုတ်ရန်",
 
         workType:
             "အလုပ်အမျိုးအစား",
@@ -200,10 +247,10 @@ const translations = {
         engineering:
             "အင်ဂျင်နီယာ",
 
-        sales: 
+        sales:
             "အရောင်း",
 
-        administration: 
+        administration:
             "စီမံခန့်ခွဲရေး",
 
         location:
@@ -228,18 +275,54 @@ const translations = {
             "အလုပ်အကိုင် မတွေ့ပါ",
 
         noJobsDescription:
-            "သင့်ရှာဖွေမှု သို့မဟုတ် စစ်ထုတ်မှုများကို ပြောင်းလဲကြည့်ပါ။"
+            "သင့်ရှာဖွေမှု သို့မဟုတ် စစ်ထုတ်မှုများကို ပြောင်းလဲကြည့်ပါ။",
+
+        viewJob:
+            "အလုပ်ကို ကြည့်မည် →",
+
+        exploreJobs:
+            "အလုပ်အကိုင်များကို ကြည့်မည်",
+
+        posted:
+            "တင်ထားသည်",
+
+        daysAgo:
+            "ရက်အကြာ",
+
+        deadline:
+            "နောက်ဆုံးရက်",
+
+        categoryResults:
+            "အမျိုးအစားအလိုက် ရှာဖွေမှု",
+
+        showingJobs:
+            "အောက်ပါအမျိုးအစားရှိ အလုပ်များကို ပြသနေသည်",
+
+        viewAllJobs:
+            "အလုပ်အကိုင်အားလုံးကို ကြည့်မည်",
+
+        clearCategory:
+            "အမျိုးအစား ဖယ်ရှားမည်",
+
+        searchHint:
+            "အလုပ်အမည်၊ ကုမ္ပဏီ၊ အမျိုးအစား သို့မဟုတ် တည်နေရာဖြင့် ရှာဖွေပါ။",
+
+        noResultsEyebrow:
+            "ရလဒ်မတွေ့ပါ",
+
+        activeFilters:
+            "လက်ရှိစစ်ထုတ်မှုများ"
+
     }
 
 };
 
 
-/* =========================================
-   SAMPLE DATA
-   -----------------------------------------
-   This will later come from Laravel API.
-========================================= */
-
+/* ==================================================
+   SAMPLE JOB DATA
+   -----------------------------------------------
+   Later this will come from Laravel API.
+================================================== */
 
 const jobs = [
 
@@ -330,27 +413,56 @@ const jobs = [
 ];
 
 
+/* ==================================================
+   STATE
+================================================== */
+
 let currentLanguage =
     localStorage.getItem("alote-language") || "en";
 
 
-/* =========================================
-   LANGUAGE
-========================================= */
+/* ==================================================
+   HELPERS
+================================================== */
 
+function getTranslation(key) {
+
+    return (
+        translations[currentLanguage]?.[key] ||
+        translations.en[key] ||
+        key
+    );
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ==================================================
+   LANGUAGE
+================================================== */
 
 function changeLanguage(language) {
 
-    const selectedLanguage =
-        translations[language];
-
-    if (!selectedLanguage) {
+    if (!translations[language]) {
         return;
     }
 
+
     currentLanguage = language;
 
-    document.documentElement.lang = language;
+    document.documentElement.lang =
+        language;
 
 
     document
@@ -360,10 +472,13 @@ function changeLanguage(language) {
             const key =
                 element.dataset.i18n;
 
-            if (selectedLanguage[key]) {
+            const value =
+                translations[language][key];
+
+            if (value) {
 
                 element.textContent =
-                    selectedLanguage[key];
+                    value;
 
             }
 
@@ -377,10 +492,13 @@ function changeLanguage(language) {
             const key =
                 element.dataset.i18nPlaceholder;
 
-            if (selectedLanguage[key]) {
+            const value =
+                translations[language][key];
+
+            if (value) {
 
                 element.placeholder =
-                    selectedLanguage[key];
+                    value;
 
             }
 
@@ -405,24 +523,29 @@ function changeLanguage(language) {
     );
 
 
+    renderCategoryContext();
+
     renderJobs();
+
+    renderActiveFilters();
 
 }
 
 
-/* =========================================
-   FILTER STATE
-========================================= */
-
+/* ==================================================
+   GET FILTER STATE
+================================================== */
 
 function getFilters() {
 
+    const searchInput =
+        document.getElementById("jobSearch");
+
+
     const search =
-        document
-            .getElementById("jobSearch")
-            .value
-            .trim()
-            .toLowerCase();
+        searchInput
+            ? searchInput.value.trim().toLowerCase()
+            : "";
 
 
     const workTypes = [
@@ -434,10 +557,16 @@ function getFilters() {
     ].map(input => input.value);
 
 
-    const workStyle =
+    const workStyleInput =
         document.querySelector(
             'input[name="workStyle"]:checked'
-        ).value;
+        );
+
+
+    const workStyle =
+        workStyleInput
+            ? workStyleInput.value
+            : "All";
 
 
     const categories = [
@@ -449,27 +578,38 @@ function getFilters() {
     ].map(input => input.value);
 
 
-    const location =
+    const locationInput =
         document.getElementById(
             "locationFilter"
-        ).value;
+        );
+
+
+    const location =
+        locationInput
+            ? locationInput.value
+            : "";
 
 
     return {
+
         search,
+
         workTypes,
+
         workStyle,
+
         categories,
+
         location
+
     };
 
 }
 
 
-/* =========================================
+/* ==================================================
    FILTER JOBS
-========================================= */
-
+================================================== */
 
 function filterJobs() {
 
@@ -480,25 +620,28 @@ function filterJobs() {
     return jobs.filter(job => {
 
 
+        const searchableText = [
+
+            job.title,
+            job.company,
+            job.category,
+            job.location,
+            job.salary,
+            job.workStyle,
+            job.workType
+
+        ]
+            .join(" ")
+            .toLowerCase();
+
+
         const matchesSearch =
 
             !filters.search ||
 
-            job.title
-                .toLowerCase()
-                .includes(filters.search) ||
-
-            job.company
-                .toLowerCase()
-                .includes(filters.search) ||
-
-            job.category
-                .toLowerCase()
-                .includes(filters.search) ||
-
-            job.location
-                .toLowerCase()
-                .includes(filters.search);
+            searchableText.includes(
+                filters.search
+            );
 
 
         const matchesWorkType =
@@ -536,20 +679,100 @@ function filterJobs() {
 
 
         return (
+
             matchesSearch &&
+
             matchesWorkType &&
+
             matchesWorkStyle &&
+
             matchesCategory &&
+
             matchesLocation
+
         );
 
     });
 
 }
 
-/* =========================================
+
+/* ==================================================
+   CATEGORY MAP
+================================================== */
+
+const categoryMap = {
+
+    "it-software": {
+
+        en: "IT & Software",
+
+        my: "IT နှင့် Software"
+
+    },
+
+    "marketing": {
+
+        en: "Marketing",
+
+        my: "Marketing"
+
+    },
+
+    "design": {
+
+        en: "Design",
+
+        my: "ဒီဇိုင်း"
+
+    },
+
+    "finance": {
+
+        en: "Finance & Accounting",
+
+        my: "ဘဏ္ဍာရေးနှင့် စာရင်းကိုင်"
+
+    },
+
+    "sales": {
+
+        en: "Sales",
+
+        my: "အရောင်း"
+
+    },
+
+    "education": {
+
+        en: "Education",
+
+        my: "ပညာရေး"
+
+    },
+
+    "engineering": {
+
+        en: "Engineering",
+
+        my: "အင်ဂျင်နီယာ"
+
+    },
+
+    "administration": {
+
+        en: "Administration",
+
+        my: "စီမံခန့်ခွဲရေး"
+
+    }
+
+};
+
+
+/* ==================================================
    CATEGORY CONTEXT
-========================================= */
+================================================== */
 
 function renderCategoryContext() {
 
@@ -558,10 +781,12 @@ function renderCategoryContext() {
             "categoryContext"
         );
 
+
     const title =
         document.getElementById(
             "categoryContextTitle"
         );
+
 
     const description =
         document.getElementById(
@@ -574,7 +799,9 @@ function renderCategoryContext() {
         !title ||
         !description
     ) {
+
         return;
+
     }
 
 
@@ -590,56 +817,13 @@ function renderCategoryContext() {
 
     if (!categoryId) {
 
-        context.classList.add("hidden");
+        context.classList.add(
+            "hidden"
+        );
 
         return;
 
     }
-
-
-    const categoryMap = {
-
-        "it-software": {
-            en: "IT & Software",
-            my: "IT နှင့် Software"
-        },
-
-        "marketing": {
-            en: "Marketing",
-            my: "Marketing"
-        },
-
-        "design": {
-            en: "Design",
-            my: "ဒီဇိုင်း"
-        },
-
-        "finance": {
-            en: "Finance & Accounting",
-            my: "ဘဏ္ဍာရေးနှင့် စာရင်းကိုင်"
-        },
-
-        "sales": {
-            en: "Sales",
-            my: "အရောင်း"
-        },
-
-        "education": {
-            en: "Education",
-            my: "ပညာရေး"
-        },
-
-        "engineering": {
-            en: "Engineering",
-            my: "အင်ဂျင်နီယာ"
-        },
-
-        "administration": {
-            en: "Administration",
-            my: "စီမံခန့်ခွဲရေး"
-        }
-
-    };
 
 
     const category =
@@ -650,50 +834,46 @@ function renderCategoryContext() {
 
     if (!category) {
 
-        context.classList.add("hidden");
+        context.classList.add(
+            "hidden"
+        );
 
         return;
 
     }
 
 
-    const language =
-        currentLanguage;
-
-
     const categoryName =
-        category[language] ||
+        category[currentLanguage] ||
         category.en;
 
 
-    if (language === "my") {
+    title.textContent =
+        currentLanguage === "my"
 
-        title.textContent =
-            `${categoryName} အလုပ်အကိုင်များ`;
+            ? `${categoryName} အလုပ်အကိုင်များ`
 
-        description.textContent =
-            `${categoryName} အမျိုးအစားရှိ အလုပ်အကိုင်များကိုသာ ပြသနေပါသည်။`;
-
-    } else {
-
-        title.textContent =
-            `${categoryName} Jobs`;
-
-        description.textContent =
-            `Showing jobs in ${categoryName}.`;
-
-    }
+            : `${categoryName} Jobs`;
 
 
-    context.classList.remove("hidden");
+    description.textContent =
+        currentLanguage === "my"
+
+            ? `${categoryName} အမျိုးအစားရှိ အလုပ်အကိုင်များကိုသာ ပြသနေပါသည်။`
+
+            : `${getTranslation("showingJobs")} ${categoryName}.`;
+
+
+    context.classList.remove(
+        "hidden"
+    );
 
 }
 
 
-/* =========================================
+/* ==================================================
    RENDER JOBS
-========================================= */
-
+================================================== */
 
 function renderJobs() {
 
@@ -702,10 +882,12 @@ function renderJobs() {
             "jobsList"
         );
 
+
     const emptyState =
         document.getElementById(
             "emptyState"
         );
+
 
     const jobCount =
         document.getElementById(
@@ -713,14 +895,25 @@ function renderJobs() {
         );
 
 
+    if (!jobsList) {
+        return;
+    }
+
+
     let filteredJobs =
         filterJobs();
 
 
-    const sort =
+    const sortElement =
         document.getElementById(
             "sortJobs"
-        ).value;
+        );
+
+
+    const sort =
+        sortElement
+            ? sortElement.value
+            : "latest";
 
 
     if (sort === "oldest") {
@@ -742,58 +935,88 @@ function renderJobs() {
     }
 
 
-    jobCount.textContent =
-        filteredJobs.length;
+    if (jobCount) {
+
+        jobCount.textContent =
+            filteredJobs.length;
+
+    }
 
 
     if (filteredJobs.length === 0) {
 
         jobsList.innerHTML = "";
 
-        emptyState.classList.remove(
-            "hidden"
-        );
+
+        if (emptyState) {
+
+            emptyState.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        renderActiveFilters();
+
+        updateFilterCount();
 
         return;
 
     }
 
 
-    emptyState.classList.add(
-        "hidden"
-    );
+    if (emptyState) {
+
+        emptyState.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     jobsList.innerHTML =
+
         filteredJobs
-            .map(job => createJobCard(job))
+            .map(job =>
+                createJobCard(job)
+            )
             .join("");
+
+
+    renderActiveFilters();
+
+    updateFilterCount();
 
 }
 
 
-/* =========================================
-   JOB CARD
-========================================= */
-
+/* ==================================================
+   CREATE JOB CARD
+================================================== */
 
 function createJobCard(job) {
 
     const workStyleClass =
 
         job.workStyle === "WFH"
+
             ? "wfh"
+
             : job.workStyle === "Hybrid"
+
                 ? "hybrid"
+
                 : "";
 
 
     const postedText =
+
         currentLanguage === "my"
 
-            ? `${job.postedDays} ရက်အကြာက တင်ထားသည်`
+            ? `${job.postedDays} ${getTranslation("daysAgo")} ${getTranslation("posted")}`
 
-            : `Posted ${job.postedDays} days ago`;
+            : `${getTranslation("posted")} ${job.postedDays} ${getTranslation("daysAgo")}`;
 
 
     const workTypeText =
@@ -820,44 +1043,47 @@ function createJobCard(job) {
 
     return `
 
-        <article class="job-card">
+        <article
+            class="job-card"
+            data-job-id="${job.id}"
+        >
 
             <div class="job-card-top">
 
                 <div class="company-avatar">
-                    ${job.initials}
+                    ${escapeHTML(job.initials)}
                 </div>
 
                 <span class="work-badge ${workStyleClass}">
-                    ${workStyleText}
+                    ${escapeHTML(workStyleText)}
                 </span>
 
             </div>
 
 
             <h3>
-                ${job.title}
+                ${escapeHTML(job.title)}
             </h3>
 
 
             <p class="job-company">
-                ${job.company}
+                ${escapeHTML(job.company)}
             </p>
 
 
             <p class="job-location">
-                ${job.location}
+                ${escapeHTML(job.location)}
             </p>
 
 
             <div class="job-meta">
 
                 <span>
-                    ${workTypeText}
+                    ${escapeHTML(workTypeText)}
                 </span>
 
                 <span>
-                    ${job.salary}
+                    ${escapeHTML(job.salary)}
                 </span>
 
             </div>
@@ -866,18 +1092,15 @@ function createJobCard(job) {
             <div class="job-card-bottom">
 
                 <span class="posted-date">
-                    ${postedText}
+                    ${escapeHTML(postedText)}
                 </span>
 
+
                 <a
-                    href="job-details.html?id=${job.id}"
-                    class="view-job">
-
-                    ${currentLanguage === "my"
-                        ? "အလုပ်ကို ကြည့်မည် →"
-                        : "View job →"
-                    }
-
+                    href="job-details.html?id=${encodeURIComponent(job.id)}"
+                    class="view-job"
+                >
+                    ${getTranslation("viewJob")}
                 </a>
 
             </div>
@@ -889,10 +1112,9 @@ function createJobCard(job) {
 }
 
 
-/* =========================================
+/* ==================================================
    DYNAMIC TRANSLATION
-========================================= */
-
+================================================== */
 
 function translateDynamicValue(value) {
 
@@ -924,44 +1146,290 @@ function translateDynamicValue(value) {
 }
 
 
-/* =========================================
-   CLEAR FILTERS
-========================================= */
+/* ==================================================
+   ACTIVE FILTERS
+================================================== */
+
+function renderActiveFilters() {
+
+    const container =
+        document.getElementById(
+            "activeFilters"
+        );
 
 
-function clearFilters() {
-
-    document.getElementById(
-        "jobSearch"
-    ).value = "";
+    if (!container) {
+        return;
+    }
 
 
-    document.querySelectorAll(
-        'input[name="workType"]'
-    ).forEach(input => {
-
-        input.checked = false;
-
-    });
+    const filters =
+        getFilters();
 
 
-    document.querySelector(
-        'input[name="workStyle"][value="All"]'
-    ).checked = true;
+    const chips = [];
 
 
-    document.querySelectorAll(
-        'input[name="category"]'
-    ).forEach(input => {
+    if (filters.search) {
 
-        input.checked = false;
+        chips.push({
 
-    });
+            label:
+                `"${filters.search}"`,
+
+            type:
+                "search"
+
+        });
+
+    }
 
 
-    document.getElementById(
-        "locationFilter"
-    ).value = "";
+    filters.workTypes.forEach(
+        value => {
+
+            chips.push({
+
+                label:
+                    translateFilterLabel(
+                        value
+                    ),
+
+                type:
+                    "workType",
+
+                value
+
+            });
+
+        }
+    );
+
+
+    if (
+        filters.workStyle &&
+        filters.workStyle !== "All"
+    ) {
+
+        chips.push({
+
+            label:
+                translateFilterLabel(
+                    filters.workStyle
+                ),
+
+            type:
+                "workStyle",
+
+            value:
+                filters.workStyle
+
+        });
+
+    }
+
+
+    filters.categories.forEach(
+        value => {
+
+            chips.push({
+
+                label:
+                    translateFilterLabel(
+                        value
+                    ),
+
+                type:
+                    "category",
+
+                value
+
+            });
+
+        }
+    );
+
+
+    if (filters.location) {
+
+        chips.push({
+
+            label:
+                filters.location,
+
+            type:
+                "location",
+
+            value:
+                filters.location
+
+        });
+
+    }
+
+
+    container.innerHTML = chips
+        .map(chip => `
+
+            <span class="active-filter">
+
+                ${escapeHTML(chip.label)}
+
+                <button
+                    type="button"
+                    aria-label="Remove filter"
+                    data-filter-type="${escapeHTML(chip.type)}"
+                    data-filter-value="${escapeHTML(chip.value || "")}"
+                >
+                    ×
+                </button>
+
+            </span>
+
+        `)
+        .join("");
+
+}
+
+
+/* ==================================================
+   FILTER LABEL TRANSLATION
+================================================== */
+
+function translateFilterLabel(value) {
+
+    const map = {
+
+        "Full-time":
+            "fullTime",
+
+        "Part-time":
+            "partTime",
+
+        "Internship":
+            "internship",
+
+        "WFH":
+            "remote",
+
+        "Hybrid":
+            "hybrid",
+
+        "On-site":
+            "onsite",
+
+        "IT & Software":
+            "itSoftware",
+
+        "Marketing":
+            "marketing",
+
+        "Design":
+            "design",
+
+        "Finance & Accounting":
+            "financeAccounting",
+
+        "Education":
+            "education",
+
+        "Engineering":
+            "engineering",
+
+        "Sales":
+            "sales",
+
+        "Administration":
+            "administration"
+
+    };
+
+
+    const key =
+        map[value];
+
+
+    return key
+        ? getTranslation(key)
+        : value;
+
+}
+
+
+/* ==================================================
+   REMOVE ACTIVE FILTER
+================================================== */
+
+function removeActiveFilter(
+    type,
+    value
+) {
+
+    if (type === "search") {
+
+        const input =
+            document.getElementById(
+                "jobSearch"
+            );
+
+        if (input) {
+            input.value = "";
+        }
+
+    }
+
+
+    if (
+        type === "workType" ||
+        type === "category"
+    ) {
+
+        document
+            .querySelectorAll(
+                `input[name="${type}"]`
+            )
+            .forEach(input => {
+
+                if (
+                    input.value === value
+                ) {
+
+                    input.checked =
+                        false;
+
+                }
+
+            });
+
+    }
+
+
+    if (type === "workStyle") {
+
+        const radio =
+            document.querySelector(
+                'input[name="workStyle"][value="All"]'
+            );
+
+        if (radio) {
+            radio.checked = true;
+        }
+
+    }
+
+
+    if (type === "location") {
+
+        const select =
+            document.getElementById(
+                "locationFilter"
+            );
+
+        if (select) {
+            select.value = "";
+        }
+
+    }
 
 
     renderJobs();
@@ -969,20 +1437,296 @@ function clearFilters() {
 }
 
 
-/* =========================================
-   URL FILTER
-========================================= */
+/* ==================================================
+   FILTER COUNT
+================================================== */
 
-function applyUrlFilter() {
+function updateFilterCount() {
 
-    const params = new URLSearchParams(
-        window.location.search
+    const countElement =
+        document.getElementById(
+            "filterCount"
+        );
+
+
+    if (!countElement) {
+        return;
+    }
+
+
+    const filters =
+        getFilters();
+
+
+    let count = 0;
+
+
+    count +=
+        filters.search
+            ? 1
+            : 0;
+
+
+    count +=
+        filters.workTypes.length;
+
+
+    count +=
+        filters.workStyle !== "All"
+            ? 1
+            : 0;
+
+
+    count +=
+        filters.categories.length;
+
+
+    count +=
+        filters.location
+            ? 1
+            : 0;
+
+
+    countElement.textContent =
+        count;
+
+}
+
+
+/* ==================================================
+   CLEAR FILTERS
+================================================== */
+
+function clearFilters() {
+
+    const search =
+        document.getElementById(
+            "jobSearch"
+        );
+
+
+    if (search) {
+        search.value = "";
+    }
+
+
+    document
+        .querySelectorAll(
+            'input[name="workType"]'
+        )
+        .forEach(input => {
+
+            input.checked =
+                false;
+
+        });
+
+
+    const allWorkStyle =
+        document.querySelector(
+            'input[name="workStyle"][value="All"]'
+        );
+
+
+    if (allWorkStyle) {
+
+        allWorkStyle.checked =
+            true;
+
+    }
+
+
+    document
+        .querySelectorAll(
+            'input[name="category"]'
+        )
+        .forEach(input => {
+
+            input.checked =
+                false;
+
+        });
+
+
+    const location =
+        document.getElementById(
+            "locationFilter"
+        );
+
+
+    if (location) {
+        location.value = "";
+    }
+
+
+    renderJobs();
+
+}
+
+
+/* ==================================================
+   SEARCH CLEAR BUTTON
+================================================== */
+
+function updateSearchClear() {
+
+    const input =
+        document.getElementById(
+            "jobSearch"
+        );
+
+
+    const clearButton =
+        document.getElementById(
+            "searchClear"
+        );
+
+
+    if (
+        !input ||
+        !clearButton
+    ) {
+        return;
+    }
+
+
+    clearButton.style.display =
+        input.value.trim()
+            ? "flex"
+            : "none";
+
+}
+
+
+function clearSearch() {
+
+    const input =
+        document.getElementById(
+            "jobSearch"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    input.value = "";
+
+    updateSearchClear();
+
+    renderJobs();
+
+    input.focus();
+
+}
+
+
+/* ==================================================
+   MOBILE FILTER DRAWER
+================================================== */
+
+function toggleMobileFilters() {
+
+    const panel =
+        document.querySelector(
+            ".filters-panel"
+        );
+
+
+    const button =
+        document.getElementById(
+            "mobileFilterButton"
+        );
+
+
+    if (
+        !panel ||
+        !button
+    ) {
+        return;
+    }
+
+
+    const isOpen =
+        panel.classList.toggle(
+            "mobile-open"
+        );
+
+
+    button.setAttribute(
+        "aria-expanded",
+        String(isOpen)
     );
 
 
-    /* =========================================
-       SEARCH FROM URL
-    ========================================= */
+    document.body.classList.toggle(
+        "filters-open",
+        isOpen
+    );
+
+}
+
+
+/* ==================================================
+   CLOSE MOBILE FILTERS
+================================================== */
+
+function closeMobileFilters() {
+
+    const panel =
+        document.querySelector(
+            ".filters-panel"
+        );
+
+
+    const button =
+        document.getElementById(
+            "mobileFilterButton"
+        );
+
+
+    if (panel) {
+
+        panel.classList.remove(
+            "mobile-open"
+        );
+
+    }
+
+
+    if (button) {
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+
+    document.body.classList.remove(
+        "filters-open"
+    );
+
+}
+
+
+/* ==================================================
+   URL FILTER
+================================================== */
+
+function applyUrlFilter() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    /* ------------------------------------------
+       SEARCH
+    ------------------------------------------ */
 
     const search =
         params.get("search");
@@ -990,13 +1734,15 @@ function applyUrlFilter() {
 
     if (search) {
 
-        const searchInput =
-            document.getElementById("jobSearch");
+        const input =
+            document.getElementById(
+                "jobSearch"
+            );
 
 
-        if (searchInput) {
+        if (input) {
 
-            searchInput.value =
+            input.value =
                 search;
 
         }
@@ -1004,9 +1750,9 @@ function applyUrlFilter() {
     }
 
 
-    /* =========================================
-       CATEGORY FILTER
-    ========================================= */
+    /* ------------------------------------------
+       CATEGORY
+    ------------------------------------------ */
 
     const category =
         params.get("category");
@@ -1014,52 +1760,24 @@ function applyUrlFilter() {
 
     if (category) {
 
-        const categoryMap = {
-
-            "it-software":
-                "IT & Software",
-
-            "marketing":
-                "Marketing",
-
-            "design":
-                "Design",
-
-            "finance":
-                "Finance & Accounting",
-
-            "sales":
-                "Sales",
-
-            "education":
-                "Education",
-
-            "engineering":
-                "Engineering",
-
-            "administration":
-                "Administration"
-
-        };
-
-
         const categoryValue =
             categoryMap[
                 category.toLowerCase()
-            ];
+            ]?.en;
 
 
         if (categoryValue) {
 
             const checkbox =
                 document.querySelector(
-                    `input[name="category"][value="${categoryValue}"]`
+                    `input[name="category"][value="${CSS.escape(categoryValue)}"]`
                 );
 
 
             if (checkbox) {
 
-                checkbox.checked = true;
+                checkbox.checked =
+                    true;
 
             }
 
@@ -1068,9 +1786,9 @@ function applyUrlFilter() {
     }
 
 
-    /* =========================================
-       WORK STYLE / WORK TYPE
-    ========================================= */
+    /* ------------------------------------------
+       MODE
+    ------------------------------------------ */
 
     const mode =
         params.get("mode");
@@ -1087,16 +1805,29 @@ function applyUrlFilter() {
 
     const workStyleMap = {
 
-        wfh: "WFH",
+        wfh:
+            "WFH",
 
-        hybrid: "Hybrid",
+        remote:
+            "WFH",
 
-        onsite: "On-site"
+        hybrid:
+            "Hybrid",
+
+        onsite:
+            "On-site",
+
+        "on-site":
+            "On-site"
 
     };
 
 
-    if (workStyleMap[normalizedMode]) {
+    if (
+        workStyleMap[
+            normalizedMode
+        ]
+    ) {
 
         const radio =
             document.querySelector(
@@ -1106,7 +1837,8 @@ function applyUrlFilter() {
 
         if (radio) {
 
-            radio.checked = true;
+            radio.checked =
+                true;
 
         }
 
@@ -1116,20 +1848,25 @@ function applyUrlFilter() {
     }
 
 
-    /* =========================================
-       WORK TYPE
-    ========================================= */
-
     const workTypeMap = {
 
-        internship: "Internship",
+        internship:
+            "Internship",
 
-        "part-time": "Part-time"
+        "part-time":
+            "Part-time",
+
+        "full-time":
+            "Full-time"
 
     };
 
 
-    if (workTypeMap[normalizedMode]) {
+    if (
+        workTypeMap[
+            normalizedMode
+        ]
+    ) {
 
         const checkbox =
             document.querySelector(
@@ -1139,7 +1876,8 @@ function applyUrlFilter() {
 
         if (checkbox) {
 
-            checkbox.checked = true;
+            checkbox.checked =
+                true;
 
         }
 
@@ -1147,101 +1885,401 @@ function applyUrlFilter() {
 
 }
 
-/* =========================================
-   EVENT LISTENERS
-========================================= */
+
+/* ==================================================
+   CLEAR CATEGORY URL
+================================================== */
+
+function clearCategoryFilter() {
+
+    const url =
+        new URL(
+            window.location.href
+        );
 
 
-document
-    .querySelectorAll(".language-button")
-    .forEach(button => {
+    url.searchParams.delete(
+        "category"
+    );
 
-        button.addEventListener(
-            "click",
-            () => {
 
-                changeLanguage(
-                    button.dataset.lang
-                );
+    window.history.replaceState(
+        {},
+        "",
+        url
+    );
+
+
+    document
+        .querySelectorAll(
+            'input[name="category"]'
+        )
+        .forEach(input => {
+
+            input.checked =
+                false;
+
+        });
+
+
+    renderCategoryContext();
+
+    renderJobs();
+
+}
+
+
+/* ==================================================
+   LANGUAGE BUTTONS
+================================================== */
+
+function initializeLanguageButtons() {
+
+    document
+        .querySelectorAll(
+            ".language-button"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    changeLanguage(
+                        button.dataset.lang
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+/* ==================================================
+   SEARCH EVENTS
+================================================== */
+
+function initializeSearch() {
+
+    const searchForm =
+        document.getElementById(
+            "jobSearchForm"
+        );
+
+
+    const searchInput =
+        document.getElementById(
+            "jobSearch"
+        );
+
+
+    const searchClear =
+        document.getElementById(
+            "clearSearch"
+        );
+
+
+    /* ------------------------------------------
+       FORM SUBMIT
+    ------------------------------------------ */
+
+    if (searchForm) {
+
+        searchForm.addEventListener(
+            "submit",
+            event => {
+
+                // Prevent page refresh
+                event.preventDefault();
+
+                // Run frontend search
+                renderJobs();
 
             }
         );
 
-    });
+    }
 
 
-document
-    .getElementById("searchButton")
-    .addEventListener(
-        "click",
-        renderJobs
-    );
+    /* ------------------------------------------
+       LIVE SEARCH
+    ------------------------------------------ */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            () => {
+
+                updateSearchClear();
+
+                renderJobs();
+
+            }
+        );
+
+    }
 
 
-document
-    .getElementById("jobSearch")
-    .addEventListener(
-        "input",
-        renderJobs
-    );
+    /* ------------------------------------------
+       CLEAR SEARCH
+    ------------------------------------------ */
+
+    if (searchClear) {
+
+        searchClear.addEventListener(
+            "click",
+            clearSearch
+        );
+
+    }
+
+}
 
 
-document
-    .querySelectorAll(
-        'input[name="workType"], input[name="workStyle"], input[name="category"]'
-    )
-    .forEach(input => {
+/* ==================================================
+   FILTER EVENTS
+================================================== */
 
-        input.addEventListener(
+function initializeFilters() {
+
+    document
+        .querySelectorAll(
+            'input[name="workType"], input[name="workStyle"], input[name="category"]'
+        )
+        .forEach(input => {
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    renderJobs();
+
+                }
+            );
+
+        });
+
+
+    const location =
+        document.getElementById(
+            "locationFilter"
+        );
+
+
+    if (location) {
+
+        location.addEventListener(
             "change",
             renderJobs
         );
 
-    });
+    }
 
 
-document
-    .getElementById("locationFilter")
-    .addEventListener(
-        "change",
-        renderJobs
-    );
+    const sort =
+        document.getElementById(
+            "sortJobs"
+        );
 
 
-document
-    .getElementById("sortJobs")
-    .addEventListener(
-        "change",
-        renderJobs
-    );
+    if (sort) {
+
+        sort.addEventListener(
+            "change",
+            renderJobs
+        );
+
+    }
 
 
-document
-    .getElementById("clearFilters")
-    .addEventListener(
+    const clear =
+        document.getElementById(
+            "clearFilters"
+        );
+
+
+    if (clear) {
+
+        clear.addEventListener(
+            "click",
+            clearFilters
+        );
+
+    }
+
+
+    const emptyClear =
+        document.getElementById(
+            "emptyClearFilters"
+        );
+
+
+    if (emptyClear) {
+
+        emptyClear.addEventListener(
+            "click",
+            clearFilters
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   MOBILE FILTER EVENTS
+================================================== */
+
+function initializeMobileFilters() {
+
+    const button =
+        document.getElementById(
+            "mobileFilterButton"
+        );
+
+
+    if (button) {
+
+        button.addEventListener(
+            "click",
+            toggleMobileFilters
+        );
+
+    }
+
+
+    document.addEventListener(
         "click",
-        clearFilters
+        event => {
+
+            const removeButton =
+                event.target.closest(
+                    ".active-filter button"
+                );
+
+
+            if (removeButton) {
+
+                removeActiveFilter(
+
+                    removeButton.dataset
+                        .filterType,
+
+                    removeButton.dataset
+                        .filterValue
+
+                );
+
+            }
+
+        }
     );
 
 
-document
-    .getElementById("emptyClearFilters")
-    .addEventListener(
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeMobileFilters();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   CATEGORY CLEAR BUTTON
+================================================== */
+
+function initializeCategoryContext() {
+
+    const clearButton =
+        document.querySelector(
+            ".category-context-clear"
+        );
+
+
+    if (!clearButton) {
+        return;
+    }
+
+
+    clearButton.addEventListener(
         "click",
-        clearFilters
+        event => {
+
+            event.preventDefault();
+
+            clearCategoryFilter();
+
+        }
     );
 
+}
 
-/* =========================================
+
+/* ==================================================
+   RESPONSIVE FILTER CLEANUP
+================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 760
+        ) {
+
+            closeMobileFilters();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
    INITIALIZE
-========================================= */
+================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        document.documentElement.lang =
+            currentLanguage;
 
 
-document.documentElement.lang =
-    currentLanguage;
+        applyUrlFilter();
 
-applyUrlFilter();
+        initializeLanguageButtons();
 
-changeLanguage(
-    currentLanguage
+        initializeSearch();
+
+        initializeFilters();
+
+        initializeMobileFilters();
+
+        initializeCategoryContext();
+
+        changeLanguage(
+            currentLanguage
+        );
+
+        updateSearchClear();
+
+        renderCategoryContext();
+
+        renderJobs();
+
+    }
 );

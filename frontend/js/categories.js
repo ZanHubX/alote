@@ -7,73 +7,113 @@ const categories = [
     {
         id: "it-software",
         icon: "⌘",
+
         name: "IT & Software",
         my: "IT နှင့် Software",
-        description: "Software development, IT support and technology roles.",
-        descriptionMy: "Software development၊ IT support နှင့် နည်းပညာဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Software development, IT support and technology roles.",
+
+        descriptionMy:
+            "Software development၊ IT support နှင့် နည်းပညာဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "marketing",
         icon: "↗",
+
         name: "Marketing",
         my: "Marketing",
-        description: "Marketing, digital marketing and brand-related roles.",
-        descriptionMy: "Marketing၊ Digital Marketing နှင့် Brand ဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Marketing, digital marketing and brand-related roles.",
+
+        descriptionMy:
+            "Marketing၊ Digital Marketing နှင့် Brand ဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "design",
         icon: "✦",
+
         name: "Design",
         my: "ဒီဇိုင်း",
-        description: "Graphic design, UI/UX and creative opportunities.",
-        descriptionMy: "Graphic Design၊ UI/UX နှင့် ဖန်တီးမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Graphic design, UI/UX and creative opportunities.",
+
+        descriptionMy:
+            "Graphic Design၊ UI/UX နှင့် ဖန်တီးမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "finance",
         icon: "◫",
+
         name: "Finance & Accounting",
         my: "ဘဏ္ဍာရေးနှင့် စာရင်းကိုင်",
-        description: "Accounting, finance and financial management roles.",
-        descriptionMy: "စာရင်းကိုင်၊ ဘဏ္ဍာရေးနှင့် ငွေကြေးစီမံခန့်ခွဲမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Accounting, finance and financial management roles.",
+
+        descriptionMy:
+            "စာရင်းကိုင်၊ ဘဏ္ဍာရေးနှင့် ငွေကြေးစီမံခန့်ခွဲမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "sales",
         icon: "↗",
+
         name: "Sales",
         my: "အရောင်း",
-        description: "Sales, business development and customer-facing roles.",
-        descriptionMy: "အရောင်း၊ Business Development နှင့် Customer ဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Sales, business development and customer-facing roles.",
+
+        descriptionMy:
+            "အရောင်း၊ Business Development နှင့် Customer ဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "education",
         icon: "▣",
+
         name: "Education",
         my: "ပညာရေး",
-        description: "Teaching, training and education-related opportunities.",
-        descriptionMy: "သင်ကြားရေး၊ Training နှင့် ပညာရေးဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Teaching, training and education-related opportunities.",
+
+        descriptionMy:
+            "သင်ကြားရေး၊ Training နှင့် ပညာရေးဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "engineering",
         icon: "△",
+
         name: "Engineering",
         my: "အင်ဂျင်နီယာ",
-        description: "Engineering, technical and infrastructure opportunities.",
-        descriptionMy: "အင်ဂျင်နီယာ၊ နည်းပညာနှင့် Infrastructure ဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Engineering, technical and infrastructure opportunities.",
+
+        descriptionMy:
+            "အင်ဂျင်နီယာ၊ နည်းပညာနှင့် Infrastructure ဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "administration",
         icon: "▤",
+
         name: "Administration",
         my: "စီမံခန့်ခွဲရေး",
-        description: "Administrative, office and operational roles.",
-        descriptionMy: "ရုံးလုပ်ငန်း၊ စီမံခန့်ခွဲရေးနှင့် Operations ဆိုင်ရာ အလုပ်အကိုင်များ။"
+
+        description:
+            "Administrative, office and operational roles.",
+
+        descriptionMy:
+            "ရုံးလုပ်ငန်း၊ စီမံခန့်ခွဲရေးနှင့် Operations ဆိုင်ရာ အလုပ်အကိုင်များ။"
     }
 
 ];
@@ -86,15 +126,28 @@ const categories = [
 
 const translations = {
 
+    /* ==================================================
+       ENGLISH
+    ================================================== */
+
     en: {
 
-        employer: "Employer",
+        /* Navigation */
 
-        findJobs: "Find Jobs",
+        employer:
+            "Employer",
 
-        categories: "Categories",
+        findJobs:
+            "Find Jobs",
 
-        whyAlote: "Why ALote",
+        categories:
+            "Categories",
+
+        whyAlote:
+            "Why ALote",
+
+
+        /* Hero */
 
         heroEyebrow:
             "EXPLORE OPPORTUNITIES",
@@ -105,6 +158,30 @@ const translations = {
         heroDescription:
             "Explore jobs by industry and discover opportunities that match your skills.",
 
+
+        /* Hero Preview */
+
+        previewLabel:
+            "YOUR NEXT FIELD",
+
+        previewTitle:
+            "Find your field",
+
+        previewDescription:
+            "Explore opportunities built around your skills.",
+
+
+        /* Hero Action */
+
+        exploreAllJobs:
+            "Explore all jobs →",
+
+        scrollHint:
+            "Explore categories",
+
+
+        /* Categories */
+
         browseLabel:
             "BROWSE BY CATEGORY",
 
@@ -113,6 +190,12 @@ const translations = {
 
         categoryCount:
             "8 categories",
+
+        exploreJobs:
+            "Explore jobs",
+
+
+        /* CTA */
 
         ctaEyebrow:
             "START YOUR SEARCH",
@@ -126,22 +209,67 @@ const translations = {
         browseJobs:
             "Browse jobs →",
 
+
+        /* Footer */
+
         footerDescription:
-            "Find work that fits you."
+            "Connecting job seekers and employers in one organized place.",
+
+        footerJobs:
+            "Jobs",
+
+        footerWfh:
+            "WFH Jobs",
+
+        footerOnsite:
+            "On-site Jobs",
+
+        footerHybrid:
+            "Hybrid Jobs",
+
+        footerInternship:
+            "Internships",
+
+        footerPartTime:
+            "Part-time Jobs",
+
+        footerLinks:
+            "Useful Links",
+
+        footerContact:
+            "Contact",
+
+        footerTagline:
+            "Find work that fits you.",
+
+        copyright:
+            "© 2026 ALote. All rights reserved."
 
     },
 
 
+    /* ==================================================
+       MYANMAR
+    ================================================== */
+
     my: {
 
-        employer: "အလုပ်ရှင်",
+        /* Navigation */
 
-        findJobs: "အလုပ်အကိုင်များ",
+        employer:
+            "အလုပ်ရှင်",
 
-        categories: "အမျိုးအစားများ",
+        findJobs:
+            "အလုပ်အကိုင်များ",
+
+        categories:
+            "အမျိုးအစားများ",
 
         whyAlote:
             "ALote ကို ဘာကြောင့်သုံးမလဲ",
+
+
+        /* Hero */
 
         heroEyebrow:
             "အလုပ်အကိုင်အခွင့်အလမ်းများကို ရှာဖွေပါ",
@@ -152,6 +280,30 @@ const translations = {
         heroDescription:
             "လုပ်ငန်းနယ်ပယ်အလိုက် အလုပ်အကိုင်များကို ရှာဖွေပြီး သင့်ကျွမ်းကျင်မှုနှင့် ကိုက်ညီသော အခွင့်အလမ်းများကို ရှာဖွေပါ။",
 
+
+        /* Hero Preview */
+
+        previewLabel:
+            "သင့်အတွက် သင့်တော်သောနယ်ပယ်",
+
+        previewTitle:
+            "သင့်နယ်ပယ်ကို ရှာဖွေပါ",
+
+        previewDescription:
+            "သင့်ကျွမ်းကျင်မှုနှင့် ကိုက်ညီသော အလုပ်အကိုင်အခွင့်အလမ်းများကို ရှာဖွေပါ။",
+
+
+        /* Hero Action */
+
+        exploreAllJobs:
+            "အလုပ်အကိုင်များအားလုံးကို ရှာဖွေမည် →",
+
+        scrollHint:
+            "အမျိုးအစားများကို ရှာဖွေပါ",
+
+
+        /* Categories */
+
         browseLabel:
             "အမျိုးအစားအလိုက် ရှာဖွေပါ",
 
@@ -160,6 +312,12 @@ const translations = {
 
         categoryCount:
             "အမျိုးအစား ၈ ခု",
+
+        exploreJobs:
+            "အလုပ်အကိုင်များကို ကြည့်မည်",
+
+
+        /* CTA */
 
         ctaEyebrow:
             "အလုပ်ရှာဖွေမှုကို စတင်ပါ",
@@ -173,8 +331,41 @@ const translations = {
         browseJobs:
             "အလုပ်အကိုင်များကို ကြည့်မည် →",
 
+
+        /* Footer */
+
         footerDescription:
-            "သင့်အတွက် သင့်တော်တဲ့အလုပ်ကို ရှာဖွေပါ။"
+            "အလုပ်ရှာဖွေသူများနှင့် အလုပ်ရှင်များကို တစ်နေရာတည်းတွင် စနစ်တကျ ချိတ်ဆက်ပေးထားပါသည်။",
+
+        footerJobs:
+            "အလုပ်အကိုင်များ",
+
+        footerWfh:
+            "WFH အလုပ်များ",
+
+        footerOnsite:
+            "ရုံးတက်အလုပ်များ",
+
+        footerHybrid:
+            "Hybrid အလုပ်များ",
+
+        footerInternship:
+            "အလုပ်သင်",
+
+        footerPartTime:
+            "အချိန်ပိုင်းအလုပ်များ",
+
+        footerLinks:
+            "အသုံးဝင်သော လင့်ခ်များ",
+
+        footerContact:
+            "ဆက်သွယ်ရန်",
+
+        footerTagline:
+            "သင့်အတွက် သင့်တော်တဲ့အလုပ်ကို ရှာဖွေပါ။",
+
+        copyright:
+            "© ၂၀၂၆ ALote။ မူပိုင်ခွင့်အားလုံး ရယူထားပါသည်။"
 
     }
 
@@ -199,6 +390,7 @@ function renderCategories() {
 
     const grid =
         document.getElementById("categoryGrid");
+
 
     if (!grid) {
         return;
@@ -256,9 +448,11 @@ function renderCategories() {
                     <div class="category-card-footer">
 
                         <span>
-                            ${currentLanguage === "my"
-                                ? "အလုပ်အကိုင်များကို ကြည့်မည်"
-                                : "Explore jobs"}
+                            ${
+                                translations[
+                                    currentLanguage
+                                ].exploreJobs
+                            }
                         </span>
 
                         <span>
@@ -287,16 +481,23 @@ function changeLanguage(language) {
     const selectedLanguage =
         translations[language];
 
+
     if (!selectedLanguage) {
         return;
     }
 
 
-    currentLanguage = language;
+    currentLanguage =
+        language;
+
 
     document.documentElement.lang =
         language;
 
+
+    /* ------------------------------------------
+       DATA-I18N ELEMENTS
+    ------------------------------------------ */
 
     document
         .querySelectorAll("[data-i18n]")
@@ -305,7 +506,13 @@ function changeLanguage(language) {
             const key =
                 element.dataset.i18n;
 
-            if (selectedLanguage[key]) {
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    selectedLanguage,
+                    key
+                )
+            ) {
 
                 element.textContent =
                     selectedLanguage[key];
@@ -314,6 +521,10 @@ function changeLanguage(language) {
 
         });
 
+
+    /* ------------------------------------------
+       LANGUAGE BUTTONS
+    ------------------------------------------ */
 
     document
         .querySelectorAll(".language-button")
@@ -327,11 +538,19 @@ function changeLanguage(language) {
         });
 
 
+    /* ------------------------------------------
+       SAVE LANGUAGE
+    ------------------------------------------ */
+
     localStorage.setItem(
         "alote-language",
         language
     );
 
+
+    /* ------------------------------------------
+       RE-RENDER CATEGORY CARDS
+    ------------------------------------------ */
 
     renderCategories();
 
@@ -366,4 +585,6 @@ document
    INITIALIZE
 ================================================== */
 
-changeLanguage(currentLanguage);
+changeLanguage(
+    currentLanguage
+);

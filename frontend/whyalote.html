@@ -36,10 +36,9 @@
 
     <div class="container navbar-container">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
+        <!-- LOGO -->
+
+        <a href="index.html" class="logo">
 
             <img
                 src="assets/logo/ALotelogo.png"
@@ -49,6 +48,8 @@
 
         </a>
 
+
+        <!-- DESKTOP NAVIGATION -->
 
         <nav class="nav-links">
 
@@ -77,7 +78,96 @@
         </nav>
 
 
+        <!-- DESKTOP LANGUAGE -->
+
         <div class="language-switcher">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <!-- DESKTOP EMPLOYER -->
+
+        <a
+            href="employer.html"
+            class="employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <nav class="mobile-nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-divider"></div>
+
+
+        <div class="mobile-language">
 
             <button
                 class="language-button active"
@@ -100,20 +190,17 @@
 
         <a
             href="employer.html"
-            class="employer-link"
-            data-i18n="employer"
+            class="mobile-employer-link"
+            data-i18n="postJob"
         >
-            Employer
+            Post a Job
         </a>
 
     </div>
 
 </header>
 
-
-
 <main>
-
 
 <!-- ==================================================
      HERO
@@ -1129,9 +1216,8 @@
 
 </footer>
 
-
-
 <script src="js/whyalote.js"></script>
+<script src="js/mobile-nav.js"></script>
 
 </body>
 

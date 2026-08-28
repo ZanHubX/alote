@@ -46,16 +46,9 @@
 
     <div class="container navbar-container">
 
+        <!-- LOGO -->
 
-        <!-- ==================================================
-             LOGO
-        ================================================== -->
-
-        <a
-            href="index.html"
-            class="logo"
-            aria-label="ALote Home"
-        >
+        <a href="index.html" class="logo">
 
             <img
                 src="assets/logo/ALotelogo.png"
@@ -66,15 +59,9 @@
         </a>
 
 
+        <!-- DESKTOP NAVIGATION -->
 
-        <!-- ==================================================
-             MAIN NAVIGATION
-        ================================================== -->
-
-        <nav
-            class="nav-links"
-            aria-label="Main navigation"
-        >
+        <nav class="nav-links">
 
             <a
                 href="jobs.html"
@@ -84,20 +71,16 @@
                 Find Jobs
             </a>
 
-
             <a
                 href="categories.html"
-                class="nav-link active"
+                class="active"
                 data-i18n="categories"
-                aria-current="page"
             >
                 Categories
             </a>
 
-
             <a
                 href="whyalote.html"
-                class="nav-link"
                 data-i18n="whyAlote"
             >
                 Why ALote
@@ -106,36 +89,22 @@
         </nav>
 
 
+        <!-- DESKTOP LANGUAGE -->
 
-        <!-- ==================================================
-             LANGUAGE SWITCHER
-        ================================================== -->
-
-        <div
-            class="language-switcher"
-            aria-label="Language selection"
-        >
+        <div class="language-switcher">
 
             <button
-                type="button"
                 class="language-button active"
                 data-lang="en"
-                aria-label="English"
             >
                 EN
             </button>
 
-
-            <span aria-hidden="true">
-                |
-            </span>
-
+            <span>|</span>
 
             <button
-                type="button"
                 class="language-button"
                 data-lang="my"
-                aria-label="Myanmar"
             >
                 မြန်မာ
             </button>
@@ -143,17 +112,99 @@
         </div>
 
 
-
-        <!-- ==================================================
-             EMPLOYER
-        ================================================== -->
+        <!-- DESKTOP EMPLOYER -->
 
         <a
             href="employer.html"
             class="employer-link"
-            data-i18n="employer"
+            data-i18n="postJob"
         >
-            Employer
+            Post a Job
+        </a>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <nav class="mobile-nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-divider"></div>
+
+
+        <div class="mobile-language">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <a
+            href="employer.html"
+            class="mobile-employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
         </a>
 
     </div>
@@ -175,26 +226,126 @@
 
     <section class="category-hero">
 
-        <div class="container category-hero-content">
+        <div class="container category-hero-container">
+
+            <div class="category-hero-content">
+
+                <span
+                    class="section-eyebrow"
+                    data-i18n="heroEyebrow"
+                >
+                    EXPLORE OPPORTUNITIES
+                </span>
 
 
-            <span
-                class="section-eyebrow"
-                data-i18n="heroEyebrow"
-            >
-                EXPLORE OPPORTUNITIES
-            </span>
+                <h1 data-i18n="heroTitle">
+                    Find work in your field.
+                </h1>
 
 
-            <h1 data-i18n="heroTitle">
-                Find work in your field.
-            </h1>
+                <p
+                    class="category-hero-description"
+                    data-i18n="heroDescription"
+                >
+                    Explore jobs by industry and discover
+                    opportunities that match your skills.
+                </p>
 
 
-            <p data-i18n="heroDescription">
-                Explore jobs by industry and discover
-                opportunities that match your skills.
-            </p>
+                <div class="category-hero-actions">
+
+                    <a
+                        href="jobs.html"
+                        class="hero-primary-button"
+                        data-i18n="browseJobs"
+                    >
+                        Browse jobs →
+                    </a>
+
+                    <span class="hero-scroll-hint">
+                        ↓
+                        <span>
+                            Explore fields
+                        </span>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="category-hero-visual">
+
+                <div class="hero-orbit hero-orbit-one"></div>
+
+                <div class="hero-orbit hero-orbit-two"></div>
+
+
+                <div class="hero-category-preview">
+
+                    <div class="preview-top">
+
+                        <span class="preview-label">
+                            ALote
+                        </span>
+
+                        <span
+                            class="preview-count"
+                            data-i18n="categoryCount"
+                        >
+                            8 categories
+                        </span>
+
+                    </div>
+
+
+                    <div class="preview-main-icon">
+                        ✦
+                    </div>
+
+
+                    <strong>
+                        Find your field
+                    </strong>
+
+
+                    <p>
+                        Explore opportunities
+                        built around your skills.
+                    </p>
+
+
+                    <div class="preview-lines">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-category floating-one">
+                    <span>⌘</span>
+                    IT
+                </div>
+
+
+                <div class="floating-category floating-two">
+                    <span>△</span>
+                    Engineering
+                </div>
+
+
+                <div class="floating-category floating-three">
+                    <span>✦</span>
+                    Design
+                </div>
+
+            </div>
 
         </div>
 
@@ -211,13 +362,11 @@
         <div class="container">
 
 
-            <!-- ==================================================
-                 SECTION HEADER
-            ================================================== -->
+            <!-- SECTION HEADER -->
 
             <div class="categories-header">
 
-                <div>
+                <div class="categories-heading">
 
                     <span
                         class="section-eyebrow"
@@ -234,22 +383,23 @@
                 </div>
 
 
-                <span
-                    class="category-count"
-                    data-i18n="categoryCount"
-                >
-                    8 categories
-                </span>
+                <div class="category-header-meta">
+
+                    <span class="category-count-dot"></span>
+
+                    <span
+                        class="category-count"
+                        data-i18n="categoryCount"
+                    >
+                        8 categories
+                    </span>
+
+                </div>
 
             </div>
 
 
-
-            <!-- ==================================================
-                 CATEGORY GRID
-                 ----------------------------------------------
-                 categories.js generates the cards here.
-            ================================================== -->
+            <!-- CATEGORY GRID -->
 
             <div
                 class="category-grid"
@@ -300,19 +450,25 @@
                 </div>
 
 
-                <a
-                    href="jobs.html"
-                    class="cta-button"
-                    data-i18n="browseJobs"
-                >
-                    Browse jobs →
-                </a>
+                <div class="category-cta-action">
+
+                    <a
+                        href="jobs.html"
+                        class="cta-button"
+                        data-i18n="browseJobs"
+                    >
+                        Browse jobs →
+                    </a>
+
+                </div>
+
 
             </div>
 
         </div>
 
     </section>
+
 
 </main>
 
@@ -582,6 +738,7 @@
 ================================================== -->
 
 <script src="js/categories.js"></script>
+<script src="js/mobile-nav.js"></script>
 
 </body>
 

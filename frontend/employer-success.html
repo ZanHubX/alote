@@ -10,22 +10,16 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Application Received | ALote</title>
-
-
-    <!-- Global CSS -->
+    <title>Request Submitted | ALote</title>
 
     <link
         rel="stylesheet"
         href="css/global.css"
     >
 
-
-    <!-- Page CSS -->
-
     <link
         rel="stylesheet"
-        href="css/application-success.css"
+        href="css/employer-success.css"
     >
 
 </head>
@@ -107,7 +101,7 @@
         <a
             href="employer.html"
             class="employer-link"
-            data-i18n="employer"
+            data-i18n="postJob"
         >
             Post a Job
         </a>
@@ -207,60 +201,47 @@
      SUCCESS PAGE
 ================================================== -->
 
-<main class="success-page">
+<main class="employer-success-page">
 
-    <div class="container success-container">
-
-
-        <!-- ==================================================
-             SUCCESS CARD
-        ================================================== -->
-
-        <section class="success-card">
+    <div class="employer-success-container">
 
 
-            <!-- Success Icon -->
+        <div class="employer-success-card">
+
+
+            <!-- SUCCESS ICON -->
 
             <div class="success-icon">
 
-                <span>
-                    ✓
-                </span>
+                <span>✓</span>
 
             </div>
 
 
-
-            <!-- Eyebrow -->
+            <!-- LABEL -->
 
             <span
                 class="success-label"
-                data-i18n="applicationReceived"
+                data-i18n="requestReceived"
             >
-                APPLICATION RECEIVED
+                REQUEST RECEIVED
             </span>
 
 
+            <!-- TITLE -->
 
-            <!-- Main Title -->
-
-            <h1
-                data-i18n="successTitle"
-            >
-                Your application has been submitted.
+            <h1 data-i18n="successTitle">
+                Your job posting request has been received.
             </h1>
 
 
-
-            <!-- Description -->
+            <!-- DESCRIPTION -->
 
             <p
                 class="success-description"
                 data-i18n="successDescription"
             >
-                We've received your application.
-                Our team will review it before
-                forwarding it to the company.
+                Thank you for submitting your job posting. Our team will review the information before contacting you about the next steps.
             </p>
 
 
@@ -269,25 +250,24 @@
                  JOB SUMMARY
             ================================================== -->
 
-            <div class="success-job">
-
+            <div class="submitted-job">
 
                 <div class="company-avatar">
-                    ABC
+                    <span id="companyInitials">
+                        ABC
+                    </span>
                 </div>
 
 
-                <div class="success-job-info">
+                <div class="submitted-job-info">
 
                     <h2 id="jobTitle">
                         Backend Developer
                     </h2>
 
-
                     <p id="companyName">
                         ABC Technology
                     </p>
-
 
                     <span id="jobMeta">
                         Yangon · Remote · Full-time
@@ -300,181 +280,24 @@
 
 
             <!-- ==================================================
-                 APPLICATION PROGRESS
+                 STATUS
             ================================================== -->
 
-            <div class="application-progress">
+            <div class="request-status">
 
-
-                <div class="progress-heading">
-
-                    <span
-                        class="section-label"
-                        data-i18n="applicationProgress"
-                    >
-                        APPLICATION PROGRESS
-                    </span>
-
-
-                    <span
-                        class="progress-status"
-                        data-i18n="currentStatus"
-                    >
-                        Currently under review
-                    </span>
-
+                <div class="status-icon">
+                    1
                 </div>
 
 
+                <div class="status-content">
 
-                <div class="progress-timeline">
-
-
-                    <!-- STEP 1 -->
-
-                    <div class="timeline-step completed">
-
-                        <div class="timeline-marker">
-
-                            <span>
-                                ✓
-                            </span>
-
-                        </div>
-
-
-                        <div class="timeline-content">
-
-                            <strong
-                                data-i18n="submittedTitle"
-                            >
-                                Application submitted
-                            </strong>
-
-
-                            <p
-                                data-i18n="submittedDescription"
-                            >
-                                Your application has been successfully received.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Connector -->
-
-                    <div class="timeline-line active"></div>
-
-
-
-                    <!-- STEP 2 -->
-
-                    <div class="timeline-step current">
-
-                        <div class="timeline-marker">
-
-                            <span>
-                                02
-                            </span>
-
-                        </div>
-
-
-                        <div class="timeline-content">
-
-                            <strong
-                                data-i18n="reviewTitle"
-                            >
-                                ALote review
-                            </strong>
-
-
-                            <p
-                                data-i18n="reviewDescription"
-                            >
-                                Our team is reviewing your application.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Connector -->
-
-                    <div class="timeline-line"></div>
-
-
-
-                    <!-- STEP 3 -->
-
-                    <div class="timeline-step">
-
-                        <div class="timeline-marker">
-
-                            <span>
-                                03
-                            </span>
-
-                        </div>
-
-
-                        <div class="timeline-content">
-
-                            <strong
-                                data-i18n="companyTitle"
-                            >
-                                Company
-                            </strong>
-
-
-                            <p
-                                data-i18n="companyDescription"
-                            >
-                                If approved, your application will be sent to the company.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- ==================================================
-                 WHAT HAPPENS NEXT
-            ================================================== -->
-
-            <div class="next-step-card">
-
-
-                <div class="next-step-icon">
-                    →
-                </div>
-
-
-                <div class="next-step-content">
-
-                    <strong
-                        data-i18n="nextStepTitle"
-                    >
-                        What happens next?
+                    <strong data-i18n="reviewTitle">
+                        Waiting for ALote review
                     </strong>
 
-
-                    <p
-                        data-i18n="nextStepDescription"
-                    >
-                        ALote will review your application.
-                        If it meets the requirements, we will
-                        forward it to the company for consideration.
+                    <p data-i18n="reviewDescription">
+                        Your request has been submitted successfully and is currently waiting for review by the ALote team.
                     </p>
 
                 </div>
@@ -484,31 +307,51 @@
 
 
             <!-- ==================================================
-                 EMAIL NOTICE
+                 NEXT STEP
             ================================================== -->
 
-            <div class="email-notice">
+            <div class="next-step">
 
-
-                <div class="email-icon">
-                    @
+                <div class="next-step-icon">
+                    2
                 </div>
 
 
-                <div class="email-content">
+                <div class="next-step-content">
 
-                    <strong
-                        data-i18n="emailTitle"
-                    >
-                        Watch your email
+                    <strong data-i18n="nextStepTitle">
+                        What happens next?
                     </strong>
 
+                    <p data-i18n="nextStepDescription">
+                        Our team will review your job information and contact you through the details you provided regarding payment and the next steps.
+                    </p>
 
-                    <p
-                        data-i18n="emailDescription"
-                    >
-                        We'll use the email address you provided
-                        to send important updates about your application.
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 IMPORTANT NOTICE
+            ================================================== -->
+
+            <div class="important-notice">
+
+                <div class="notice-icon">
+                    !
+                </div>
+
+
+                <div>
+
+                    <strong data-i18n="importantTitle">
+                        Your job is not published yet.
+                    </strong>
+
+                    <p data-i18n="importantDescription">
+                        The job will only appear on ALote after it has been reviewed, approved and the required payment process has been completed.
                     </p>
 
                 </div>
@@ -523,44 +366,39 @@
 
             <div class="success-actions">
 
-
-                <a
-                    href="jobs.html"
-                    class="primary-button"
-                    data-i18n="backToJobs"
-                >
-                    Back to Jobs
-                </a>
-
-
                 <a
                     href="index.html"
-                    class="secondary-button"
+                    class="primary-button"
                     data-i18n="backHome"
                 >
                     Back to Home
                 </a>
 
+
+                <a
+                    href="jobs.html"
+                    class="secondary-button"
+                    data-i18n="browseJobs"
+                >
+                    Browse Jobs
+                </a>
+
             </div>
 
-        </section>
+
+            <p
+                class="success-footer"
+                data-i18n="thankYou"
+            >
+                Thank you for choosing ALote.
+            </p>
 
 
-
-        <!-- Small message -->
-
-        <p
-            class="success-footer"
-            data-i18n="thankYou"
-        >
-            Thank you for using ALote.
-        </p>
+        </div>
 
     </div>
 
 </main>
-
-
 
 <!-- ==================================================
      FOOTER
@@ -574,7 +412,6 @@
         <!-- Brand -->
 
         <div class="footer-brand">
-
 
             <a
                 href="index.html"
@@ -611,7 +448,6 @@
                     f
                 </a>
 
-
                 <a
                     href="#"
                     aria-label="Telegram"
@@ -619,14 +455,12 @@
                     ➤
                 </a>
 
-
                 <a
                     href="#"
                     aria-label="LinkedIn"
                 >
                     in
                 </a>
-
 
                 <a
                     href="#"
@@ -641,7 +475,7 @@
 
 
 
-        <!-- Jobs -->
+        <!-- Job Categories -->
 
         <div class="footer-column">
 
@@ -794,9 +628,6 @@
     </div>
 
 
-
-    <!-- Footer Bottom -->
-
     <div class="footer-bottom container">
 
         <p
@@ -810,13 +641,7 @@
 
 </footer>
 
-
-
-<!-- ==================================================
-     JAVASCRIPT
-================================================== -->
-
-<script src="js/application-success.js"></script>
+<script src="js/employer-success.js"></script>
 <script src="js/mobile-nav.js"></script>
 
 </body>

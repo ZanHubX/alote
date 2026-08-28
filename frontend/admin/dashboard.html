@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>Dashboard | ALote Admin</title>
+
+
+    <!-- ==================================================
+         ADMIN GLOBAL CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/admin-global.css"
+    >
+
+
+    <!-- ==================================================
+         DASHBOARD CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/dashboard.css"
+    >
+
+</head>
+
+
+<body class="admin-page">
+
+
+<!-- ==================================================
+     MOBILE OVERLAY
+================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+
+<!-- ==================================================
+     SIDEBAR
+================================================== -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+
+    <!-- ==================================================
+         BRAND
+    ================================================== -->
+
+    <div class="sidebar-brand">
+
+        <a
+            href="../index.html"
+            class="admin-logo"
+        >
+
+            <img
+                src="../assets/logo/ALotelogo.png"
+                alt="ALote"
+                class="admin-logo-image"
+            >
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         ADMIN PROFILE
+    ================================================== -->
+
+    <div class="admin-profile">
+
+        <div class="admin-avatar">
+            A
+        </div>
+
+
+        <div class="admin-profile-info">
+
+            <strong>
+                ALote Admin
+            </strong>
+
+            <span>
+                Administrator
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         NAVIGATION
+    ================================================== -->
+
+    <nav class="admin-navigation">
+
+
+        <div class="nav-section-label">
+            OVERVIEW
+        </div>
+
+
+        <a
+            href="dashboard.html"
+            class="admin-nav-link active"
+            data-page="dashboard"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+
+        <div class="nav-section-label">
+            MANAGEMENT
+        </div>
+
+
+        <a
+            href="job-submissions.html"
+            class="admin-nav-link"
+            data-page="submissions"
+        >
+
+            <span class="nav-icon">
+                ◫
+            </span>
+
+            <span>
+                Job Submissions
+            </span>
+
+            <span
+                class="nav-badge"
+                id="pendingJobsBadge"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="jobs.html"
+            class="admin-nav-link"
+            data-page="jobs"
+        >
+
+            <span class="nav-icon">
+                ◧
+            </span>
+
+            <span>
+                Published Jobs
+            </span>
+
+        </a>
+
+
+        <a
+            href="applications.html"
+            class="admin-nav-link"
+            data-page="applications"
+        >
+
+            <span class="nav-icon">
+                ◎
+            </span>
+
+            <span>
+                Applications
+            </span>
+
+            <span
+                class="nav-badge muted"
+                id="newApplicationsBadge"
+            >
+                0
+            </span>
+
+        </a>
+
+
+
+        <div class="nav-section-label">
+            SYSTEM
+        </div>
+
+
+        <a
+            href="../index.html"
+            class="admin-nav-link"
+        >
+
+            <span class="nav-icon">
+                ↗
+            </span>
+
+            <span>
+                View Website
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- ==================================================
+         SIDEBAR FOOTER
+    ================================================== -->
+
+    <div class="sidebar-footer">
+
+        <button
+            type="button"
+            class="logout-button"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ⇥
+            </span>
+
+            <span>
+                Sign out
+            </span>
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- ==================================================
+     MAIN AREA
+================================================== -->
+
+<div class="admin-main">
+
+
+    <!-- ==================================================
+         TOP BAR
+    ================================================== -->
+
+    <header class="admin-topbar">
+
+
+        <div class="topbar-left">
+
+
+            <!-- Mobile Menu -->
+
+            <button
+                type="button"
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="Open navigation"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <span class="page-eyebrow">
+                    ADMINISTRATION
+                </span>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="topbar-right">
+
+
+            <!-- Current Date -->
+
+            <div class="topbar-date">
+
+                <span class="date-icon">
+                    ◷
+                </span>
+
+                <span id="currentDate">
+                    Today
+                </span>
+
+            </div>
+
+
+            <!-- Admin -->
+
+            <div class="topbar-user">
+
+                <div class="topbar-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        ALote
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ==================================================
+         DASHBOARD CONTENT
+    ================================================== -->
+
+    <main class="dashboard-content">
+
+
+        <!-- ==================================================
+             WELCOME
+        ================================================== -->
+
+        <section class="dashboard-welcome">
+
+
+            <div>
+
+                <span class="welcome-label">
+                    GOOD TO SEE YOU
+                </span>
+
+
+                <h2>
+                    Here's what's happening with ALote.
+                </h2>
+
+
+                <p>
+                    Review job submissions, manage published
+                    opportunities and keep track of applications.
+                </p>
+
+            </div>
+
+
+            <a
+                href="job-submissions.html"
+                class="primary-action"
+            >
+
+                <span>
+                    Review submissions
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- Total Jobs -->
+
+            <article class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <span class="stat-label">
+                        PUBLISHED JOBS
+                    </span>
+
+                    <span class="stat-icon">
+                        ◧
+                    </span>
+
+                </div>
+
+
+                <div class="stat-value-row">
+
+                    <strong
+                        id="totalJobs"
+                        class="stat-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <span class="stat-description">
+                    Currently visible on ALote
+                </span>
+
+            </article>
+
+
+
+            <!-- Pending -->
+
+            <article class="stat-card stat-card-highlight">
+
+                <div class="stat-card-top">
+
+                    <span class="stat-label">
+                        PENDING REVIEW
+                    </span>
+
+                    <span class="stat-icon">
+                        ◫
+                    </span>
+
+                </div>
+
+
+                <div class="stat-value-row">
+
+                    <strong
+                        id="pendingJobs"
+                        class="stat-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <span class="stat-description">
+                    Job submissions waiting for review
+                </span>
+
+            </article>
+
+
+
+            <!-- Applications -->
+
+            <article class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <span class="stat-label">
+                        APPLICATIONS
+                    </span>
+
+                    <span class="stat-icon">
+                        ◎
+                    </span>
+
+                </div>
+
+
+                <div class="stat-value-row">
+
+                    <strong
+                        id="totalApplications"
+                        class="stat-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <span class="stat-description">
+                    Applications received
+                </span>
+
+            </article>
+
+
+
+            <!-- New Applications -->
+
+            <article class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <span class="stat-label">
+                        NEW APPLICATIONS
+                    </span>
+
+                    <span class="stat-icon">
+                        ✦
+                    </span>
+
+                </div>
+
+
+                <div class="stat-value-row">
+
+                    <strong
+                        id="newApplications"
+                        class="stat-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <span class="stat-description">
+                    Applications needing attention
+                </span>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             MAIN DASHBOARD GRID
+        ================================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- ==================================================
+                 PENDING SUBMISSIONS
+            ================================================== -->
+
+            <div class="dashboard-panel submissions-panel">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            NEEDS ATTENTION
+                        </span>
+
+                        <h2>
+                            Pending job submissions
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="job-submissions.html"
+                        class="panel-link"
+                    >
+                        View all →
+                    </a>
+
+                </div>
+
+
+
+                <!-- Dynamic submissions -->
+
+                <div
+                    class="submission-list"
+                    id="pendingSubmissions"
+                >
+
+
+                    <!-- Temporary loading state -->
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◫
+                        </div>
+
+                        <strong>
+                            No pending submissions
+                        </strong>
+
+                        <p>
+                            New employer submissions will appear here.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 QUICK ACTIONS
+            ================================================== -->
+
+            <div class="dashboard-panel quick-actions-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            QUICK ACTIONS
+                        </span>
+
+                        <h2>
+                            Manage ALote
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="quick-actions">
+
+
+                    <a
+                        href="job-submissions.html"
+                        class="quick-action"
+                    >
+
+                        <div class="quick-action-icon">
+                            ◫
+                        </div>
+
+
+                        <div class="quick-action-content">
+
+                            <strong>
+                                Review submissions
+                            </strong>
+
+                            <span>
+                                Check new employer requests
+                            </span>
+
+                        </div>
+
+
+                        <span class="quick-action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="jobs.html"
+                        class="quick-action"
+                    >
+
+                        <div class="quick-action-icon">
+                            ◧
+                        </div>
+
+
+                        <div class="quick-action-content">
+
+                            <strong>
+                                Manage jobs
+                            </strong>
+
+                            <span>
+                                Edit or remove published jobs
+                            </span>
+
+                        </div>
+
+
+                        <span class="quick-action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="applications.html"
+                        class="quick-action"
+                    >
+
+                        <div class="quick-action-icon">
+                            ◎
+                        </div>
+
+
+                        <div class="quick-action-content">
+
+                            <strong>
+                                Review applications
+                            </strong>
+
+                            <span>
+                                Check and process applications
+                            </span>
+
+                        </div>
+
+
+                        <span class="quick-action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             LOWER DASHBOARD
+        ================================================== -->
+
+        <section class="dashboard-grid dashboard-grid-lower">
+
+
+            <!-- ==================================================
+                 RECENT APPLICATIONS
+            ================================================== -->
+
+            <div class="dashboard-panel">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            APPLICATIONS
+                        </span>
+
+                        <h2>
+                            Recent applications
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="applications.html"
+                        class="panel-link"
+                    >
+                        View all →
+                    </a>
+
+                </div>
+
+
+
+                <div
+                    class="application-list"
+                    id="recentApplications"
+                >
+
+
+                    <!-- Dynamic content -->
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◎
+                        </div>
+
+                        <strong>
+                            No applications yet
+                        </strong>
+
+                        <p>
+                            New applications will appear here.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 RECENT ACTIVITY
+            ================================================== -->
+
+            <div class="dashboard-panel">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            ACTIVITY
+                        </span>
+
+                        <h2>
+                            Recent activity
+                        </h2>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="activity-list"
+                    id="recentActivity"
+                >
+
+
+                    <!-- Activity 1 -->
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot success">
+                        </div>
+
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Admin dashboard ready
+                            </strong>
+
+                            <span>
+                                System initialized
+                            </span>
+
+                        </div>
+
+
+                        <time>
+                            Now
+                        </time>
+
+                    </div>
+
+
+                    <!-- Activity 2 -->
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot">
+                        </div>
+
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Waiting for submissions
+                            </strong>
+
+                            <span>
+                                Employer jobs will appear here
+                            </span>
+
+                        </div>
+
+
+                        <time>
+                            —
+                        </time>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             SYSTEM STATUS
+        ================================================== -->
+
+        <section class="system-status">
+
+
+            <div class="system-status-left">
+
+                <span class="status-indicator"></span>
+
+
+                <div>
+
+                    <strong>
+                        ALote admin system
+                    </strong>
+
+                    <span>
+                        Temporary data mode
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <span class="system-version">
+                Frontend prototype
+            </span>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script src="../js/admin/dashboard.js"></script>
+
+
+</body>
+
+</html>

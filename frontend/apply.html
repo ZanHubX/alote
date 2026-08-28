@@ -31,87 +31,170 @@
 
     <header class="navbar">
 
-        <div class="container navbar-container">
+    <div class="container navbar-container">
 
-            <a href="index.html" class="logo">
+        <!-- LOGO -->
 
-                <img
-                    src="assets/logo/ALotelogo.png"
-                    alt="ALote"
-                    class="logo-image">
+        <a href="index.html" class="logo">
 
-            </a>
+            <img
+                src="assets/logo/ALotelogo.png"
+                alt="ALote"
+                class="logo-image"
+            >
 
-
-            <nav class="nav-links">
-
-                <a
-                    href="jobs.html"
-                    class="nav-link active"
-                    data-i18n="findJobs">
-
-                    Find Jobs
-
-                </a>
+        </a>
 
 
-                <a
-                    href="categories.html"
-                    data-i18n="categories">
+        <!-- DESKTOP NAVIGATION -->
 
-                    Categories
-
-                </a>
-
-
-                <a
-                    href="whyalote.html"
-                    data-i18n="whyAlote">
-
-                    Why ALote
-
-                </a>
-
-            </nav>
-
-
-            <div class="language-switcher">
-
-                <button
-                    class="language-button active"
-                    data-lang="en">
-
-                    EN
-
-                </button>
-
-
-                <span>|</span>
-
-
-                <button
-                    class="language-button"
-                    data-lang="my">
-
-                    မြန်မာ
-
-                </button>
-
-            </div>
-
+        <nav class="nav-links">
 
             <a
-                href="admin/login.html"
-                class="employer-link"
-                data-i18n="employer">
-
-                Employer
-
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
             </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <!-- DESKTOP LANGUAGE -->
+
+        <div class="language-switcher">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
 
         </div>
 
-    </header>
+
+        <!-- DESKTOP EMPLOYER -->
+
+        <a
+            href="employer.html"
+            class="employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <nav class="mobile-nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-divider"></div>
+
+
+        <div class="mobile-language">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <a
+            href="employer.html"
+            class="mobile-employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+    </div>
+
+</header>
 
 
 
@@ -822,6 +905,7 @@
     ================================================== -->
 
     <script src="js/apply.js"></script>
+    <script src="js/mobile-nav.js"></script>
 
 </body>
 

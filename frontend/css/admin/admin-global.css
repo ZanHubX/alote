@@ -1,0 +1,113 @@
+/* ==================================================
+   ALOTE ADMIN — GLOBAL
+================================================== */
+
+:root {
+    --admin-primary: #4f46e5;
+    --admin-primary-dark: #4338ca;
+
+    --admin-bg: #f8fafc;
+    --admin-surface: #ffffff;
+
+    --admin-text: #0f172a;
+    --admin-text-secondary: #475569;
+    --admin-text-muted: #94a3b8;
+
+    --admin-border: #e2e8f0;
+    --admin-border-light: #eef2f7;
+
+    --admin-success: #15803d;
+    --admin-success-bg: #dcfce7;
+
+    --admin-danger: #dc2626;
+    --admin-danger-bg: #fee2e2;
+
+    --admin-warning: #b45309;
+    --admin-warning-bg: #fef3c7;
+
+    --admin-radius: 12px;
+    --admin-transition: 0.2s ease;
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+
+    background: var(--admin-bg);
+    color: var(--admin-text);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    color: inherit;
+}
+
+
+/* ==================================================
+   UTILITIES
+================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

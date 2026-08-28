@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>Dashboard | ALote Admin</title>
+
+
+    <!-- ==================================================
+         ADMIN GLOBAL CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/admin-global.css"
+    >
+    <link
+        rel="stylesheet"
+        href="../css/admin/dashboard.css"
+    >
+
+
+    <!-- ==================================================
+         DASHBOARD CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/job-submissions.css"
+    >
+
+</head>
+
+
+<body class="admin-page">
+
+
+<!-- ==================================================
+     MOBILE OVERLAY
+================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+
+<!-- ==================================================
+     SIDEBAR
+================================================== -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+
+    <!-- BRAND -->
+
+    <div class="sidebar-brand">
+
+        <a
+            href="../index.html"
+            class="admin-logo"
+        >
+
+            <img
+                src="../assets/logo/ALotelogo.png"
+                alt="ALote"
+                class="admin-logo-image"
+            >
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ADMIN PROFILE -->
+
+    <div class="admin-profile">
+
+        <div class="admin-avatar">
+            A
+        </div>
+
+
+        <div class="admin-profile-info">
+
+            <strong>
+                ALote Admin
+            </strong>
+
+            <span>
+                Administrator
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="admin-navigation">
+
+
+        <div class="nav-section-label">
+            OVERVIEW
+        </div>
+
+
+        <a
+            href="dashboard.html"
+            class="admin-nav-link"
+            data-page="dashboard"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+
+        <div class="nav-section-label">
+            MANAGEMENT
+        </div>
+
+
+        <a
+            href="job-submissions.html"
+            class="admin-nav-link active"
+            data-page="submissions"
+        >
+
+            <span class="nav-icon">
+                ◫
+            </span>
+
+            <span>
+                Job Submissions
+            </span>
+
+            <span
+                class="nav-badge"
+                id="pendingJobsBadge"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="jobs.html"
+            class="admin-nav-link"
+            data-page="jobs"
+        >
+
+            <span class="nav-icon">
+                ◧
+            </span>
+
+            <span>
+                Published Jobs
+            </span>
+
+        </a>
+
+
+        <a
+            href="applications.html"
+            class="admin-nav-link"
+            data-page="applications"
+        >
+
+            <span class="nav-icon">
+                ◎
+            </span>
+
+            <span>
+                Applications
+            </span>
+
+            <span
+                class="nav-badge muted"
+                id="newApplicationsBadge"
+            >
+                0
+            </span>
+
+        </a>
+
+
+
+        <div class="nav-section-label">
+            SYSTEM
+        </div>
+
+
+        <a
+            href="../index.html"
+            class="admin-nav-link"
+        >
+
+            <span class="nav-icon">
+                ↗
+            </span>
+
+            <span>
+                View Website
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- SIDEBAR FOOTER -->
+
+    <div class="sidebar-footer">
+
+        <button
+            type="button"
+            class="logout-button"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ⇥
+            </span>
+
+            <span>
+                Sign out
+            </span>
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<div class="admin-main">
+
+
+    <!-- ==================================================
+         TOPBAR
+    ================================================== -->
+
+    <header class="admin-topbar">
+
+
+        <div class="topbar-left">
+
+
+            <button
+                type="button"
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="Open navigation"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <span class="page-eyebrow">
+                    MANAGEMENT
+                </span>
+
+                <h1>
+                    Job Submissions
+                </h1>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="topbar-right">
+
+
+            <div class="topbar-date">
+
+                <span class="date-icon">
+                    ◷
+                </span>
+
+                <span id="currentDate">
+                    Today
+                </span>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <div class="topbar-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        ALote
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ==================================================
+         PAGE CONTENT
+    ================================================== -->
+
+    <main class="submissions-content">
+
+
+        <!-- ==================================================
+             PAGE INTRO
+        ================================================== -->
+
+        <section class="submissions-intro">
+
+
+            <div>
+
+                <span class="page-section-eyebrow">
+                    EMPLOYER REQUESTS
+                </span>
+
+
+                <h2>
+                    Review job submissions.
+                </h2>
+
+
+                <p>
+                    Review employer requests, verify payment details,
+                    and publish approved opportunities to ALote.
+                </p>
+
+            </div>
+
+
+            <div class="submission-summary">
+
+                <span class="summary-label">
+                    PENDING REVIEW
+                </span>
+
+
+                <strong id="pendingCount">
+                    0
+                </strong>
+
+
+                <span class="summary-caption">
+                    submissions
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             FILTER / SEARCH BAR
+        ================================================== -->
+
+        <section class="submission-toolbar">
+
+
+            <div class="submission-search">
+
+                <span
+                    class="submission-search-icon"
+                    aria-hidden="true"
+                >
+                    ⌕
+                </span>
+
+
+                <input
+                    type="search"
+                    id="submissionSearch"
+                    placeholder="Search job title, company or submission ID..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="button"
+                    id="clearSubmissionSearch"
+                    class="search-clear-button"
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- STATUS FILTER -->
+
+            <div class="status-filters">
+
+
+                <button
+                    type="button"
+                    class="status-filter active"
+                    data-status="all"
+                >
+                    All
+                    <span id="allCount">
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-filter"
+                    data-status="pending"
+                >
+                    Pending
+                    <span id="pendingFilterCount">
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-filter"
+                    data-status="approved"
+                >
+                    Approved
+                    <span id="approvedCount">
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-filter"
+                    data-status="rejected"
+                >
+                    Rejected
+                    <span id="rejectedCount">
+                        0
+                    </span>
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             SUBMISSION LIST HEADER
+        ================================================== -->
+
+        <section class="submissions-list-section">
+
+
+            <div class="list-header">
+
+
+                <div>
+
+                    <span class="list-eyebrow">
+                        SUBMISSIONS
+                    </span>
+
+                    <h3>
+                        Employer job requests
+                    </h3>
+
+                </div>
+
+
+                <div class="list-tools">
+
+                    <label
+                        for="sortSubmissions"
+                        class="sort-label"
+                    >
+                        Sort
+                    </label>
+
+
+                    <select
+                        id="sortSubmissions"
+                        class="sort-select"
+                    >
+
+                        <option value="newest">
+                            Newest first
+                        </option>
+
+                        <option value="oldest">
+                            Oldest first
+                        </option>
+
+                        <option value="company">
+                            Company name
+                        </option>
+
+                        <option value="status">
+                            Status
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 DESKTOP SUBMISSION TABLE
+            ================================================== -->
+
+            <div class="submission-table-wrapper">
+
+
+                <table class="submission-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Submission
+                            </th>
+
+                            <th>
+                                Employer
+                            </th>
+
+                            <th>
+                                Job Details
+                            </th>
+
+                            <th>
+                                Payment
+                            </th>
+
+                            <th>
+                                Submitted
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="submissionTableBody">
+
+                        <!-- Generated by JavaScript -->
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 MOBILE SUBMISSION LIST
+            ================================================== -->
+
+            <div
+                class="submission-mobile-list"
+                id="submissionMobileList"
+            >
+
+                <!-- Generated by JavaScript -->
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div
+                class="submissions-empty hidden"
+                id="submissionsEmpty"
+            >
+
+                <div class="empty-large-icon">
+                    ◫
+                </div>
+
+
+                <h3>
+                    No submissions found
+                </h3>
+
+
+                <p>
+                    Try changing your search or status filter.
+                </p>
+
+
+                <button
+                    type="button"
+                    class="reset-filter-button"
+                    id="resetFilters"
+                >
+                    Reset filters
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             PAGINATION
+        ================================================== -->
+
+        <div class="submission-pagination">
+
+
+            <span id="paginationInfo">
+                Showing 0 submissions
+            </span>
+
+
+            <div class="pagination-buttons">
+
+                <button
+                    type="button"
+                    id="previousPage"
+                    class="pagination-button"
+                    disabled
+                >
+                    ←
+                </button>
+
+
+                <span
+                    class="pagination-current"
+                    id="currentPage"
+                >
+                    1
+                </span>
+
+
+                <button
+                    type="button"
+                    id="nextPage"
+                    class="pagination-button"
+                    disabled
+                >
+                    →
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     REVIEW MODAL
+================================================== -->
+
+<div
+    class="modal-overlay hidden"
+    id="submissionModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalJobTitle"
+>
+
+
+    <div class="submission-modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    JOB SUBMISSION
+                </span>
+
+
+                <h2 id="modalJobTitle">
+                    Job Title
+                </h2>
+
+
+                <p id="modalSubmissionId">
+                    Submission ID
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeSubmissionModal"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+
+        <!-- MODAL CONTENT -->
+
+        <div class="modal-body">
+
+
+            <!-- EMPLOYER -->
+
+            <section class="review-section">
+
+
+                <div class="review-section-header">
+
+                    <span class="review-section-icon">
+                        ◉
+                    </span>
+
+
+                    <div>
+
+                        <span class="review-section-label">
+                            EMPLOYER
+                        </span>
+
+                        <h3>
+                            Company information
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-grid">
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Company
+                        </span>
+
+                        <strong id="modalCompany">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Contact person
+                        </span>
+
+                        <strong id="modalContact">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong id="modalEmail">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Phone
+                        </span>
+
+                        <strong id="modalPhone">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- JOB -->
+
+            <section class="review-section">
+
+
+                <div class="review-section-header">
+
+                    <span class="review-section-icon">
+                        ◧
+                    </span>
+
+
+                    <div>
+
+                        <span class="review-section-label">
+                            POSITION
+                        </span>
+
+                        <h3>
+                            Job information
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-grid">
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Job title
+                        </span>
+
+                        <strong id="modalJob">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Category
+                        </span>
+
+                        <strong id="modalCategory">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Location
+                        </span>
+
+                        <strong id="modalLocation">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Work style
+                        </span>
+
+                        <strong id="modalWorkType">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Employment type
+                        </span>
+
+                        <strong id="modalEmploymentType">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="review-field">
+
+                        <span>
+                            Salary
+                        </span>
+
+                        <strong id="modalSalary">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <section class="review-section">
+
+
+                <div class="review-section-header">
+
+                    <span class="review-section-icon">
+                        ≡
+                    </span>
+
+
+                    <div>
+
+                        <span class="review-section-label">
+                            DESCRIPTION
+                        </span>
+
+                        <h3>
+                            Job description
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="review-description"
+                    id="modalDescription"
+                >
+                    —
+                </div>
+
+
+            </section>
+
+
+
+            <!-- REQUIREMENTS -->
+
+            <section class="review-section">
+
+
+                <div class="review-section-header">
+
+                    <span class="review-section-icon">
+                        ✓
+                    </span>
+
+
+                    <div>
+
+                        <span class="review-section-label">
+                            REQUIREMENTS
+                        </span>
+
+                        <h3>
+                            Candidate requirements
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="review-description"
+                    id="modalRequirements"
+                >
+                    —
+                </div>
+
+
+            </section>
+
+
+
+            <!-- PAYMENT -->
+
+            <section class="review-section payment-review-section">
+
+
+                <div class="review-section-header">
+
+                    <span class="review-section-icon payment-icon">
+                        $
+                    </span>
+
+
+                    <div>
+
+                        <span class="review-section-label">
+                            PAYMENT
+                        </span>
+
+                        <h3>
+                            Payment verification
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-review-card">
+
+
+                    <div>
+
+                        <span>
+                            Payment status
+                        </span>
+
+                        <strong
+                            id="modalPaymentStatus"
+                            class="payment-status paid"
+                        >
+                            Paid
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Amount
+                        </span>
+
+                        <strong id="modalPaymentAmount">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Reference
+                        </span>
+
+                        <strong id="modalPaymentReference">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- MODAL ACTIONS -->
+
+        <div class="modal-footer">
+
+
+            <button
+                type="button"
+                class="modal-secondary-button"
+                id="modalRejectButton"
+            >
+                Reject
+            </button>
+
+
+            <button
+                type="button"
+                class="modal-primary-button"
+                id="modalApproveButton"
+            >
+
+                <span>
+                    ✓
+                </span>
+
+                Approve & Publish
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     CONFIRMATION MODAL
+================================================== -->
+
+<div
+    class="confirm-overlay hidden"
+    id="confirmModal"
+>
+
+
+    <div class="confirm-card">
+
+
+        <div
+            class="confirm-icon"
+            id="confirmIcon"
+        >
+            !
+        </div>
+
+
+        <span
+            class="confirm-eyebrow"
+            id="confirmEyebrow"
+        >
+            CONFIRM ACTION
+        </span>
+
+
+        <h2 id="confirmTitle">
+            Approve this job?
+        </h2>
+
+
+        <p id="confirmMessage">
+            This job will be published on ALote.
+        </p>
+
+
+        <div class="confirm-actions">
+
+
+            <button
+                type="button"
+                class="confirm-cancel"
+                id="confirmCancel"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                class="confirm-proceed"
+                id="confirmProceed"
+            >
+                Confirm
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="../js/admin/job-submissions.js"></script>
+
+
+</body>
+
+</html>

@@ -6,6 +6,8 @@ const translations = {
         findJobs: "Find Jobs",
         categories: "Categories",
         whyAlote: "Why ALote",
+        postJob:
+            "Post a Job",
 
         // Hero
         heroBadge: "Myanmar's job discovery platform",
@@ -90,6 +92,8 @@ const translations = {
         findJobs: "အလုပ်အကိုင်များ",
         categories: "အမျိုးအစားများ",
         whyAlote: "ALote ကို ဘာကြောင့်သုံးမလဲ",
+        postJob:
+            "အလုပ်တင်မည်",
 
         // Hero
         heroBadge:

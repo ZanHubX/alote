@@ -147,6 +147,8 @@ const translations = {
         findJobs: "အလုပ်အကိုင်များ",
         categories: "အမျိုးအစားများ",
         whyAlote: "ALote ကို ဘာကြောင့်သုံးမလဲ",
+        postJob:
+            "အလုပ်တင်မည်",
 
         backToJobs: "အလုပ်အကိုင်များသို့ ပြန်သွားမည်",
 

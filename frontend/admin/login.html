@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>Admin Login | ALote</title>
+
+
+    <!-- Global Admin CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/admin-global.css"
+    >
+
+
+    <!-- Login CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/admin/login.css"
+    >
+
+</head>
+
+
+<body class="admin-login-page">
+
+
+    <!-- ==================================================
+         LOGIN WRAPPER
+    ================================================== -->
+
+    <main class="login-wrapper">
+
+
+        <!-- ==================================================
+             BRAND
+        ================================================== -->
+
+        <div class="login-brand">
+
+            <a
+                href="../index.html"
+                class="login-logo"
+            >
+
+                <img
+                    src="../assets/logo/ALotelogo.png"
+                    alt="ALote"
+                    class="login-logo-image"
+                >
+
+            </a>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             LOGIN CARD
+        ================================================== -->
+
+        <section class="login-card">
+
+
+            <div class="login-header">
+
+                <span class="login-eyebrow">
+                    ALote ADMIN
+                </span>
+
+
+                <h1>
+                    Welcome back.
+                </h1>
+
+
+                <p>
+                    Sign in to manage job submissions,
+                    applications and published jobs.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 LOGIN FORM
+            ================================================== -->
+
+            <form
+                id="adminLoginForm"
+                class="admin-login-form"
+            >
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="adminEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        name="email"
+                        placeholder="uracc@gmail.com"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <div class="password-label-row">
+
+                        <label for="adminPassword">
+                            Password
+                        </label>
+
+                    </div>
+
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Error -->
+
+                <div
+                    id="loginError"
+                    class="login-error hidden"
+                    role="alert"
+                >
+                    Invalid email or password.
+                </div>
+
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+
+                    <span class="login-button-text">
+                        Sign in
+                    </span>
+
+                </button>
+
+            </form>
+
+
+
+            <!-- ==================================================
+                 SECURITY NOTICE
+            ================================================== -->
+
+            <div class="login-security">
+
+                <span class="security-icon">
+                    ✓
+                </span>
+
+                <p>
+                    This area is restricted to authorized
+                    ALote administrators.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             BACK TO WEBSITE
+        ================================================== -->
+
+        <a
+            href="../index.html"
+            class="back-to-site"
+        >
+            ← Back to ALote
+        </a>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script src="../js/admin/login.js"></script>
+
+</body>
+
+</html>

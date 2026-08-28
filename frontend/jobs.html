@@ -2,555 +2,926 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Find Jobs | ALote</title>
 
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/jobs.css">
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/jobs.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
 
 <header class="navbar">
 
-        <div class="container navbar-container">
+    <div class="container navbar-container">
 
-            <a href="index.html" class="logo">
-                <img
-                    src="assets/logo/ALotelogo.png"
-                    alt="ALote"
-                    class="logo-image"
-                >
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+
+            <img
+                src="assets/logo/ALotelogo.png"
+                alt="ALote"
+                class="logo-image"
+            >
+
+        </a>
+
+
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <nav class="nav-links">
+
+            <a
+                href="jobs.html"
+                class="nav-link active"
+                data-i18n="findJobs"
+            >
+                Find Jobs
             </a>
 
-            <nav class="nav-links">
-                <a href="jobs.html"
-                class="nav-link active"
-                data-i18n="findJobs">
-                    Find Jobs
-                </a>
-                <a href="categories.html" data-i18n="categories">Categories</a>
-                <a
+
+            <a
+                href="categories.html"
+                class="nav-link"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+
+            <a
                 href="whyalote.html"
+                class="nav-link"
                 data-i18n="whyAlote"
-                >
+            >
                 Why ALote
             </a>
-            </nav>
 
-            <div class="language-switcher">
-                <button class="language-button active" data-lang="en">
-                    EN
-                </button>
+        </nav>
 
-                <span>|</span>
 
-                <button class="language-button" data-lang="my">
-                    မြန်မာ
-                </button>
-            </div>
 
-            <a href="admin/login.html" class="employer-link" data-i18n="employer">
-                Employer
-            </a>
+        <!-- DESKTOP LANGUAGE -->
+
+        <div class="language-switcher">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
 
         </div>
 
-    </header>
 
-    <!-- =========================
-         JOBS HERO
-    ========================== -->
 
-    <main>
+        <!-- DESKTOP EMPLOYER -->
 
-        <section class="jobs-hero">
+        <a
+            href="employer.html"
+            class="employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
 
-            <div class="jobs-container">
 
-                <div class="jobs-hero-content">
 
-                    <span class="section-label"
-                          data-i18n="jobDiscovery">
-                        JOB DISCOVERY
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <nav class="mobile-nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-divider"></div>
+
+
+        <div class="mobile-language">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <a
+            href="employer.html"
+            class="mobile-employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main>
+
+
+<!-- ==================================================
+     JOB HERO
+================================================== -->
+
+<section class="jobs-hero">
+
+    <div class="container jobs-container">
+
+        <div class="jobs-hero-content">
+
+            <span
+                class="section-label"
+                data-i18n="jobDiscovery"
+            >
+                JOB DISCOVERY
+            </span>
+
+
+            <h1 data-i18n="findNextOpportunity">
+                Find your next opportunity.
+            </h1>
+
+
+            <p data-i18n="jobsSubtitle">
+                Search opportunities and find work
+                that fits your skills and goals.
+            </p>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             SEARCH BAR
+        ================================================== -->
+
+        <form
+            class="jobs-search"
+            id="jobSearchForm"
+        >
+
+            <div class="search-field">
+
+                <span
+                    class="search-icon"
+                    aria-hidden="true"
+                >
+                    ⌕
+                </span>
+
+
+                <input
+                    type="text"
+                    id="jobSearch"
+                    data-i18n-placeholder="searchPlaceholder"
+                    placeholder="Search jobs, skills or companies..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="button"
+                    class="search-clear"
+                    id="clearSearch"
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="search-button"
+                id="searchButton"
+                data-i18n="searchJobs"
+            >
+                Search Jobs
+            </button>
+
+        </form>
+
+
+
+        <!-- SEARCH HINT -->
+
+        <div class="search-hint">
+
+            <span data-i18n="searchHint">
+                Try searching by job title, skill or company
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     JOBS CONTENT
+================================================== -->
+
+<section class="jobs-section">
+
+    <div class="container jobs-layout">
+
+
+
+        <!-- ==================================================
+             MOBILE FILTER BUTTON
+        ================================================== -->
+
+        <button
+            type="button"
+            class="mobile-filter-button"
+            id="mobileFilterButton"
+        >
+
+            <span>
+                ☷
+            </span>
+
+            <span data-i18n="filters">
+                Filters
+            </span>
+
+            <span
+                class="filter-count"
+                id="activeFilterCount"
+            >
+                0
+            </span>
+
+        </button>
+
+
+
+        <!-- ==================================================
+             FILTERS
+        ================================================== -->
+
+        <aside
+            class="filters-panel"
+            id="filtersPanel"
+        >
+
+
+            <div class="filters-header">
+
+                <div>
+
+                    <span
+                        class="filter-eyebrow"
+                        data-i18n="refineSearch"
+                    >
+                        REFINE
                     </span>
 
-                    <h1 data-i18n="findNextOpportunity">
-                        Find your next opportunity.
-                    </h1>
+                    <h2 data-i18n="filters">
+                        Filters
+                    </h2>
 
-                    <p data-i18n="jobsSubtitle">
-                        Search thousands of opportunities and find work
-                        that fits your skills and goals.
+                </div>
+
+
+                <button
+                    type="button"
+                    id="clearFilters"
+                    class="clear-filters"
+                    data-i18n="clearFilters"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 WORK TYPE
+            ================================================== -->
+
+            <div class="filter-group">
+
+                <h3 data-i18n="workType">
+                    Work Type
+                </h3>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="workType"
+                        value="Full-time"
+                    >
+
+                    <span data-i18n="fullTime">
+                        Full-time
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="workType"
+                        value="Part-time"
+                    >
+
+                    <span data-i18n="partTime">
+                        Part-time
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="workType"
+                        value="Internship"
+                    >
+
+                    <span data-i18n="internship">
+                        Internship
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 WORK STYLE
+            ================================================== -->
+
+            <div class="filter-group">
+
+                <h3 data-i18n="workStyle">
+                    Work Style
+                </h3>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="radio"
+                        name="workStyle"
+                        value="All"
+                        checked
+                    >
+
+                    <span data-i18n="all">
+                        All
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="radio"
+                        name="workStyle"
+                        value="WFH"
+                    >
+
+                    <span data-i18n="remote">
+                        Remote
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="radio"
+                        name="workStyle"
+                        value="Hybrid"
+                    >
+
+                    <span data-i18n="hybrid">
+                        Hybrid
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="radio"
+                        name="workStyle"
+                        value="On-site"
+                    >
+
+                    <span data-i18n="onsite">
+                        On-site
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 CATEGORY
+            ================================================== -->
+
+            <div class="filter-group">
+
+                <h3 data-i18n="category">
+                    Category
+                </h3>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="IT & Software"
+                    >
+
+                    <span data-i18n="itSoftware">
+                        IT & Software
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Marketing"
+                    >
+
+                    <span data-i18n="marketing">
+                        Marketing
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Design"
+                    >
+
+                    <span data-i18n="design">
+                        Design
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Finance & Accounting"
+                    >
+
+                    <span data-i18n="financeAccounting">
+                        Finance & Accounting
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Education"
+                    >
+
+                    <span data-i18n="education">
+                        Education
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Engineering"
+                    >
+
+                    <span data-i18n="engineering">
+                        Engineering
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Sales"
+                    >
+
+                    <span data-i18n="sales">
+                        Sales
+                    </span>
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="Administration"
+                    >
+
+                    <span data-i18n="administration">
+                        Administration
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 LOCATION
+            ================================================== -->
+
+            <div class="filter-group">
+
+                <h3 data-i18n="location">
+                    Location
+                </h3>
+
+
+                <select id="locationFilter">
+
+                    <option
+                        value=""
+                        data-i18n="allLocations"
+                    >
+                        All locations
+                    </option>
+
+
+                    <option value="Yangon">
+                        Yangon
+                    </option>
+
+
+                    <option value="Mandalay">
+                        Mandalay
+                    </option>
+
+
+                    <option value="Naypyidaw">
+                        Naypyidaw
+                    </option>
+
+
+                    <option
+                        value="Remote"
+                        data-i18n="remote"
+                    >
+                        Remote
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             RESULTS
+        ================================================== -->
+
+        <div class="jobs-results">
+
+
+
+            <!-- ==================================================
+                 CATEGORY CONTEXT
+            ================================================== -->
+
+            <div
+                id="categoryContext"
+                class="category-context hidden"
+            >
+
+                <div class="category-context-main">
+
+                    <span
+                        class="category-context-label"
+                        data-i18n="categoryResults"
+                    >
+                        CATEGORY RESULTS
+                    </span>
+
+
+                    <h2 id="categoryContextTitle">
+                        Engineering Jobs
+                    </h2>
+
+
+                    <p id="categoryContextDescription">
+                        Showing jobs in Engineering.
                     </p>
 
                 </div>
 
 
-                <!-- Search -->
+                <a
+                    href="jobs.html"
+                    class="category-context-clear"
+                    data-i18n="viewAllJobs"
+                >
+                    View all jobs
+                </a>
 
-                <div class="jobs-search">
+            </div>
 
-                    <div class="search-field">
 
-                        <span class="search-icon">⌕</span>
 
-                        <input
-                            type="text"
-                            id="jobSearch"
-                            data-i18n-placeholder="searchPlaceholder"
-                            placeholder="Search jobs, skills or companies..."
-                            autocomplete="off">
+            <!-- ==================================================
+                 RESULTS HEADER
+            ================================================== -->
 
-                    </div>
+            <div class="results-header">
 
-                    <button
-                        class="search-button"
-                        id="searchButton"
-                        data-i18n="searchJobs">
+                <div class="results-heading">
 
-                        Search Jobs
+                    <span
+                        class="results-label"
+                        data-i18n="latestOpportunities"
+                    >
+                        LATEST OPPORTUNITIES
+                    </span>
 
-                    </button>
+
+                    <h2>
+
+                        <span id="jobCount">
+                            6
+                        </span>
+
+                        <span data-i18n="jobsFound">
+                            jobs found
+                        </span>
+
+                    </h2>
+
+                </div>
+
+
+
+                <div class="results-actions">
+
+                    <span
+                        class="sort-label"
+                        data-i18n="sortBy"
+                    >
+                        Sort by
+                    </span>
+
+
+                    <select
+                        id="sortJobs"
+                        class="sort-select"
+                    >
+
+                        <option
+                            value="latest"
+                            data-i18n="latest"
+                        >
+                            Latest
+                        </option>
+
+
+                        <option
+                            value="oldest"
+                            data-i18n="oldest"
+                        >
+                            Oldest
+                        </option>
+
+                    </select>
 
                 </div>
 
             </div>
 
-        </section>
 
 
-        <!-- =========================
-             JOBS CONTENT
-        ========================== -->
+            <!-- ==================================================
+                 ACTIVE FILTERS
+            ================================================== -->
 
-        <section class="jobs-section">
+            <div
+                class="active-filters"
+                id="activeFilters"
+            >
+            </div>
 
-            <div class="jobs-container jobs-layout">
 
 
-                <!-- =========================
-                     FILTERS
-                ========================== -->
+            <!-- ==================================================
+                 JOB LIST
+            ================================================== -->
 
-                <aside class="filters-panel">
+            <div
+                id="jobsList"
+                class="jobs-list"
+            >
+            </div>
 
-                    <div class="filters-header">
 
-                        <h2 data-i18n="filters">
-                            Filters
-                        </h2>
 
-                        <button
-                            id="clearFilters"
-                            class="clear-filters"
-                            data-i18n="clearFilters">
+            <!-- ==================================================
+                 EMPTY STATE
+            ================================================== -->
 
-                            Clear
+            <div
+                id="emptyState"
+                class="empty-state hidden"
+            >
 
-                        </button>
-
-                    </div>
-
-
-                    <!-- Work Type -->
-
-                    <div class="filter-group">
-
-                        <h3 data-i18n="workType">
-                            Work Type
-                        </h3>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="workType"
-                                value="Full-time">
-
-                            <span data-i18n="fullTime">
-                                Full-time
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="workType"
-                                value="Part-time">
-
-                            <span data-i18n="partTime">
-                                Part-time
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="workType"
-                                value="Internship">
-
-                            <span data-i18n="internship">
-                                Internship
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-                    <!-- Work Style -->
-
-                    <div class="filter-group">
-
-                        <h3 data-i18n="workStyle">
-                            Work Style
-                        </h3>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="radio"
-                                name="workStyle"
-                                value="All"
-                                checked>
-
-                            <span data-i18n="all">
-                                All
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="radio"
-                                name="workStyle"
-                                value="WFH">
-
-                            <span data-i18n="remote">
-                                Remote
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="radio"
-                                name="workStyle"
-                                value="Hybrid">
-
-                            <span data-i18n="hybrid">
-                                Hybrid
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="radio"
-                                name="workStyle"
-                                value="On-site">
-
-                            <span data-i18n="onsite">
-                                On-site
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-                    <!-- Category -->
-
-                    <div class="filter-group">
-
-                        <h3 data-i18n="category">
-                            Category
-                        </h3>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="IT & Software">
-
-                            <span data-i18n="itSoftware">
-                                IT & Software
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Marketing">
-
-                            <span data-i18n="marketing">
-                                Marketing
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Design">
-
-                            <span data-i18n="design">
-                                Design
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Finance & Accounting">
-
-                            <span data-i18n="financeAccounting">
-                                Finance & Accounting
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Education">
-
-                            <span data-i18n="education">
-                                Education
-                            </span>
-
-                        </label>
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Engineering">
-
-                            <span data-i18n="engineering">
-                                Engineering
-                            </span>
-
-                        </label>
-
-                        <!-- Sales -->
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Sales">
-
-                            <span data-i18n="sales">
-                                Sales
-                            </span>
-
-                        </label>
-
-
-                        <!-- Administration -->
-
-                        <label class="filter-option">
-
-                            <input
-                                type="checkbox"
-                                name="category"
-                                value="Administration">
-
-                            <span data-i18n="administration">
-                                Administration
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-                    <!-- Location -->
-
-                    <div class="filter-group">
-
-                        <h3 data-i18n="location">
-                            Location
-                        </h3>
-
-                        <select id="locationFilter">
-
-                            <option value=""
-                                    data-i18n="allLocations">
-                                All locations
-                            </option>
-
-                            <option value="Yangon">
-                                Yangon
-                            </option>
-
-                            <option value="Mandalay">
-                                Mandalay
-                            </option>
-
-                            <option value="Naypyidaw">
-                                Naypyidaw
-                            </option>
-
-                            <option value="Remote"
-                                    data-i18n="remote">
-                                Remote
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </aside>
-
-
-                <!-- =========================
-                     JOB RESULTS
-                ========================== -->
-
-                <div class="jobs-results">
-
-                    <div class="results-header">
-
-                        <div
-                        id="categoryContext"
-                        class="category-context hidden">
-
-                        <div>
-
-                            <span
-                                class="category-context-label"
-                                data-i18n="categoryResults">
-                                CATEGORY RESULTS
-                            </span>
-
-                            <h2 id="categoryContextTitle">
-                                Engineering Jobs
-                            </h2>
-
-                            <p id="categoryContextDescription">
-                                Showing jobs in Engineering.
-                            </p>
-
-                        </div>
-
-
-                        <a
-                            href="jobs.html"
-                            class="category-context-clear"
-                            data-i18n="viewAllJobs">
-                            View all jobs
-                        </a>
-
-                    </div>
-
-                        <div>
-
-                            <span class="results-label"
-                                  data-i18n="latestOpportunities">
-                                LATEST OPPORTUNITIES
-                            </span>
-
-                            <h2>
-                                <span id="jobCount">6</span>
-
-                                <span data-i18n="jobsFound">
-                                    jobs found
-                                </span>
-                            </h2>
-
-                        </div>
-
-                        <select
-                            id="sortJobs"
-                            class="sort-select">
-
-                            <option
-                                value="latest"
-                                data-i18n="latest">
-                                Latest
-                            </option>
-
-                            <option
-                                value="oldest"
-                                data-i18n="oldest">
-                                Oldest
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Dynamic job cards -->
-
-                    <div
-                        id="jobsList"
-                        class="jobs-list">
-                    </div>
-
-
-                    <!-- Empty state -->
-
-                    <div
-                        id="emptyState"
-                        class="empty-state hidden">
-
-                        <div class="empty-icon">
-                            ○
-                        </div>
-
-                        <h3 data-i18n="noJobs">
-                            No jobs found
-                        </h3>
-
-                        <p data-i18n="noJobsDescription">
-                            Try changing your search or filters.
-                        </p>
-
-                        <button
-                            id="emptyClearFilters"
-                            data-i18n="clearFilters">
-                            Clear filters
-                        </button>
-
-                    </div>
-
+                <div class="empty-icon">
+                    ⌕
                 </div>
+
+
+                <span
+                    class="empty-label"
+                    data-i18n="nothingFound"
+                >
+                    NOTHING FOUND
+                </span>
+
+
+                <h3 data-i18n="noJobs">
+                    No jobs found
+                </h3>
+
+
+                <p data-i18n="noJobsDescription">
+                    Try changing your search or filters.
+                </p>
+
+
+                <button
+                    type="button"
+                    id="emptyClearFilters"
+                    data-i18n="clearFilters"
+                >
+                    Clear filters
+                </button>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
+
+</section>
+
+
+</main>
+
+
 
 <!-- ==================================================
      FOOTER
@@ -561,7 +932,7 @@
     <div class="container footer-container">
 
 
-        <!-- Brand -->
+        <!-- BRAND -->
 
         <div class="footer-brand">
 
@@ -600,6 +971,7 @@
                     f
                 </a>
 
+
                 <a
                     href="#"
                     aria-label="Telegram"
@@ -607,12 +979,14 @@
                     ➤
                 </a>
 
+
                 <a
                     href="#"
                     aria-label="LinkedIn"
                 >
                     in
                 </a>
+
 
                 <a
                     href="#"
@@ -627,7 +1001,7 @@
 
 
 
-        <!-- Job Categories -->
+        <!-- JOBS -->
 
         <div class="footer-column">
 
@@ -679,7 +1053,7 @@
 
 
 
-        <!-- Useful Links -->
+        <!-- USEFUL LINKS -->
 
         <div class="footer-column">
 
@@ -723,7 +1097,7 @@
 
 
 
-        <!-- Contact -->
+        <!-- CONTACT -->
 
         <div class="footer-column footer-contact">
 
@@ -780,6 +1154,7 @@
     </div>
 
 
+
     <div class="footer-bottom container">
 
         <p
@@ -794,11 +1169,15 @@
 </footer>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
 
-    <script src="js/jobs.js"></script>
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="js/jobs.js"></script>
+
+<script src="js/mobile-nav.js"></script>
+
 
 </body>
 

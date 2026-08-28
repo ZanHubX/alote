@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Post a Job | ALote</title>
+
+
+    <!-- ==================================================
+         GLOBAL CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+
+    <!-- ==================================================
+         PAGE CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/employer.css"
+    >
+
+<header class="navbar">
+
+    <div class="container navbar-container">
+
+        <!-- LOGO -->
+
+        <a href="index.html" class="logo">
+
+            <img
+                src="assets/logo/ALotelogo.png"
+                alt="ALote"
+                class="logo-image"
+            >
+
+        </a>
+
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <nav class="nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <!-- DESKTOP LANGUAGE -->
+
+        <div class="language-switcher">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <!-- DESKTOP EMPLOYER -->
+
+        <a
+            href="employer.html"
+            class="employer-link active"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <nav class="mobile-nav-links">
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-divider"></div>
+
+
+        <div class="mobile-language">
+
+            <button
+                class="language-button active"
+                data-lang="en"
+            >
+                EN
+            </button>
+
+            <span>|</span>
+
+            <button
+                class="language-button"
+                data-lang="my"
+            >
+                မြန်မာ
+            </button>
+
+        </div>
+
+
+        <a
+            href="employer.html"
+            class="mobile-employer-link"
+            data-i18n="postJob"
+        >
+            Post a Job
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main class="employer-page">
+
+    <div class="container employer-container">
+
+
+        <!-- ==================================================
+             BACK
+        ================================================== -->
+
+        <a
+            href="index.html"
+            class="back-link"
+        >
+
+            <span>
+                ←
+            </span>
+
+            <span data-i18n="backHome">
+                Back to home
+            </span>
+
+        </a>
+
+
+
+        <!-- ==================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="employer-header">
+
+            <span
+                class="section-label"
+                data-i18n="pageLabel"
+            >
+                FOR EMPLOYERS
+            </span>
+
+
+            <h1 data-i18n="pageTitle">
+                Post your next opportunity.
+            </h1>
+
+
+            <p data-i18n="pageDescription">
+                Tell us about the role you're hiring for.
+                Our team will review your posting before
+                it appears on ALote.
+            </p>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             TRUST / PROCESS NOTICE
+        ================================================== -->
+
+        <section class="posting-notice">
+
+            <div class="notice-icon">
+                ✓
+            </div>
+
+
+            <div class="notice-content">
+
+                <strong data-i18n="noticeTitle">
+                    Reviewed before publishing
+                </strong>
+
+
+                <p data-i18n="noticeDescription">
+                    Every job posting is reviewed by the
+                    ALote team before being published.
+                    We'll contact you regarding payment
+                    and the next steps.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             POSTING FORM
+        ================================================== -->
+
+        <form
+            id="employerPostingForm"
+            class="posting-form"
+        >
+
+
+            <!-- ==================================================
+                 COMPANY INFORMATION
+            ================================================== -->
+
+            <section class="form-section">
+
+                <div class="form-section-heading">
+
+                    <span class="form-step">
+                        01
+                    </span>
+
+
+                    <div>
+
+                        <h2 data-i18n="companyInformation">
+                            Company information
+                        </h2>
+
+
+                        <p data-i18n="companyInformationDescription">
+                            Tell us who is hiring.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- Company Name -->
+
+                    <div class="form-group">
+
+                        <label for="companyName">
+
+                            <span>*</span>
+
+                            <span data-i18n="companyName">
+                                Company name
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="companyName"
+                            name="companyName"
+                            placeholder="ABC Technology"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Company Email -->
+
+                    <div class="form-group">
+
+                        <label for="companyEmail">
+
+                            <span>*</span>
+
+                            <span data-i18n="companyEmail">
+                                Company email
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="companyEmail"
+                            name="companyEmail"
+                            placeholder="company@example.com"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Phone -->
+
+                    <div class="form-group">
+
+                        <label for="companyPhone">
+
+                            <span>*</span>
+
+                            <span data-i18n="companyPhone">
+                                Contact number
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            id="companyPhone"
+                            name="companyPhone"
+                            placeholder="09xxxxxxxxx"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Company Website -->
+
+                    <div class="form-group">
+
+                        <label for="companyWebsite">
+
+                            <span data-i18n="companyWebsite">
+                                Company website
+                            </span>
+
+                            <span
+                                class="optional"
+                                data-i18n="optional"
+                            >
+                                Optional
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="url"
+                            id="companyWebsite"
+                            name="companyWebsite"
+                            placeholder="https://example.com"
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 JOB INFORMATION
+            ================================================== -->
+
+            <section class="form-section">
+
+                <div class="form-section-heading">
+
+                    <span class="form-step">
+                        02
+                    </span>
+
+
+                    <div>
+
+                        <h2 data-i18n="jobInformation">
+                            Job information
+                        </h2>
+
+
+                        <p data-i18n="jobInformationDescription">
+                            Give candidates the information
+                            they need to understand the role.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- Job Title -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="jobTitle">
+
+                            <span>*</span>
+
+                            <span data-i18n="jobTitle">
+                                Job title
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="jobTitle"
+                            name="jobTitle"
+                            placeholder="Backend Developer"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Category -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+
+                            <span>*</span>
+
+                            <span data-i18n="category">
+                                Category
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                data-i18n="selectCategory"
+                            >
+                                Select category
+                            </option>
+
+                            <option value="IT & Software">
+                                IT & Software
+                            </option>
+
+                            <option value="Marketing">
+                                Marketing
+                            </option>
+
+                            <option value="Design">
+                                Design
+                            </option>
+
+                            <option value="Finance & Accounting">
+                                Finance & Accounting
+                            </option>
+
+                            <option value="Sales">
+                                Sales
+                            </option>
+
+                            <option value="Education">
+                                Education
+                            </option>
+
+                            <option value="Engineering">
+                                Engineering
+                            </option>
+
+                            <option value="Administration">
+                                Administration
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- Location -->
+
+                    <div class="form-group">
+
+                        <label for="location">
+
+                            <span>*</span>
+
+                            <span data-i18n="location">
+                                Location
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="Yangon"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Work Style -->
+
+                    <div class="form-group">
+
+                        <label for="workStyle">
+
+                            <span>*</span>
+
+                            <span data-i18n="workStyle">
+                                Work style
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="workStyle"
+                            name="workStyle"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                data-i18n="selectWorkStyle"
+                            >
+                                Select work style
+                            </option>
+
+                            <option
+                                value="Remote"
+                                data-i18n="remote"
+                            >
+                                Remote
+                            </option>
+
+                            <option
+                                value="Hybrid"
+                                data-i18n="hybrid"
+                            >
+                                Hybrid
+                            </option>
+
+                            <option
+                                value="On-site"
+                                data-i18n="onsite"
+                            >
+                                On-site
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- Employment Type -->
+
+                    <div class="form-group">
+
+                        <label for="employmentType">
+
+                            <span>*</span>
+
+                            <span data-i18n="employmentType">
+                                Employment type
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="employmentType"
+                            name="employmentType"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                data-i18n="selectEmploymentType"
+                            >
+                                Select employment type
+                            </option>
+
+                            <option
+                                value="Full-time"
+                                data-i18n="fullTime"
+                            >
+                                Full-time
+                            </option>
+
+                            <option
+                                value="Part-time"
+                                data-i18n="partTime"
+                            >
+                                Part-time
+                            </option>
+
+                            <option
+                                value="Internship"
+                                data-i18n="internship"
+                            >
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- Salary -->
+
+                    <div class="form-group">
+
+                        <label for="salary">
+
+                            <span data-i18n="salary">
+                                Salary
+                            </span>
+
+                            <span
+                                class="optional"
+                                data-i18n="optional"
+                            >
+                                Optional
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="salary"
+                            name="salary"
+                            placeholder="800K – 1.2M MMK"
+                        >
+
+                    </div>
+
+
+
+                    <!-- Deadline -->
+
+                    <div class="form-group">
+
+                        <label for="deadline">
+
+                            <span>*</span>
+
+                            <span data-i18n="deadline">
+                                Application deadline
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 JOB DESCRIPTION
+            ================================================== -->
+
+            <section class="form-section">
+
+                <div class="form-section-heading">
+
+                    <span class="form-step">
+                        03
+                    </span>
+
+
+                    <div>
+
+                        <h2 data-i18n="jobDetails">
+                            Job details
+                        </h2>
+
+
+                        <p data-i18n="jobDetailsDescription">
+                            Describe the opportunity clearly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Description -->
+
+                <div class="form-group">
+
+                    <label for="description">
+
+                        <span>*</span>
+
+                        <span data-i18n="description">
+                            Job description
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="7"
+                        placeholder="Describe the role, team and opportunity..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- Requirements -->
+
+                <div class="form-group">
+
+                    <label for="requirements">
+
+                        <span>*</span>
+
+                        <span data-i18n="requirements">
+                            Requirements
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        id="requirements"
+                        name="requirements"
+                        rows="6"
+                        placeholder="Enter each requirement on a new line..."
+                        required
+                    ></textarea>
+
+
+                    <small data-i18n="requirementsNote">
+                        Add one requirement per line.
+                    </small>
+
+                </div>
+
+
+
+                <!-- Responsibilities -->
+
+                <div class="form-group">
+
+                    <label for="responsibilities">
+
+                        <span>*</span>
+
+                        <span data-i18n="responsibilities">
+                            Responsibilities
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        id="responsibilities"
+                        name="responsibilities"
+                        rows="6"
+                        placeholder="Enter each responsibility on a new line..."
+                        required
+                    ></textarea>
+
+
+                    <small data-i18n="responsibilitiesNote">
+                        Add one responsibility per line.
+                    </small>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 APPLICATION INFORMATION
+            ================================================== -->
+
+            <section class="form-section">
+
+                <div class="form-section-heading">
+
+                    <span class="form-step">
+                        04
+                    </span>
+
+
+                    <div>
+
+                        <h2 data-i18n="applicationInformation">
+                            Application information
+                        </h2>
+
+
+                        <p data-i18n="applicationInformationDescription">
+                            Tell candidates how they should apply.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="applicationEmail">
+
+                        <span>*</span>
+
+                        <span data-i18n="applicationEmail">
+                            Application email
+                        </span>
+
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="applicationEmail"
+                        name="applicationEmail"
+                        placeholder="careers@example.com"
+                        required
+                    >
+
+
+                    <small data-i18n="applicationEmailNote">
+                        Applications will be directed to this email
+                        after your job is approved and published.
+                    </small>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 PAYMENT / REVIEW
+            ================================================== -->
+
+            <section class="submission-notice">
+
+                <div class="submission-icon">
+                    !
+                </div>
+
+
+                <div>
+
+                    <strong data-i18n="submissionTitle">
+                        What happens after you submit?
+                    </strong>
+
+
+                    <p data-i18n="submissionDescription">
+                        Your posting request will be sent to
+                        ALote for review. Our team will contact
+                        you through the information provided
+                        to confirm the posting details and
+                        payment before publication.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 SUBMIT
+            ================================================== -->
+
+            <div class="submit-area">
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                    id="submitPostingButton"
+                >
+
+                    <span data-i18n="submitRequest">
+                        Submit posting request
+                    </span>
+
+                    <span aria-hidden="true">
+                        →
+                    </span>
+
+                </button>
+
+
+                <p data-i18n="submitNote">
+                    Your job will not be published automatically.
+                    It must be reviewed and approved by ALote.
+                </p>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
+                ALote
+            </a>
+
+
+            <p class="footer-tagline">
+
+                <span data-i18n="footerTagline">
+                    Find work that fits you.
+                </span>
+
+            </p>
+
+
+            <p
+                class="footer-description"
+                data-i18n="footerDescription"
+            >
+                Connecting job seekers and employers
+                in one organized place.
+            </p>
+
+
+            <div class="footer-socials">
+
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
+                    f
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Telegram"
+                >
+                    ➤
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="LinkedIn"
+                >
+                    in
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Email"
+                >
+                    ✉
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Job Categories -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerJobs">
+                Jobs
+            </h3>
+
+
+            <a
+                href="jobs.html?mode=wfh"
+                data-i18n="footerWfh"
+            >
+                WFH Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=onsite"
+                data-i18n="footerOnsite"
+            >
+                On-site Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=hybrid"
+                data-i18n="footerHybrid"
+            >
+                Hybrid Jobs
+            </a>
+
+
+            <a
+                href="jobs.html?mode=internship"
+                data-i18n="footerInternship"
+            >
+                Internships
+            </a>
+
+
+            <a
+                href="jobs.html?mode=part-time"
+                data-i18n="footerPartTime"
+            >
+                Part-time Jobs
+            </a>
+
+        </div>
+
+
+
+        <!-- Useful Links -->
+
+        <div class="footer-column">
+
+            <h3 data-i18n="footerLinks">
+                Useful Links
+            </h3>
+
+
+            <a
+                href="jobs.html"
+                data-i18n="findJobs"
+            >
+                Find Jobs
+            </a>
+
+
+            <a
+                href="categories.html"
+                data-i18n="categories"
+            >
+                Categories
+            </a>
+
+
+            <a
+                href="whyalote.html"
+                data-i18n="whyAlote"
+            >
+                Why ALote
+            </a>
+
+
+            <a
+                href="employer.html"
+                data-i18n="employer"
+            >
+                Employer
+            </a>
+
+        </div>
+
+
+
+        <!-- Contact -->
+
+        <div class="footer-column footer-contact">
+
+            <h3 data-i18n="footerContact">
+                Contact
+            </h3>
+
+
+            <a href="mailto:hello@alote.com">
+
+                <span class="contact-icon">
+                    ✉
+                </span>
+
+                hello@alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ➤
+                </span>
+
+                t.me/alotejobs
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ◎
+                </span>
+
+                www.alote.com
+
+            </a>
+
+
+            <a href="#">
+
+                <span class="contact-icon">
+                    ⌖
+                </span>
+
+                Yangon, Myanmar
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom container">
+
+        <p
+            class="copyright"
+            data-i18n="copyright"
+        >
+            © 2026 ALote. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="js/employer.js"></script>
+<script src="js/mobile-nav.js"></script>
+
+</body>
+
+</html>
