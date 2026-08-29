@@ -62,12 +62,30 @@ const translations = {
             "Browse Jobs",
 
         thankYou:
-            "Thank you for choosing ALote."
+            "Thank you for choosing ALote.",
+        
+        paymentTitle:
+            "Complete your payment",
+
+        paymentDescription:
+            "To continue with your job posting, please contact ALote on Telegram. Our team will provide the payment method and instructions.",
+
+        contactTelegram:
+            "Contact us on Telegram →",
 
     },
 
 
     my: {
+
+        paymentTitle:
+            "ငွေပေးချေမှုကို ဆက်လက်လုပ်ဆောင်ပါ",
+
+        paymentDescription:
+            "အလုပ်အကိုင်တင်ရန် လုပ်ငန်းစဉ်ကို ဆက်လက်လုပ်ဆောင်ရန် ALote Telegram သို့ ဆက်သွယ်ပါ။ ကျွန်ုပ်တို့၏အဖွဲ့မှ ငွေပေးချေရမည့်နည်းလမ်းနှင့် လမ်းညွှန်ချက်များကို ပေးပို့ပေးပါမည်။",
+
+        contactTelegram:
+            "Telegram သို့ ဆက်သွယ်မည် →",
 
         findJobs:
             "အလုပ်အကိုင်များ",
