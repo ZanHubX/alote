@@ -1954,3 +1954,97 @@
     }
 
 }
+
+/* ==================================================
+   WEBSITE ANALYTICS
+================================================== */
+
+.analytics-section {
+
+    margin-bottom: 20px;
+
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+}
+
+
+.analytics-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+
+.analytics-header h2 {
+
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 16px;
+
+    line-height: 1.3;
+
+    letter-spacing: -0.02em;
+}
+
+
+.analytics-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+.analytics-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid #eef2f7;
+
+    border-radius: 12px;
+}
+
+
+.analytics-value {
+
+    margin-top: 12px;
+
+    color: #0f172a;
+
+    font-size: 26px;
+
+    line-height: 1;
+
+    letter-spacing: -0.035em;
+}
+
+            
+@media (max-width: 760px) {
+
+    .analytics-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

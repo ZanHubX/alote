@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\JobPost;
 use App\Models\JobSubmission;
+use App\Models\WebsiteVisit;
 
 class AdminDashboardController extends Controller
 {
@@ -42,6 +43,34 @@ class AdminDashboardController extends Controller
             )->count();
 
 
+        // ==========================================
+        // WEBSITE VISITOR STATISTICS
+        // ==========================================
+
+        $todayVisitors =
+            WebsiteVisit::whereDate(
+                'visited_at',
+                today()
+            )
+            ->distinct('visitor_id')
+            ->count('visitor_id');
+
+
+        $totalVisitors =
+            WebsiteVisit::distinct(
+                'visitor_id'
+            )
+            ->count('visitor_id');
+
+
+        $totalPageViews =
+            WebsiteVisit::count();
+
+
+        // ==========================================
+        // RECENT PENDING JOB SUBMISSIONS
+        // ==========================================
+
         $recentPendingSubmissions =
             JobSubmission::with([
                 'employer',
@@ -56,6 +85,10 @@ class AdminDashboardController extends Controller
             ->get();
 
 
+        // ==========================================
+        // RECENT APPLICATIONS
+        // ==========================================
+
         $recentApplications =
             Application::with([
                 'jobPost.employer',
@@ -65,6 +98,10 @@ class AdminDashboardController extends Controller
             ->take(4)
             ->get();
 
+
+        // ==========================================
+        // RESPONSE
+        // ==========================================
 
         return response()->json([
             'data' => [
@@ -86,6 +123,15 @@ class AdminDashboardController extends Controller
 
                 'hired_applications' =>
                 $hiredApplications,
+
+                'today_visitors' =>
+                $todayVisitors,
+
+                'total_visitors' =>
+                $totalVisitors,
+
+                'total_page_views' =>
+                $totalPageViews,
 
                 'recent_pending_submissions' =>
                 $recentPendingSubmissions,
