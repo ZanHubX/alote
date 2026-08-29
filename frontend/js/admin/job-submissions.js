@@ -11,352 +11,94 @@
    TEMPORARY SUBMISSION DATA
 ================================================== */
 
-const submissions = [
+let submissions = [];
 
-    {
-        id: "SUB-2026-001",
+async function loadSubmissions() {
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/admin/job-submissions",
+            {
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
 
-        jobTitle: "Backend Developer",
+        const result = await response.json();
 
-        company: "ABC Technology",
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Failed to load submissions."
+            );
+        }
 
-        contact: "Mg Aung",
+        submissions = result.data.map(item => ({
+            id: `SUB-${item.id}`,
 
-        email: "hr@abctechnology.com",
+            jobTitle: item.title,
 
-        phone: "+95 9 421 000 111",
+            company:
+                item.employer?.company_name || "Not available",
 
-        category: "IT & Software",
+            contact:
+                item.employer?.contact_name || "Not available",
 
-        location: "Yangon",
+            email:
+                item.employer?.email ||
+                item.apply_email ||
+                "Not available",
 
-        workType: "Remote",
+            phone:
+                item.employer?.phone || "Not available",
 
-        employmentType: "Full-time",
+            category:
+                item.category?.name || "Not available",
 
-        salary: "MMK 1,500,000 – 2,000,000",
+            location: item.location || "Not specified",
 
-        paymentStatus: "paid",
+            workType: item.work_mode || "Not specified",
 
-        paymentAmount: "50,000 MMK",
+            employmentType: item.job_type || "Not specified",
 
-        paymentReference: "PAY-928371",
+            salary:
+                item.salary_text ||
+                "Not specified",
 
-        submittedDate: "2026-08-28",
+            paymentStatus: "pending",
 
-        submittedText: "Today",
+            paymentAmount: "Not available",
 
-        status: "pending",
+            paymentReference: "Not available",
 
-        description:
-            "We are looking for a skilled Backend Developer to join our technology team and build reliable, scalable backend services for our growing platform.",
+            submittedDate: item.created_at
+                ? item.created_at.split("T")[0]
+                : "",
 
-        requirements:
-            "2+ years of backend development experience. Experience with Node.js, REST APIs, databases and Git. Strong problem-solving skills are preferred."
-    },
+            submittedText: "Recently",
 
+            status: item.status || "pending",
 
-    {
-        id: "SUB-2026-002",
+            description:
+                item.description || "No description",
 
-        jobTitle: "UI/UX Designer",
+            requirements:
+                Array.isArray(item.requirements) &&
+                    item.requirements.length > 0
+                    ? item.requirements.join("\n")
+                    : "Not available",
+        }));
 
-        company: "Creative Studio MM",
+        updateCounts();
+        renderSubmissions();
 
-        contact: "Su Su",
+    } catch (error) {
+        console.error(error);
 
-        email: "careers@creativestudio.com",
-
-        phone: "+95 9 512 345 678",
-
-        category: "Design",
-
-        location: "Yangon",
-
-        workType: "Hybrid",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 1,000,000 – 1,500,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "PAY-928352",
-
-        submittedDate: "2026-08-27",
-
-        submittedText: "Yesterday",
-
-        status: "pending",
-
-        description:
-            "Creative Studio MM is looking for a UI/UX Designer who can create modern and user-friendly digital experiences across web and mobile products.",
-
-        requirements:
-            "Strong knowledge of Figma, user research, wireframing and prototyping. A good understanding of responsive design and usability is required."
-    },
-
-
-    {
-        id: "SUB-2026-003",
-
-        jobTitle: "Digital Marketing Specialist",
-
-        company: "NextGen Myanmar",
-
-        contact: "Kyaw Zin",
-
-        email: "hr@nextgen.com",
-
-        phone: "+95 9 765 222 333",
-
-        category: "Marketing",
-
-        location: "Yangon",
-
-        workType: "On-site",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 800,000 – 1,200,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "PAY-928314",
-
-        submittedDate: "2026-08-26",
-
-        submittedText: "2 days ago",
-
-        status: "approved",
-
-        description:
-            "Join our marketing team to develop and execute digital campaigns that increase brand awareness and customer engagement.",
-
-        requirements:
-            "Experience with social media marketing, SEO, content strategy and analytics."
-    },
-
-
-    {
-        id: "SUB-2026-004",
-
-        jobTitle: "Accountant",
-
-        company: "Golden Star Group",
-
-        contact: "Htet Htet",
-
-        email: "finance@goldenstar.com",
-
-        phone: "+95 9 411 567 890",
-
-        category: "Finance & Accounting",
-
-        location: "Mandalay",
-
-        workType: "On-site",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 700,000 – 1,000,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "PAY-928301",
-
-        submittedDate: "2026-08-25",
-
-        submittedText: "3 days ago",
-
-        status: "approved",
-
-        description:
-            "Golden Star Group is looking for an experienced Accountant to support daily financial operations and reporting.",
-
-        requirements:
-            "Bachelor's degree in accounting or finance. Knowledge of accounting software and financial reporting."
-    },
-
-
-    {
-        id: "SUB-2026-005",
-
-        jobTitle: "Civil Engineer",
-
-        company: "BuildPro Myanmar",
-
-        contact: "Min Thu",
-
-        email: "jobs@buildpro.com",
-
-        phone: "+95 9 432 789 123",
-
-        category: "Engineering",
-
-        location: "Naypyidaw",
-
-        workType: "On-site",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 1,000,000 – 1,600,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "PAY-928299",
-
-        submittedDate: "2026-08-24",
-
-        submittedText: "4 days ago",
-
-        status: "rejected",
-
-        description:
-            "BuildPro Myanmar is looking for a Civil Engineer to assist with construction planning, site supervision and project coordination.",
-
-        requirements:
-            "Civil Engineering degree with relevant construction experience."
-    },
-
-
-    {
-        id: "SUB-2026-006",
-
-        jobTitle: "English Teacher",
-
-        company: "Future Learning Center",
-
-        contact: "May Zin",
-
-        email: "hr@futurelearning.com",
-
-        phone: "+95 9 522 222 444",
-
-        category: "Education",
-
-        location: "Yangon",
-
-        workType: "On-site",
-
-        employmentType: "Part-time",
-
-        salary: "MMK 500,000 – 800,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "35,000 MMK",
-
-        paymentReference: "PAY-928270",
-
-        submittedDate: "2026-08-23",
-
-        submittedText: "5 days ago",
-
-        status: "approved",
-
-        description:
-            "Future Learning Center is looking for an enthusiastic English teacher to teach students across different levels.",
-
-        requirements:
-            "Strong English communication skills and previous teaching experience."
-    },
-
-
-    {
-        id: "SUB-2026-007",
-
-        jobTitle: "Sales Executive",
-
-        company: "Prime Distribution",
-
-        contact: "Aung Myo",
-
-        email: "hr@prime.com",
-
-        phone: "+95 9 455 111 222",
-
-        category: "Sales",
-
-        location: "Yangon",
-
-        workType: "On-site",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 600,000 + Commission",
-
-        paymentStatus: "pending",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "Not available",
-
-        submittedDate: "2026-08-22",
-
-        submittedText: "6 days ago",
-
-        status: "pending",
-
-        description:
-            "Prime Distribution is hiring a Sales Executive to expand its customer network and manage relationships with existing clients.",
-
-        requirements:
-            "Good communication and negotiation skills. Previous sales experience is preferred."
-    },
-
-
-    {
-        id: "SUB-2026-008",
-
-        jobTitle: "Office Administrator",
-
-        company: "Urban Services",
-
-        contact: "Ei Ei",
-
-        email: "admin@urbanservices.com",
-
-        phone: "+95 9 477 333 555",
-
-        category: "Administration",
-
-        location: "Yangon",
-
-        workType: "Hybrid",
-
-        employmentType: "Full-time",
-
-        salary: "MMK 600,000 – 900,000",
-
-        paymentStatus: "paid",
-
-        paymentAmount: "50,000 MMK",
-
-        paymentReference: "PAY-928244",
-
-        submittedDate: "2026-08-21",
-
-        submittedText: "1 week ago",
-
-        status: "rejected",
-
-        description:
-            "Urban Services is looking for an organized Office Administrator to support daily office operations.",
-
-        requirements:
-            "Good organizational, communication and Microsoft Office skills."
+        alert(
+            "Cannot load job submissions from ALote backend."
+        );
     }
-
-];
+}
 
 
 
@@ -1671,120 +1413,152 @@ function closeConfirmation() {
    EXECUTE ACTION
 ================================================== */
 
-function executeAction() {
+async function executeAction() {
 
-    if (
-        !selectedSubmission ||
-        !pendingAction
-    ) {
-
+    if (!selectedSubmission || !pendingAction) {
         return;
-
     }
 
-
-    const submission =
-        submissions.find(
-            item =>
-                item.id ===
-                selectedSubmission.id
-        );
-
+    const submission = submissions.find(
+        item => item.id === selectedSubmission.id
+    );
 
     if (!submission) {
         return;
     }
 
-
     /* ==============================================
        APPROVE
     ============================================== */
 
-    if (
-        pendingAction === "approve"
-    ) {
+    if (pendingAction === "approve") {
 
-        /*
-         * TEMPORARY FRONTEND ACTION
-         *
-         * Later this becomes:
-         *
-         * fetch(
-         *   "/api/admin/job-submissions/" +
-         *   submission.id +
-         *   "/approve",
-         *   { method: "POST" }
-         * )
-         *
-         */
+        try {
 
+            confirmProceed.disabled = true;
+            confirmProceed.textContent = "Publishing...";
 
-        submission.status =
-            "approved";
+            // "SUB-3" → "3"
+            const submissionId =
+                submission.id.replace("SUB-", "");
 
+            const response = await fetch(
+                `http://127.0.0.1:8000/api/admin/job-submissions/${submissionId}/approve`,
+                {
+                    method: "POST",
 
-        /*
-         * In the real backend:
-         *
-         * job_submissions
-         *       ↓
-         * approved
-         *       ↓
-         * jobs
-         *       ↓
-         * published
-         */
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
 
+            const result = await response.json();
 
-        closeConfirmation();
+            if (!response.ok) {
 
-        closeModal();
+                console.error(result);
 
-        updateCounts();
+                throw new Error(
+                    result.message ||
+                    "Unable to approve job."
+                );
+            }
 
-        renderSubmissions();
+            closeConfirmation();
+            closeModal();
 
-        showToast(
-            "Job approved and published."
-        );
+            showToast(
+                "Job approved and published."
+            );
+
+            // Reload actual database data
+            await loadSubmissions();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.message ||
+                "Unable to approve job."
+            );
+
+        } finally {
+
+            confirmProceed.disabled = false;
+            confirmProceed.textContent =
+                "Approve & Publish";
+        }
 
     }
-
 
 
     /* ==============================================
        REJECT
     ============================================== */
 
-    else if (
-        pendingAction === "reject"
-    ) {
+    else if (pendingAction === "reject") {
 
-        submission.status =
-            "rejected";
+        try {
 
+            confirmProceed.disabled = true;
+            confirmProceed.textContent = "Rejecting...";
 
-        /*
-         * Later:
-         *
-         * POST /api/admin/job-submissions/:id/reject
-         */
+            const submissionId =
+                submission.id.replace("SUB-", "");
 
+            const response = await fetch(
+                `http://127.0.0.1:8000/api/admin/job-submissions/${submissionId}/reject`,
+                {
+                    method: "POST",
 
-        closeConfirmation();
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
 
-        closeModal();
+            const result = await response.json();
 
-        updateCounts();
+            if (!response.ok) {
 
-        renderSubmissions();
+                console.error(result);
 
-        showToast(
-            "Submission rejected."
-        );
+                throw new Error(
+                    result.message ||
+                    "Unable to reject submission."
+                );
+            }
+
+            closeConfirmation();
+            closeModal();
+
+            showToast(
+                "Submission rejected."
+            );
+
+            await loadSubmissions();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.message ||
+                "Unable to reject submission."
+            );
+
+        } finally {
+
+            confirmProceed.disabled = false;
+            confirmProceed.textContent =
+                "Reject";
+        }
 
     }
-
 }
 
 
@@ -2462,3 +2236,5 @@ updateCounts();
 renderSubmissions();
 
 renderCurrentDate();
+
+loadSubmissions();

@@ -1,102 +1,124 @@
-const jobs = [
+let jobs = [];
+async function loadJobDetailsFromBackend() {
 
-    {
-        id: 1,
+    try {
 
-        title: "Backend Developer",
-        company: "ABC Technology",
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
 
-        location: "Yangon",
+        const jobId =
+            params.get("id");
 
-        workType: "WFH",
-        employmentType: "Full-time",
+        if (!jobId) {
+            throw new Error(
+                "Job ID not found."
+            );
+        }
 
-        salary: "800K – 1.2M MMK",
+        const response = await fetch(
+            `http://127.0.0.1:8000/api/jobs/${jobId}`,
+            {
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
 
-        category: "IT & Software",
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
 
-        description:
-            "We are looking for a motivated Backend Developer to join our development team and build reliable, scalable web applications.",
+        const result =
+            await response.json();
 
-        requirements: [
-            "Experience with PHP and Laravel",
-            "Understanding of REST APIs",
-            "Knowledge of MySQL or relational databases",
-            "Basic understanding of Git and version control",
-            "Good problem-solving skills"
-        ],
+        const item =
+            result.data;
 
-        responsibilities: [
-            "Develop and maintain backend applications",
-            "Build and integrate REST APIs",
-            "Work with databases and optimize queries",
-            "Collaborate with frontend developers",
-            "Fix bugs and improve application performance"
-        ],
+        let salary =
+            item.salary_text ||
+            "Not specified";
 
-        applicationEmail:
-            "careers@abctechnology.com",
+        jobs = [
+            {
+                id: item.id,
 
-        postedDate:
-            "2026-08-20",
+                title:
+                    item.title,
 
-        deadlineDate:
-            "2026-09-15"
+                company:
+                    item.employer?.company_name ||
+                    "Not available",
+
+                location:
+                    item.location ||
+                    "Not specified",
+
+                workType:
+                    item.work_mode ||
+                    "Not specified",
+
+                employmentType:
+                    item.job_type ||
+                    "Not specified",
+
+                salary:
+                    salary,
+
+                category:
+                    item.category?.name ||
+                    "Other",
+
+                description:
+                    item.description ||
+                    "",
+
+                requirements:
+                    Array.isArray(item.requirements)
+                        ? item.requirements
+                        : [],
+
+                responsibilities:
+                    Array.isArray(item.responsibilities)
+                        ? item.responsibilities
+                        : [],
+
+                applicationEmail:
+                    item.apply_email ||
+                    "",
+
+                postedDate:
+                    item.published_at ||
+                    "",
+
+                deadlineDate:
+                    item.deadline ||
+                    ""
+            }
+        ];
+
+        console.log(
+            "Job detail loaded:",
+            jobs
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Cannot load job details:",
+            error
+        );
+
     }
 
-];
-
-/* =========================================
-   GET JOB FROM URL
-========================================= */
-
-const urlParams =
-    new URLSearchParams(window.location.search);
-
-const jobId =
-    Number(urlParams.get("id"));
-
-const job =
-    jobs.find(item => item.id === jobId);
-
-
-/* =========================================
-   INVALID JOB
-========================================= */
-
-if (!job) {
-
-    window.location.href =
-        "jobs.html";
-
 }
 
-/* =========================================
-   APPLY BUTTONS
-========================================= */
-
-const applyButton =
-    document.getElementById("applyButton");
-
-if (applyButton) {
-
-    applyButton.href =
-        `apply.html?job=${job.id}`;
-
-}
+let job = null;
 
 
-const applyButtonBottom =
-    document.getElementById(
-        "applyButtonBottom"
-    );
-
-if (applyButtonBottom) {
-
-    applyButtonBottom.href =
-        `apply.html?job=${job.id}`;
-
-}
 
 
 /* =========================================
@@ -344,7 +366,19 @@ function formatDate(dateString) {
 ========================================= */
 
 function renderJob() {
+    const companyInitials =
+        job.company
+            .split(" ")
+            .filter(word => word.length > 0)
+            .map(word => word[0])
+            .join("")
+            .substring(0, 3)
+            .toUpperCase();
 
+    document.getElementById(
+        "companyAvatar"
+    ).textContent =
+        companyInitials;
     document.getElementById(
         "jobTitle"
     ).textContent = job.title;
@@ -480,11 +514,65 @@ document
    INITIALIZE
 ========================================= */
 
-document.documentElement.lang =
-    currentLanguage;
+async function initializeJobDetails() {
 
-changeLanguage(
-    currentLanguage
-);
+    await loadJobDetailsFromBackend();
 
-renderJob();
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const jobId =
+        Number(
+            urlParams.get("id")
+        );
+
+    job =
+        jobs.find(
+            item => item.id === jobId
+        );
+
+    if (!job) {
+
+        window.location.href =
+            "jobs.html";
+
+        return;
+    }
+
+    const applyButton =
+        document.getElementById(
+            "applyButton"
+        );
+
+    if (applyButton) {
+
+        applyButton.href =
+            `apply.html?job=${job.id}`;
+
+    }
+
+    const applyButtonBottom =
+        document.getElementById(
+            "applyButtonBottom"
+        );
+
+    if (applyButtonBottom) {
+
+        applyButtonBottom.href =
+            `apply.html?job=${job.id}`;
+
+    }
+
+    document.documentElement.lang =
+        currentLanguage;
+
+    changeLanguage(
+        currentLanguage
+    );
+
+    renderJob();
+}
+
+initializeJobDetails();

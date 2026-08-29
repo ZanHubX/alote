@@ -323,95 +323,107 @@ const translations = {
    -----------------------------------------------
    Later this will come from Laravel API.
 ================================================== */
+let jobs = [];
 
-const jobs = [
+async function loadJobsFromBackend() {
 
-    {
-        id: 1,
-        title: "Backend Developer",
-        company: "ABC Technology",
-        initials: "ABC",
-        workStyle: "WFH",
-        workType: "Full-time",
-        category: "IT & Software",
-        location: "Yangon",
-        salary: "800K – 1.2M MMK",
-        postedDays: 2,
-        deadline: "2026-09-15"
-    },
+    try {
 
-    {
-        id: 2,
-        title: "UI/UX Designer",
-        company: "XYZ Creative",
-        initials: "XYZ",
-        workStyle: "Hybrid",
-        workType: "Full-time",
-        category: "Design",
-        location: "Yangon",
-        salary: "700K – 1M MMK",
-        postedDays: 3,
-        deadline: "2026-09-18"
-    },
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/jobs",
+            {
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
 
-    {
-        id: 3,
-        title: "Marketing Executive",
-        company: "Myanmar Tech Co.",
-        initials: "MTC",
-        workStyle: "On-site",
-        workType: "Full-time",
-        category: "Marketing",
-        location: "Mandalay",
-        salary: "600K – 900K MMK",
-        postedDays: 4,
-        deadline: "2026-09-20"
-    },
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
 
-    {
-        id: 4,
-        title: "Frontend Developer",
-        company: "Digital Myanmar",
-        initials: "DM",
-        workStyle: "Hybrid",
-        workType: "Full-time",
-        category: "IT & Software",
-        location: "Yangon",
-        salary: "900K – 1.4M MMK",
-        postedDays: 5,
-        deadline: "2026-09-22"
-    },
+        const result = await response.json();
 
-    {
-        id: 5,
-        title: "Graphic Design Intern",
-        company: "Creative Hub",
-        initials: "CH",
-        workStyle: "On-site",
-        workType: "Internship",
-        category: "Design",
-        location: "Yangon",
-        salary: "150K – 250K MMK",
-        postedDays: 6,
-        deadline: "2026-09-25"
-    },
+        jobs = result.data.map(item => {
 
-    {
-        id: 6,
-        title: "Finance Assistant",
-        company: "Golden Group",
-        initials: "GG",
-        workStyle: "On-site",
-        workType: "Full-time",
-        category: "Finance & Accounting",
-        location: "Naypyidaw",
-        salary: "500K – 700K MMK",
-        postedDays: 7,
-        deadline: "2026-09-28"
+            const company =
+                item.employer?.company_name ||
+                "Not available";
+
+            const initials = company
+                .split(" ")
+                .map(word => word[0])
+                .join("")
+                .substring(0, 3)
+                .toUpperCase();
+
+            let salary =
+                item.salary_text ||
+                "Not specified";
+
+            const publishedDate =
+                item.published_at
+                    ? new Date(
+                        item.published_at.replace(
+                            " ",
+                            "T"
+                        )
+                    )
+                    : new Date();
+
+            const today = new Date();
+
+            const postedDays =
+                Math.max(
+                    0,
+                    Math.floor(
+                        (today - publishedDate) /
+                        (1000 * 60 * 60 * 24)
+                    )
+                );
+
+            return {
+                id: item.id,
+                title: item.title,
+                company: company,
+                initials: initials,
+                workStyle:
+                    item.work_mode ||
+                    "Not specified",
+                workType:
+                    item.job_type ||
+                    "Not specified",
+                category:
+                    item.category?.name ||
+                    "Other",
+                location:
+                    item.location ||
+                    "Not specified",
+                salary: salary,
+                postedDays: postedDays,
+                deadline:
+                    item.deadline || ""
+            };
+
+        });
+
+        console.log(
+            "Jobs loaded from backend:",
+            jobs
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Cannot load jobs:",
+            error
+        );
+
     }
 
-];
-
+}
 
 /* ==================================================
    STATE
@@ -2279,7 +2291,15 @@ document.addEventListener(
 
         renderCategoryContext();
 
-        renderJobs();
+        async function initializeJobsPage() {
+
+            await loadJobsFromBackend();
+
+            renderJobs();
+
+        }
+
+        initializeJobsPage();
 
     }
 );

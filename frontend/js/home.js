@@ -346,3 +346,161 @@ const savedLanguage =
     localStorage.getItem("alote-language") || "en";
 
 changeLanguage(savedLanguage);
+
+async function loadLatestJobs() {
+
+    const grid =
+        document.getElementById("latestJobsGrid");
+
+    if (!grid) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/api/jobs"
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load jobs."
+            );
+        }
+
+        const result =
+            await response.json();
+
+        const jobs =
+            (result.data || []).slice(0, 3);
+
+        grid.innerHTML = "";
+
+        if (jobs.length === 0) {
+            grid.innerHTML =
+                "<p>No jobs available yet.</p>";
+            return;
+        }
+
+        jobs.forEach(item => {
+
+            const companyName =
+                item.employer?.company_name ||
+                "Company";
+
+            const companyLogo =
+                companyName
+                    .split(" ")
+                    .map(word => word[0])
+                    .join("")
+                    .slice(0, 3)
+                    .toUpperCase();
+
+            const workMode =
+                item.work_mode || "On-site";
+
+            let badgeClass =
+                "onsite";
+
+            if (
+                workMode.toLowerCase() ===
+                "remote"
+            ) {
+                badgeClass = "remote";
+            }
+
+            if (
+                workMode.toLowerCase() ===
+                "hybrid"
+            ) {
+                badgeClass = "hybrid";
+            }
+
+            const badgeText =
+                workMode.toLowerCase() ===
+                    "remote"
+                    ? "WFH"
+                    : workMode;
+
+            const salary =
+                item.salary_text ||
+                "Not specified";
+
+            const postedDate =
+                item.published_at
+                    ? new Date(
+                        item.published_at
+                    ).toLocaleDateString()
+                    : "";
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+            card.className =
+                "job-card";
+
+            card.innerHTML = `
+                <div class="job-card-top">
+
+                    <div class="company-logo">
+                        ${companyLogo}
+                    </div>
+
+                    <span class="job-badge ${badgeClass}">
+                        ${badgeText}
+                    </span>
+
+                </div>
+
+                <h3>
+                    ${item.title}
+                </h3>
+
+                <p class="company-name">
+                    ${companyName}
+                </p>
+
+                <div class="job-info">
+
+                    <span>
+                        ${item.job_type}
+                    </span>
+
+                    <span>
+                        ${salary}
+                    </span>
+
+                </div>
+
+                <div class="job-card-footer">
+
+                    <span>
+                        Posted ${postedDate}
+                    </span>
+
+                    <a href="job-details.html?id=${item.id}">
+                        View job →
+                    </a>
+
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Latest jobs error:",
+            error
+        );
+
+        grid.innerHTML =
+            "<p>Unable to load jobs.</p>";
+    }
+}
+
+loadLatestJobs();

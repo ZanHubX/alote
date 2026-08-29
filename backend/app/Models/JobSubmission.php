@@ -18,12 +18,20 @@ class JobSubmission extends Model
         'job_type',
         'salary_min',
         'salary_max',
+        'salary_text',
         'currency',
+        'requirements',
+        'responsibilities',
         'apply_email',
         'apply_link',
         'deadline',
         'status',
         'rejection_reason',
+    ];
+
+    protected $casts = [
+        'requirements' => 'array',
+        'responsibilities' => 'array',
     ];
 
     public function employer(): BelongsTo

@@ -51,48 +51,98 @@ class JobSubmissionController extends Controller
                 'email' => $validated['company_email']
             ],
             [
-                'company_name' => $validated['company_name'],
-                'contact_name' => $validated['company_name'],
-                'phone' => $validated['company_phone'] ?? null,
-                'company_website' => $validated['company_website'] ?? null,
+                'company_name' =>
+                $validated['company_name'],
+
+                'contact_name' =>
+                $validated['company_name'],
+
+                'phone' =>
+                $validated['company_phone'] ?? null,
+
+                'company_website' =>
+                $validated['company_website'] ?? null,
             ]
         );
 
         $submission = JobSubmission::create([
-            'employer_id' => $employer->id,
-            'category_id' => $category->id,
+            'employer_id' =>
+            $employer->id,
 
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'location' => $validated['location'] ?? null,
+            'category_id' =>
+            $category->id,
 
-            'work_mode' => $validated['work_mode'],
-            'job_type' => $validated['job_type'],
+            'title' =>
+            $validated['title'],
 
-            'apply_email' => $validated['apply_email'],
-            'deadline' => $validated['deadline'],
+            'description' =>
+            $validated['description'],
 
-            'status' => 'pending',
+            'location' =>
+            $validated['location'] ?? null,
+
+            'work_mode' =>
+            $validated['work_mode'],
+
+            'job_type' =>
+            $validated['job_type'],
+
+            'salary_text' =>
+            $validated['salary'] ?? null,
+
+            'requirements' =>
+            $validated['requirements'] ?? [],
+
+            'responsibilities' =>
+            $validated['responsibilities'] ?? [],
+            
+            'apply_email' =>
+            $validated['apply_email'],
+
+            'deadline' =>
+            $validated['deadline'],
+
+            'status' =>
+            'pending',
         ]);
 
         return response()->json([
-            'message' => 'Job submitted successfully.',
+            'message' =>
+            'Job submitted successfully.',
 
             'data' => [
-                'submission_id' => $submission->id,
-                'status' => $submission->status,
+                'submission_id' =>
+                $submission->id,
+
+                'status' =>
+                $submission->status,
 
                 'company' => [
-                    'name' => $employer->company_name,
-                    'email' => $employer->email,
-                    'phone' => $employer->phone,
+                    'name' =>
+                    $employer->company_name,
+
+                    'email' =>
+                    $employer->email,
+
+                    'phone' =>
+                    $employer->phone,
                 ],
 
                 'job' => [
-                    'title' => $submission->title,
-                    'location' => $submission->location,
-                    'workStyle' => $submission->work_mode,
-                    'employmentType' => $submission->job_type,
+                    'title' =>
+                    $submission->title,
+
+                    'location' =>
+                    $submission->location,
+
+                    'workStyle' =>
+                    $submission->work_mode,
+
+                    'employmentType' =>
+                    $submission->job_type,
+
+                    'salary' =>
+                    $submission->salary_text,
                 ],
             ],
         ], 201);

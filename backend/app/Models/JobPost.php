@@ -19,12 +19,20 @@ class JobPost extends Model
         'job_type',
         'salary_min',
         'salary_max',
+        'salary_text',
         'currency',
+        'requirements',
+        'responsibilities',
         'apply_email',
         'apply_link',
         'deadline',
         'is_active',
         'published_at',
+    ];
+
+    protected $casts = [
+        'requirements' => 'array',
+        'responsibilities' => 'array',
     ];
 
     public function employer(): BelongsTo
