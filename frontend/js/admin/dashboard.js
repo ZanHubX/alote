@@ -36,7 +36,11 @@ let dashboardData = {
         totalJobs: 0,
         pendingJobs: 0,
         totalApplications: 0,
-        newApplications: 0
+        newApplications: 0,
+
+        todayVisitors: 0,
+        totalVisitors: 0,
+        totalPageViews: 0
     },
 
     pendingSubmissions: [],
@@ -89,7 +93,16 @@ async function loadDashboardFromBackend() {
                 data.total_applications,
 
             newApplications:
-                data.new_applications
+                data.new_applications,
+
+            todayVisitors:
+                data.today_visitors ?? 0,
+
+            totalVisitors:
+                data.total_visitors ?? 0,
+
+            totalPageViews:
+                data.total_page_views ?? 0
 
         };
 
@@ -210,7 +223,38 @@ function getElement(id) {
 ================================================== */
 
 function renderStatistics() {
+    const todayVisitors =
+        getElement("todayVisitors");
 
+    const totalVisitors =
+        getElement("totalVisitors");
+
+    const totalPageViews =
+        getElement("totalPageViews");
+
+
+    if (todayVisitors) {
+
+        todayVisitors.textContent =
+            dashboardData.statistics.todayVisitors;
+
+    }
+
+
+    if (totalVisitors) {
+
+        totalVisitors.textContent =
+            dashboardData.statistics.totalVisitors;
+
+    }
+
+
+    if (totalPageViews) {
+
+        totalPageViews.textContent =
+            dashboardData.statistics.totalPageViews;
+
+    }
     const totalJobs =
         getElement("totalJobs");
 
