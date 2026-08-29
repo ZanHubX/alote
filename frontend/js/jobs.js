@@ -153,7 +153,52 @@ const translations = {
             "NO RESULTS",
 
         activeFilters:
-            "Active filters"
+            "Active filters",
+        
+        dataAnalytics:
+            "Data & Analytics",
+
+        cybersecurity:
+            "Cybersecurity",
+
+        mediaCommunications:
+            "Media & Communications",
+
+        businessDevelopment:
+            "Business Development",
+
+        customerService:
+            "Customer Service",
+
+        humanResources:
+            "Human Resources",
+
+        healthcare:
+            "Healthcare",
+
+        legal:
+            "Legal",
+
+        hospitalityTourism:
+            "Hospitality & Tourism",
+
+        construction:
+            "Construction",
+
+        manufacturing:
+            "Manufacturing",
+
+        logisticsSupplyChain:
+            "Logistics & Supply Chain",
+
+        architecture:
+            "Architecture",
+
+        research:
+            "Research",
+
+        other:
+            "Other",
 
     },
 
@@ -311,7 +356,52 @@ const translations = {
             "ရလဒ်မတွေ့ပါ",
 
         activeFilters:
-            "လက်ရှိစစ်ထုတ်မှုများ"
+            "လက်ရှိစစ်ထုတ်မှုများ",
+
+        dataAnalytics:
+            "Data နှင့် Analytics",
+
+        cybersecurity:
+            "Cybersecurity",
+
+        mediaCommunications:
+            "Media နှင့် ဆက်သွယ်ရေး",
+
+        businessDevelopment:
+            "Business Development",
+
+        customerService:
+            "Customer Service",
+
+        humanResources:
+            "လူ့စွမ်းအားအရင်းအမြစ်",
+
+        healthcare:
+            "ကျန်းမာရေးစောင့်ရှောက်မှု",
+
+        legal:
+            "ဥပဒေရေးရာ",
+
+        hospitalityTourism:
+            "ဧည့်ဝန်ဆောင်မှုနှင့် ခရီးသွားလုပ်ငန်း",
+
+        construction:
+            "ဆောက်လုပ်ရေး",
+
+        manufacturing:
+            "ထုတ်လုပ်ရေး",
+
+        logisticsSupplyChain:
+            "Logistics နှင့် Supply Chain",
+
+        architecture:
+            "ဗိသုကာ",
+
+        research:
+            "သုတေသန",
+
+        other:
+            "အခြား",
 
     }
 

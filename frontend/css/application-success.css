@@ -1023,3 +1023,223 @@ html[lang="my"] .email-notice p {
     }
 
 }
+/* =========================================
+   PAYMENT NOTICE
+========================================= */
+
+.payment-notice {
+
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    margin-top: 14px;
+    padding: 17px;
+
+    text-align: left;
+
+    background: #fafbff;
+
+    border: 1px solid #e5e7ff;
+
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.payment-notice:hover {
+
+    border-color: #c7d2fe;
+
+    background: #f8f8ff;
+
+}
+
+
+/* =========================================
+   PAYMENT ICON
+========================================= */
+
+.payment-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   PAYMENT CONTENT
+========================================= */
+
+.payment-content {
+
+    min-width: 0;
+}
+
+
+.payment-content strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #334155;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.payment-content p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   TELEGRAM BUTTON
+========================================= */
+
+.success-actions .primary-button {
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(79, 70, 229, 0.14);
+}
+
+
+.success-actions .primary-button:hover {
+
+    background: #4338ca;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(79, 70, 229, 0.20);
+}
+
+
+/* =========================================
+   SECONDARY BUTTON
+========================================= */
+
+.success-actions .secondary-button {
+
+    background: #ffffff;
+
+    color: #475569;
+
+    border: 1px solid #dbe2ea;
+}
+
+
+.success-actions .secondary-button:hover {
+
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   BURMESE PAYMENT TYPOGRAPHY
+========================================= */
+
+html[lang="my"] .payment-notice,
+html[lang="my"] .payment-content {
+
+    font-family:
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        sans-serif;
+}
+
+
+html[lang="my"] .payment-content strong {
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+html[lang="my"] .payment-content p {
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .payment-notice {
+
+        padding: 15px;
+
+        gap: 11px;
+
+    }
+
+
+    .payment-icon {
+
+        width: 26px;
+        height: 26px;
+
+        font-size: 12px;
+
+    }
+
+
+    .success-actions {
+
+        flex-direction: column;
+
+        gap: 9px;
+
+    }
+
+
+    .success-actions .primary-button,
+    .success-actions .secondary-button {
+
+        width: 100%;
+
+    }
+
+}

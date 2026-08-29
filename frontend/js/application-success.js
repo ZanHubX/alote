@@ -116,13 +116,14 @@ const translations = {
             "We'll use the email address you provided to send important updates about your application.",
 
 
-        /* Actions */
+        paymentTitle:
+            "Complete your payment",
 
-        backToJobs:
-            "Back to Jobs",
+        paymentDescription:
+            "To continue with your job posting, please contact ALote on Telegram. Our team will provide the payment method and instructions.",
 
-        backHome:
-            "Back to Home",
+        contactTelegram:
+            "Contact us on Telegram →",
 
 
         /* Footer */
@@ -247,13 +248,14 @@ const translations = {
             "သင့်လျှောက်လွှာနှင့်ပတ်သက်သော အရေးကြီးသည့် အကြောင်းကြားချက်များကို သင်ပေးထားသော Email သို့ ပေးပို့ပါမည်။",
 
 
-        /* Actions */
+        paymentTitle:
+            "ငွေပေးချေမှုကို ဆက်လက်လုပ်ဆောင်ပါ",
 
-        backToJobs:
-            "အလုပ်အကိုင်များသို့ ပြန်သွားမည်",
+        paymentDescription:
+            "အလုပ်အကိုင်တင်ရန် လုပ်ငန်းစဉ်ကို ဆက်လက်လုပ်ဆောင်ရန် ALote Telegram သို့ ဆက်သွယ်ပါ။ ကျွန်ုပ်တို့၏အဖွဲ့မှ ငွေပေးချေရမည့်နည်းလမ်းနှင့် လမ်းညွှန်ချက်များကို ပေးပို့ပေးပါမည်။",
 
-        backHome:
-            "ပင်မစာမျက်နှာသို့ ပြန်သွားမည်",
+        contactTelegram:
+            "Telegram သို့ ဆက်သွယ်မည် →",
 
 
         /* Footer */
