@@ -115,17 +115,6 @@ const translations = {
         emailDescription:
             "We'll use the email address you provided to send important updates about your application.",
 
-
-        paymentTitle:
-            "Complete your payment",
-
-        paymentDescription:
-            "To continue with your job posting, please contact ALote on Telegram. Our team will provide the payment method and instructions.",
-
-        contactTelegram:
-            "Contact us on Telegram →",
-
-
         /* Footer */
 
         thankYou:
@@ -246,17 +235,6 @@ const translations = {
 
         emailDescription:
             "သင့်လျှောက်လွှာနှင့်ပတ်သက်သော အရေးကြီးသည့် အကြောင်းကြားချက်များကို သင်ပေးထားသော Email သို့ ပေးပို့ပါမည်။",
-
-
-        paymentTitle:
-            "ငွေပေးချေမှုကို ဆက်လက်လုပ်ဆောင်ပါ",
-
-        paymentDescription:
-            "အလုပ်အကိုင်တင်ရန် လုပ်ငန်းစဉ်ကို ဆက်လက်လုပ်ဆောင်ရန် ALote Telegram သို့ ဆက်သွယ်ပါ။ ကျွန်ုပ်တို့၏အဖွဲ့မှ ငွေပေးချေရမည့်နည်းလမ်းနှင့် လမ်းညွှန်ချက်များကို ပေးပို့ပေးပါမည်။",
-
-        contactTelegram:
-            "Telegram သို့ ဆက်သွယ်မည် →",
-
 
         /* Footer */
 
