@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AdminApplicationController;
 use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\WebsiteVisitController;
-
+use App\Http\Controllers\Api\CategoryController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -39,3 +39,8 @@ Route::get('/admin/applications', [AdminApplicationController::class, 'index']);
 Route::patch('/admin/applications/{id}/status', [AdminApplicationController::class, 'updateStatus']);
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
 Route::post('/website-visits', [WebsiteVisitController::class, 'store']);
+Route::get('/categories', [CategoryController::class, 'index']);
+
+
+
+

@@ -19,8 +19,22 @@ const categories = [
     },
 
     {
-        id: "marketing",
+        id: "sales",
         icon: "↗",
+
+        name: "Sales",
+        my: "အရောင်း",
+
+        description:
+            "Sales, retail and customer-facing opportunities.",
+
+        descriptionMy:
+            "အရောင်း၊ Retail နှင့် Customer ဆိုင်ရာ အလုပ်အကိုင်များ။"
+    },
+
+    {
+        id: "marketing",
+        icon: "✦",
 
         name: "Marketing",
         my: "Marketing",
@@ -33,21 +47,7 @@ const categories = [
     },
 
     {
-        id: "design",
-        icon: "✦",
-
-        name: "Design",
-        my: "ဒီဇိုင်း",
-
-        description:
-            "Graphic design, UI/UX and creative opportunities.",
-
-        descriptionMy:
-            "Graphic Design၊ UI/UX နှင့် ဖန်တီးမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
-    },
-
-    {
-        id: "finance",
+        id: "finance-accounting",
         icon: "◫",
 
         name: "Finance & Accounting",
@@ -61,36 +61,50 @@ const categories = [
     },
 
     {
-        id: "sales",
-        icon: "↗",
+        id: "customer-service",
+        icon: "◎",
 
-        name: "Sales",
-        my: "အရောင်း",
+        name: "Customer Service",
+        my: "ဖောက်သည်ဝန်ဆောင်မှု",
 
         description:
-            "Sales, business development and customer-facing roles.",
+            "Customer support, service and client-facing roles.",
 
         descriptionMy:
-            "အရောင်း၊ Business Development နှင့် Customer ဆိုင်ရာ အလုပ်အကိုင်များ။"
+            "Customer Support၊ ဝန်ဆောင်မှုနှင့် Client ဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
-        id: "education",
-        icon: "▣",
+        id: "human-resources",
+        icon: "◇",
 
-        name: "Education",
-        my: "ပညာရေး",
+        name: "Human Resources",
+        my: "လူ့စွမ်းအားအရင်းအမြစ်",
 
         description:
-            "Teaching, training and education-related opportunities.",
+            "Recruitment, HR operations and people management roles.",
 
         descriptionMy:
-            "သင်ကြားရေး၊ Training နှင့် ပညာရေးဆိုင်ရာ အလုပ်အကိုင်များ။"
+            "Recruitment၊ HR Operations နှင့် ဝန်ထမ်းစီမံခန့်ခွဲမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
+    },
+
+    {
+        id: "business-development",
+        icon: "△",
+
+        name: "Business Development",
+        my: "စီးပွားရေးဖွံ့ဖြိုးတိုးတက်မှု",
+
+        description:
+            "Business growth, partnerships and development opportunities.",
+
+        descriptionMy:
+            "Business Growth၊ Partnerships နှင့် စီးပွားရေးဖွံ့ဖြိုးမှုဆိုင်ရာ အလုပ်အကိုင်များ။"
     },
 
     {
         id: "engineering",
-        icon: "△",
+        icon: "▤",
 
         name: "Engineering",
         my: "အင်ဂျင်နီယာ",
@@ -100,20 +114,6 @@ const categories = [
 
         descriptionMy:
             "အင်ဂျင်နီယာ၊ နည်းပညာနှင့် Infrastructure ဆိုင်ရာ အလုပ်အကိုင်များ။"
-    },
-
-    {
-        id: "administration",
-        icon: "▤",
-
-        name: "Administration",
-        my: "စီမံခန့်ခွဲရေး",
-
-        description:
-            "Administrative, office and operational roles.",
-
-        descriptionMy:
-            "ရုံးလုပ်ငန်း၊ စီမံခန့်ခွဲရေးနှင့် Operations ဆိုင်ရာ အလုပ်အကိုင်များ။"
     }
 
 ];
@@ -189,7 +189,7 @@ const translations = {
             "Find your field.",
 
         categoryCount:
-            "8 categories",
+            "8 popular categories",
 
         exploreJobs:
             "Explore jobs",
@@ -311,7 +311,7 @@ const translations = {
             "သင့်နယ်ပယ်ကို ရွေးချယ်ပါ။",
 
         categoryCount:
-            "အမျိုးအစား ၈ ခု",
+            "လူကြိုက်များသော အမျိုးအစား ၈ ခု",
 
         exploreJobs:
             "အလုပ်အကိုင်များကို ကြည့်မည်",

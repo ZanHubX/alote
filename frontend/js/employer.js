@@ -587,71 +587,16 @@ function translateSelectOptions() {
 
     if (category) {
 
-        const categoryNames = {
-
-            "IT & Software":
-                {
-                    en: "IT & Software",
-                    my: "IT နှင့် Software"
-                },
-
-            "Marketing":
-                {
-                    en: "Marketing",
-                    my: "Marketing"
-                },
-
-            "Design":
-                {
-                    en: "Design",
-                    my: "ဒီဇိုင်း"
-                },
-
-            "Finance & Accounting":
-                {
-                    en: "Finance & Accounting",
-                    my: "ဘဏ္ဍာရေးနှင့် စာရင်းကိုင်"
-                },
-
-            "Sales":
-                {
-                    en: "Sales",
-                    my: "အရောင်း"
-                },
-
-            "Education":
-                {
-                    en: "Education",
-                    my: "ပညာရေး"
-                },
-
-            "Engineering":
-                {
-                    en: "Engineering",
-                    my: "အင်ဂျင်နီယာ"
-                },
-
-            "Administration":
-                {
-                    en: "Administration",
-                    my: "စီမံခန့်ခွဲရေး"
-                }
-
-        };
-
-
         Array
             .from(category.options)
             .forEach(option => {
 
-                if (
-                    categoryNames[option.value]
-                ) {
+                if (!option.value) {
 
                     option.textContent =
-                        categoryNames[
-                            option.value
-                        ][currentLanguage];
+                        translations[
+                            currentLanguage
+                        ].selectCategory;
 
                 }
 
@@ -674,35 +619,35 @@ function translateSelectOptions() {
                 const translationsMap = {
 
                     "Remote":
-                        {
-                            en: "Remote",
-                            my: "အဝေးမှ"
-                        },
+                    {
+                        en: "Remote",
+                        my: "အဝေးမှ"
+                    },
 
                     "Hybrid":
-                        {
-                            en: "Hybrid",
-                            my: "Hybrid"
-                        },
+                    {
+                        en: "Hybrid",
+                        my: "Hybrid"
+                    },
 
                     "On-site":
-                        {
-                            en: "On-site",
-                            my: "ရုံးတက်"
-                        }
+                    {
+                        en: "On-site",
+                        my: "ရုံးတက်"
+                    }
 
                 };
 
 
                 if (
                     translationsMap[
-                        option.value
+                    option.value
                     ]
                 ) {
 
                     option.textContent =
                         translationsMap[
-                            option.value
+                        option.value
                         ][currentLanguage];
 
                 }
@@ -726,40 +671,207 @@ function translateSelectOptions() {
                 const translationsMap = {
 
                     "Full-time":
-                        {
-                            en: "Full-time",
-                            my: "အချိန်ပြည့်"
-                        },
+                    {
+                        en: "Full-time",
+                        my: "အချိန်ပြည့်"
+                    },
 
                     "Part-time":
-                        {
-                            en: "Part-time",
-                            my: "အချိန်ပိုင်း"
-                        },
+                    {
+                        en: "Part-time",
+                        my: "အချိန်ပိုင်း"
+                    },
 
                     "Internship":
-                        {
-                            en: "Internship",
-                            my: "အလုပ်သင်"
-                        }
+                    {
+                        en: "Internship",
+                        my: "အလုပ်သင်"
+                    }
 
                 };
 
 
                 if (
                     translationsMap[
-                        option.value
+                    option.value
                     ]
                 ) {
 
                     option.textContent =
                         translationsMap[
-                            option.value
+                        option.value
                         ][currentLanguage];
 
                 }
 
             });
+
+    }
+
+}
+
+
+
+/* ==================================================
+   LOAD CATEGORIES FROM DATABASE
+================================================== */
+
+async function loadCategories() {
+
+    const category =
+        document.getElementById(
+            "category"
+        );
+
+
+    if (!category) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/api/categories",
+                {
+                    headers: {
+
+                        "Accept":
+                            "application/json"
+
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Unable to load categories. Status: ${response.status}`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        /* ------------------------------------------
+           CLEAR OLD OPTIONS
+        ------------------------------------------ */
+
+        category.innerHTML = "";
+
+
+        /* ------------------------------------------
+           DEFAULT OPTION
+        ------------------------------------------ */
+
+        const defaultOption =
+            document.createElement(
+                "option"
+            );
+
+
+        defaultOption.value = "";
+
+        defaultOption.textContent =
+            translations[
+                currentLanguage
+            ].selectCategory;
+
+
+        defaultOption.disabled = true;
+
+        defaultOption.selected = true;
+
+
+        category.appendChild(
+            defaultOption
+        );
+
+
+        /* ------------------------------------------
+           CATEGORY DATA
+        ------------------------------------------ */
+
+        const categories =
+            Array.isArray(result.data)
+                ? result.data
+                : [];
+
+
+        categories.forEach(item => {
+
+            if (!item || !item.name) {
+
+                return;
+
+            }
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                item.name;
+
+
+            option.textContent =
+                item.name;
+
+
+            category.appendChild(
+                option
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Category loading error:",
+            error
+        );
+
+
+        /* ------------------------------------------
+           ERROR OPTION
+        ------------------------------------------ */
+
+        category.innerHTML = "";
+
+
+        const errorOption =
+            document.createElement(
+                "option"
+            );
+
+
+        errorOption.value = "";
+
+        errorOption.textContent =
+            currentLanguage === "my"
+                ? "အမျိုးအစားများ မရရှိနိုင်ပါ"
+                : "Categories unavailable";
+
+
+        errorOption.disabled = true;
+
+        errorOption.selected = true;
+
+
+        category.appendChild(
+            errorOption
+        );
 
     }
 
@@ -1155,10 +1267,12 @@ if (postingForm) {
 
                 submitButton.disabled = true;
 
+
                 const text =
                     submitButton.querySelector(
                         "[data-i18n]"
                     );
+
 
                 if (text) {
 
@@ -1166,7 +1280,9 @@ if (postingForm) {
                         currentLanguage === "my"
                             ? "တင်သွင်းနေပါသည်..."
                             : "Submitting...";
+
                 }
+
             }
 
 
@@ -1180,20 +1296,25 @@ if (postingForm) {
                     await fetch(
                         "http://127.0.0.1:8000/api/job-submissions",
                         {
-                            method: "POST",
+
+                            method:
+                                "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json",
 
                                 "Accept":
                                     "application/json"
+
                             },
 
                             body:
                                 JSON.stringify(
                                     apiData
                                 )
+
                         }
                     );
 
@@ -1209,12 +1330,15 @@ if (postingForm) {
                         result
                     );
 
+
                     alert(
                         result.message ||
                         "Unable to submit job."
                     );
 
+
                     return;
+
                 }
 
 
@@ -1249,9 +1373,11 @@ if (postingForm) {
                     error
                 );
 
+
                 alert(
                     "Unable to connect to the server."
                 );
+
 
             } finally {
 
@@ -1259,6 +1385,7 @@ if (postingForm) {
 
                     submitButton.disabled =
                         false;
+
                 }
 
             }
@@ -1267,6 +1394,7 @@ if (postingForm) {
     );
 
 }
+
 
 
 /* ==================================================
@@ -1303,3 +1431,6 @@ document.documentElement.lang =
 changeLanguage(
     currentLanguage
 );
+
+
+loadCategories();
