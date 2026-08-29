@@ -1004,35 +1004,28 @@ if (postingForm) {
 
     postingForm.addEventListener(
         "submit",
-        event => {
+        async event => {
 
             event.preventDefault();
-
 
 
             /* ------------------------------------------
                HTML VALIDATION
             ------------------------------------------ */
 
-            if (
-                !postingForm.checkValidity()
-            ) {
+            if (!postingForm.checkValidity()) {
 
                 postingForm.reportValidity();
 
                 return;
-
             }
-
 
 
             /* ------------------------------------------
                DEADLINE
             ------------------------------------------ */
 
-            if (
-                !validateDeadline()
-            ) {
+            if (!validateDeadline()) {
 
                 alert(
                     translations[
@@ -1041,9 +1034,7 @@ if (postingForm) {
                 );
 
                 return;
-
             }
-
 
 
             /* ------------------------------------------
@@ -1056,59 +1047,98 @@ if (postingForm) {
                 );
 
 
-
-            /* ------------------------------------------
-               CREATE REQUEST
-            ------------------------------------------ */
-
             const postingRequest =
                 createPostingRequest(
                     formData
                 );
 
 
-
             /* ------------------------------------------
-               STORE TEMPORARILY
-               ------------------------------------------
-               Later this becomes:
-
-               POST /api/job-postings
+               API DATA
             ------------------------------------------ */
 
-            const existingRequests =
-                JSON.parse(
-                    localStorage.getItem(
-                        "aloteJobPostingRequests"
-                    ) || "[]"
-                );
+            const apiData = {
 
+                company_name:
+                    formData.get(
+                        "companyName"
+                    ),
 
-            existingRequests.push(
-                postingRequest
-            );
+                company_email:
+                    formData.get(
+                        "companyEmail"
+                    ),
 
+                company_phone:
+                    formData.get(
+                        "companyPhone"
+                    ) || null,
 
-            localStorage.setItem(
-                "aloteJobPostingRequests",
-                JSON.stringify(
-                    existingRequests
-                )
-            );
+                company_website:
+                    formData.get(
+                        "companyWebsite"
+                    ) || null,
 
+                category:
+                    formData.get(
+                        "category"
+                    ),
 
+                title:
+                    formData.get(
+                        "jobTitle"
+                    ),
 
-            /* ------------------------------------------
-               SAVE CURRENT REQUEST
-            ------------------------------------------ */
+                description:
+                    formData.get(
+                        "description"
+                    ),
 
-            sessionStorage.setItem(
-                "aloteLatestJobPosting",
-                JSON.stringify(
-                    postingRequest
-                )
-            );
+                location:
+                    formData.get(
+                        "location"
+                    ) || null,
 
+                work_mode:
+                    formData.get(
+                        "workStyle"
+                    ),
+
+                job_type:
+                    formData.get(
+                        "employmentType"
+                    ),
+
+                salary:
+                    formData.get(
+                        "salary"
+                    ) || null,
+
+                deadline:
+                    formData.get(
+                        "deadline"
+                    ),
+
+                requirements:
+                    textToArray(
+                        formData.get(
+                            "requirements"
+                        ) || ""
+                    ),
+
+                responsibilities:
+                    textToArray(
+                        formData.get(
+                            "responsibilities"
+                        ) || ""
+                    ),
+
+                apply_email:
+                    formData.get(
+                        "applicationEmail"
+                    )
+
+            };
 
 
             /* ------------------------------------------
@@ -1123,15 +1153,12 @@ if (postingForm) {
 
             if (submitButton) {
 
-                submitButton.disabled =
-                    true;
-
+                submitButton.disabled = true;
 
                 const text =
                     submitButton.querySelector(
                         "[data-i18n]"
                     );
-
 
                 if (text) {
 
@@ -1139,25 +1166,107 @@ if (postingForm) {
                         currentLanguage === "my"
                             ? "တင်သွင်းနေပါသည်..."
                             : "Submitting...";
-
                 }
-
             }
 
 
-
             /* ------------------------------------------
-               CONFIRMATION
+               SEND TO BACKEND
             ------------------------------------------ */
 
-            window.location.href =
-            "employer-success.html";
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:8000/api/job-submissions",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    apiData
+                                )
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    console.error(
+                        "Submission error:",
+                        result
+                    );
+
+                    alert(
+                        result.message ||
+                        "Unable to submit job."
+                    );
+
+                    return;
+                }
+
+
+                /* ------------------------------------------
+                   SAVE SUCCESS DATA
+                ------------------------------------------ */
+
+                postingRequest.id =
+                    `SUB-${result.data.submission_id}`;
+
+
+                sessionStorage.setItem(
+                    "aloteLatestJobPosting",
+                    JSON.stringify(
+                        postingRequest
+                    )
+                );
+
+
+                /* ------------------------------------------
+                   SUCCESS PAGE
+                ------------------------------------------ */
+
+                window.location.href =
+                    "employer-success.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Job submission error:",
+                    error
+                );
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+            } finally {
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        false;
+                }
+
+            }
 
         }
     );
 
 }
-
 
 
 /* ==================================================

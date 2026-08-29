@@ -9,21 +9,23 @@
    Later this will come from the application / job API.
 ================================================== */
 
-const job = {
+const storedJob =
+    sessionStorage.getItem(
+        "aloteAppliedJob"
+    );
 
-    title: "Backend Developer",
 
-    company: "ABC Technology",
+let job = null;
 
-    location: "Yangon",
 
-    workType: "Remote",
+if (storedJob) {
 
-    employmentType: "Full-time",
+    job =
+        JSON.parse(
+            storedJob
+        );
 
-    initials: "ABC"
-
-};
+}
 
 
 
@@ -451,8 +453,11 @@ function renderJob() {
     if (companyAvatar) {
 
         companyAvatar.textContent =
-            job.initials ||
             job.company
+                .split(" ")
+                .filter(word => word.length > 0)
+                .map(word => word[0])
+                .join("")
                 .substring(0, 3)
                 .toUpperCase();
 
@@ -609,4 +614,8 @@ changeLanguage(
 );
 
 
-renderJob();
+if (job) {
+
+    renderJob();
+
+}

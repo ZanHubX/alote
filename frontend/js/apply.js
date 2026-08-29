@@ -9,21 +9,96 @@
    Later this will come from Laravel / API.
 ================================================== */
 
-const job = {
+let job = null;
 
-    id: 1,
 
-    title: "Backend Developer",
+async function loadJobFromBackend() {
 
-    company: "ABC Technology",
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-    location: "Yangon",
+    const jobId =
+        params.get("job");
 
-    workType: "Remote",
 
-    employmentType: "Full-time"
+    if (!jobId) {
 
-};
+        window.location.href =
+            "jobs.html";
+
+        return false;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://127.0.0.1:8000/api/jobs/${jobId}`,
+                {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            window.location.href =
+                "jobs.html";
+
+            return false;
+        }
+
+
+        const result =
+            await response.json();
+
+
+        const item =
+            result.data;
+
+
+        job = {
+
+            id:
+                item.id,
+
+            title:
+                item.title,
+
+            company:
+                item.employer?.company_name ||
+                "Not available",
+
+            location:
+                item.location ||
+                "Not specified",
+
+            workType:
+                item.work_mode ||
+                "Not specified",
+
+            employmentType:
+                item.job_type ||
+                "Not specified"
+
+        };
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        return false;
+    }
+
+}
 
 
 
@@ -594,7 +669,7 @@ if (applicationForm) {
 
     applicationForm.addEventListener(
         "submit",
-        event => {
+        async event => {
 
             event.preventDefault();
 
@@ -653,108 +728,6 @@ if (applicationForm) {
 
 
             /* ------------------------------------------
-               CREATE APPLICATION OBJECT
-            ------------------------------------------ */
-
-            const application = {
-
-                id:
-                    `APP-${Date.now()}`,
-
-                status:
-                    "pending",
-
-
-                submittedAt:
-                    new Date().toISOString(),
-
-
-                job: {
-
-                    id:
-                        job.id,
-
-                    title:
-                        job.title,
-
-                    company:
-                        job.company,
-
-                    location:
-                        job.location,
-
-                    workType:
-                        job.workType,
-
-                    employmentType:
-                        job.employmentType
-
-                },
-
-
-                applicant: {
-
-                    fullName:
-                        formData.get(
-                            "fullName"
-                        ),
-
-                    email:
-                        formData.get(
-                            "email"
-                        ),
-
-                    phone:
-                        formData.get(
-                            "phone"
-                        ),
-
-                    coverMessage:
-                        formData.get(
-                            "coverMessage"
-                        )
-
-                },
-
-
-                resume: {
-
-                    name:
-                        resume.name,
-
-                    size:
-                        resume.size,
-
-                    type:
-                        resume.type
-
-                }
-
-            };
-
-
-
-            /* ------------------------------------------
-               TEMPORARY STORAGE
-               ------------------------------------------
-               Later this will be replaced by:
-
-               fetch("/api/applications", {
-                   method: "POST",
-                   body: formData
-               })
-            ------------------------------------------ */
-
-            sessionStorage.setItem(
-                "aloteApplication",
-                JSON.stringify(
-                    application
-                )
-            );
-
-
-
-            /* ------------------------------------------
                PREVENT DOUBLE SUBMISSION
             ------------------------------------------ */
 
@@ -763,41 +736,103 @@ if (applicationForm) {
                     "submitApplicationButton"
                 );
 
-
             if (submitButton) {
 
                 submitButton.disabled =
                     true;
 
-
                 submitButton.textContent =
                     currentLanguage === "my"
                         ? "တင်သွင်းနေပါသည်..."
                         : "Submitting...";
-
             }
 
 
-
             /* ------------------------------------------
-               REDIRECT TO SUCCESS PAGE
+               PREPARE BACKEND DATA
             ------------------------------------------ */
 
-            setTimeout(
-                () => {
-
-                    window.location.href =
-                        "application-success.html";
-
-                },
-                250
+            formData.append(
+                "job_post_id",
+                job.id
             );
 
+            formData.append(
+                "full_name",
+                formData.get("fullName")
+            );
+
+            formData.append(
+                "cover_letter",
+                formData.get("coverMessage") || ""
+            );
+
+
+            /* ------------------------------------------
+               SUBMIT TO LARAVEL
+            ------------------------------------------ */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:8000/api/applications",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Accept": "application/json"
+                            },
+                            body: formData
+                        }
+                    );
+
+                const result =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    console.error(result);
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to submit application."
+                    );
+                }
+
+                sessionStorage.setItem(
+                    "aloteAppliedJob",
+                    JSON.stringify(job)
+                );
+
+                window.location.href =
+                    "application-success.html";
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    currentLanguage === "my"
+                        ? "လျှောက်လွှာတင်ရာတွင် အမှားရှိနေပါသည်။"
+                        : error.message
+                );
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        currentLanguage === "my"
+                            ? "လျှောက်လွှာတင်မည်"
+                            : "Submit application";
+                }
+
+            }
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -830,13 +865,30 @@ document
    INITIALIZE
 ================================================== */
 
-document.documentElement.lang =
-    currentLanguage;
+async function initializeApplicationPage() {
+
+    const loaded =
+        await loadJobFromBackend();
 
 
-changeLanguage(
-    currentLanguage
-);
+    if (!loaded) {
+
+        return;
+    }
 
 
-renderJob();
+    document.documentElement.lang =
+        currentLanguage;
+
+
+    changeLanguage(
+        currentLanguage
+    );
+
+
+    renderJob();
+
+}
+
+
+initializeApplicationPage();

@@ -30,125 +30,166 @@ if (!adminSession) {
    API/database data later.
 ================================================== */
 
-const dashboardData = {
+let dashboardData = {
 
     statistics: {
-
-        totalJobs: 24,
-
-        pendingJobs: 5,
-
-        totalApplications: 87,
-
-        newApplications: 12
-
+        totalJobs: 0,
+        pendingJobs: 0,
+        totalApplications: 0,
+        newApplications: 0
     },
 
+    pendingSubmissions: [],
 
-    pendingSubmissions: [
-
-        {
-            id: "SUB-001",
-
-            title: "Backend Developer",
-
-            company: "ABC Technology",
-
-            location: "Yangon",
-
-            workType: "Remote",
-
-            employmentType: "Full-time",
-
-            submitted: "Today",
-
-            status: "Pending"
-        },
-
-
-        {
-            id: "SUB-002",
-
-            title: "UI/UX Designer",
-
-            company: "Creative Studio",
-
-            location: "Yangon",
-
-            workType: "Hybrid",
-
-            employmentType: "Full-time",
-
-            submitted: "Yesterday",
-
-            status: "Pending"
-        },
-
-
-        {
-            id: "SUB-003",
-
-            title: "Digital Marketing Specialist",
-
-            company: "NextGen Myanmar",
-
-            location: "Mandalay",
-
-            workType: "On-site",
-
-            employmentType: "Full-time",
-
-            submitted: "2 days ago",
-
-            status: "Pending"
-        }
-
-    ],
-
-
-    recentApplications: [
-
-        {
-            name: "Mg Mg",
-
-            job: "Backend Developer",
-
-            company: "ABC Technology",
-
-            status: "Pending",
-
-            time: "10 min ago"
-        },
-
-
-        {
-            name: "Su Su",
-
-            job: "UI/UX Designer",
-
-            company: "Creative Studio",
-
-            status: "Reviewed",
-
-            time: "1 hour ago"
-        },
-
-
-        {
-            name: "Aung Aung",
-
-            job: "Marketing Executive",
-
-            company: "NextGen Myanmar",
-
-            status: "Pending",
-
-            time: "3 hours ago"
-        }
-
-    ]
+    recentApplications: []
 
 };
+
+
+async function loadDashboardFromBackend() {
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/api/admin/dashboard",
+                {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load dashboard."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+        const data =
+            result.data;
+
+
+        dashboardData.statistics = {
+
+            totalJobs:
+                data.total_jobs,
+
+            pendingJobs:
+                data.pending_submissions,
+
+            totalApplications:
+                data.total_applications,
+
+            newApplications:
+                data.new_applications
+
+        };
+
+    
+        dashboardData.pendingSubmissions =
+            data.recent_pending_submissions.map(
+                item => ({
+
+                    id:
+                        `SUB-${item.id}`,
+
+                    title:
+                        item.title ||
+                        "Not available",
+
+                    company:
+                        item.employer?.company_name ||
+                        "Not available",
+
+                    location:
+                        item.location ||
+                        "Not specified",
+
+                    workType:
+                        item.work_mode ||
+                        "Not specified",
+
+                    employmentType:
+                        item.job_type ||
+                        "Not specified",
+
+                    submitted:
+                        item.created_at
+                            ? new Date(
+                                item.created_at
+                            ).toLocaleDateString(
+                                "en-US",
+                                {
+                                    month: "short",
+                                    day: "numeric"
+                                }
+                            )
+                            : "",
+
+                    status:
+                        "Pending"
+
+                })
+            );
+
+        dashboardData.recentApplications =
+            data.recent_applications.map(
+                item => ({
+
+                    name:
+                        item.job_seeker?.full_name ||
+                        "Not available",
+
+                    job:
+                        item.job_post?.title ||
+                        "Not available",
+
+                    company:
+                        item.job_post?.employer?.company_name ||
+                        "Not available",
+
+                    status:
+                        item.status === "pending"
+                            ? "New"
+                            : item.status === "review"
+                                ? "Under Review"
+                                : item.status
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                item.status.slice(1),
+
+                    time:
+                        item.applied_at
+                            ? new Date(
+                                item.applied_at
+                            ).toLocaleDateString(
+                                "en-US",
+                                {
+                                    month: "short",
+                                    day: "numeric"
+                                }
+                            )
+                            : ""
+
+                })
+            );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
 
 
 
@@ -818,7 +859,9 @@ function protectAdminHistory() {
    INITIALIZE DASHBOARD
 ================================================== */
 
-function initializeDashboard() {
+async function initializeDashboard() {
+
+    await loadDashboardFromBackend();
 
     renderStatistics();
 

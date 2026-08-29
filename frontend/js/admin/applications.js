@@ -8,249 +8,104 @@
    TEMPORARY APPLICATION DATA
 ================================================== */
 
-const applications = [
+let applications = [];
 
-    {
-        id: "APP-2026-001",
+async function loadApplicationsFromBackend() {
 
-        applicant: {
-            name: "Aung Min",
-            email: "aungmin@example.com"
-        },
+    try {
 
-        job: {
-            title: "Senior Frontend Developer",
-            id: "JOB-2026-001"
-        },
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/api/admin/applications",
+                {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }
+            );
 
-        company: "ABC Technology",
+        if (!response.ok) {
+            throw new Error(
+                "Unable to load applications."
+            );
+        }
 
-        location: "Yangon",
+        const result =
+            await response.json();
 
-        workType: "Hybrid",
+        applications =
+            result.data.map(item => ({
 
-        appliedDate: "2026-08-28",
+                id:
+                    `APP-${item.id}`,
 
-        status: "new",
+                applicant: {
+                    name:
+                        item.job_seeker?.full_name ||
+                        "Not available",
 
-        coverLetter:
-            "I am interested in the Senior Frontend Developer position. I have several years of experience building modern web applications using JavaScript, React and other frontend technologies.",
+                    email:
+                        item.job_seeker?.email ||
+                        "Not available"
+                },
 
-        resume: "Aung_Min_Resume.pdf"
-    },
+                job: {
+                    title:
+                        item.job_post?.title ||
+                        "Not available",
 
+                    id:
+                        item.job_post?.id
+                            ? `JOB-${item.job_post.id}`
+                            : "Not available"
+                },
 
-    {
-        id: "APP-2026-002",
+                company:
+                    item.job_post?.employer?.company_name ||
+                    "Not available",
 
-        applicant: {
-            name: "May Thu",
-            email: "maythu@example.com"
-        },
+                location:
+                    item.job_post?.location ||
+                    "Not specified",
 
-        job: {
-            title: "UI/UX Designer",
-            id: "JOB-2026-003"
-        },
+                workType:
+                    item.job_post?.work_mode ||
+                    "Not specified",
 
-        company: "Creative Studio",
+                appliedDate:
+                    item.applied_at
+                        ? item.applied_at.substring(0, 10)
+                        : "",
 
-        location: "Yangon",
+                status:
+                    item.status === "pending"
+                        ? "new"
+                        : item.status,
 
-        workType: "On-site",
+                coverLetter:
+                    item.cover_letter ||
+                    "No cover letter.",
 
-        appliedDate: "2026-08-27",
+                resume:
+                    item.resume_path || ""
+            }));
 
-        status: "review",
+        filteredApplications =
+            [...applications];
 
-        coverLetter:
-            "I would love to join your design team. My experience includes user interface design, user research, wireframing and creating design systems.",
+        updateStatistics();
 
-        resume: "May_Thu_Resume.pdf"
-    },
+        sortFilteredApplications();
 
+        renderApplications();
 
-    {
-        id: "APP-2026-003",
+    } catch (error) {
 
-        applicant: {
-            name: "Kyaw Zin",
-            email: "kyawzin@example.com"
-        },
+        console.error(error);
 
-        job: {
-            title: "Digital Marketing Specialist",
-            id: "JOB-2026-002"
-        },
-
-        company: "Growth Myanmar",
-
-        location: "Yangon",
-
-        workType: "Hybrid",
-
-        appliedDate: "2026-08-26",
-
-        status: "shortlisted",
-
-        coverLetter:
-            "I have experience in digital marketing, social media campaigns, content strategy and performance analysis.",
-
-        resume: "Kyaw_Zin_Resume.pdf"
-    },
-
-
-    {
-        id: "APP-2026-004",
-
-        applicant: {
-            name: "Ei Ei Mon",
-            email: "eieimon@example.com"
-        },
-
-        job: {
-            title: "Senior Accountant",
-            id: "JOB-2026-004"
-        },
-
-        company: "Prime Holdings",
-
-        location: "Yangon",
-
-        workType: "On-site",
-
-        appliedDate: "2026-08-25",
-
-        status: "interview",
-
-        coverLetter:
-            "I am applying for the Senior Accountant position with strong experience in accounting, financial reporting and financial management.",
-
-        resume: "Ei_Ei_Mon_Resume.pdf"
-    },
-
-
-    {
-        id: "APP-2026-005",
-
-        applicant: {
-            name: "Htet Naing",
-            email: "htetnaing@example.com"
-        },
-
-        job: {
-            title: "Senior Frontend Developer",
-            id: "JOB-2026-001"
-        },
-
-        company: "ABC Technology",
-
-        location: "Yangon",
-
-        workType: "Hybrid",
-
-        appliedDate: "2026-08-24",
-
-        status: "hired",
-
-        coverLetter:
-            "I am excited about the opportunity to contribute to your development team and bring my frontend development experience to the company.",
-
-        resume: "Htet_Naing_Resume.pdf"
-    },
-
-
-    {
-        id: "APP-2026-006",
-
-        applicant: {
-            name: "Su Hnin",
-            email: "suhnin@example.com"
-        },
-
-        job: {
-            title: "UI/UX Designer",
-            id: "JOB-2026-003"
-        },
-
-        company: "Creative Studio",
-
-        location: "Mandalay",
-
-        workType: "Remote",
-
-        appliedDate: "2026-08-23",
-
-        status: "rejected",
-
-        coverLetter:
-            "I am passionate about creating simple and user-friendly digital experiences and would be happy to contribute to your team.",
-
-        resume: "Su_Hnin_Resume.pdf"
-    },
-
-
-    {
-        id: "APP-2026-007",
-
-        applicant: {
-            name: "Thura Aung",
-            email: "thuraaung@example.com"
-        },
-
-        job: {
-            title: "Digital Marketing Specialist",
-            id: "JOB-2026-002"
-        },
-
-        company: "Growth Myanmar",
-
-        location: "Yangon",
-
-        workType: "Remote",
-
-        appliedDate: "2026-08-22",
-
-        status: "new",
-
-        coverLetter:
-            "My background in social media marketing and content strategy makes this position a strong match for my skills.",
-
-        resume: "Thura_Aung_Resume.pdf"
-    },
-
-
-    {
-        id: "APP-2026-008",
-
-        applicant: {
-            name: "Nandar Win",
-            email: "nandarwin@example.com"
-        },
-
-        job: {
-            title: "Senior Frontend Developer",
-            id: "JOB-2026-001"
-        },
-
-        company: "ABC Technology",
-
-        location: "Yangon",
-
-        workType: "Hybrid",
-
-        appliedDate: "2026-08-20",
-
-        status: "review",
-
-        coverLetter:
-            "I have worked on multiple web applications and enjoy creating accessible and responsive user interfaces.",
-
-        resume: "Nandar_Win_Resume.pdf"
     }
 
-];
-
+}
 
 
 /* ==================================================
@@ -1705,24 +1560,21 @@ if (viewResume) {
             const resume =
                 viewResume.dataset.resume;
 
-
             if (!resume) {
 
-                return;
+                alert(
+                    "Resume not available."
+                );
 
+                return;
             }
 
+            const resumeUrl =
+                `http://127.0.0.1:8000/storage/${resume}`;
 
-            /*
-             * Temporary behavior.
-             *
-             * Later this will point to the
-             * actual uploaded resume URL.
-             */
-
-            alert(
-                `Resume: ${resume}\n\n` +
-                "Resume preview/download will be connected to the backend later."
+            window.open(
+                resumeUrl,
+                "_blank"
             );
 
         }
@@ -1740,7 +1592,7 @@ if (rejectApplication) {
 
     rejectApplication.addEventListener(
         "click",
-        () => {
+        async () => {
 
             const id =
                 rejectApplication.dataset
@@ -1763,8 +1615,7 @@ if (rejectApplication) {
 
             const confirmed =
                 confirm(
-                    `Reject the application from ${
-                        application.applicant.name
+                    `Reject the application from ${application.applicant.name
                     }?`
                 );
 
@@ -1776,17 +1627,66 @@ if (rejectApplication) {
             }
 
 
-            application.status =
-                "rejected";
+            const backendId =
+                application.id.replace(
+                    "APP-",
+                    ""
+                );
 
 
-            updateStatistics();
+            try {
+
+                const response =
+                    await fetch(
+                        `http://127.0.0.1:8000/api/admin/applications/${backendId}/status`,
+                        {
+                            method: "PATCH",
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                status: "rejected"
+                            })
+                        }
+                    );
 
 
-            filterApplications();
+                const result =
+                    await response.json();
 
 
-            closeModal();
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to reject application."
+                    );
+                }
+
+
+                application.status =
+                    "rejected";
+
+
+                updateStatistics();
+
+
+                filterApplications();
+
+
+                closeModal();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message
+                );
+
+            }
 
         }
     );
@@ -1803,12 +1703,11 @@ if (updateApplication) {
 
     updateApplication.addEventListener(
         "click",
-        () => {
+        async () => {
 
             const id =
                 updateApplication.dataset
                     .applicationId;
-
 
             const application =
                 applications.find(
@@ -1816,50 +1715,83 @@ if (updateApplication) {
                         item.id === id
                 );
 
-
             if (!application) {
-
                 return;
-
             }
-
 
             const nextStatuses = {
 
                 new: "review",
-
                 review: "shortlisted",
-
                 shortlisted: "interview",
-
                 interview: "hired",
-
                 hired: "hired",
-
                 rejected: "review"
 
             };
 
-
             const nextStatus =
                 nextStatuses[
-                    application.status
+                application.status
                 ];
 
+            const backendId =
+                application.id.replace(
+                    "APP-",
+                    ""
+                );
 
-            application.status =
-                nextStatus;
+            try {
 
+                const response =
+                    await fetch(
+                        `http://127.0.0.1:8000/api/admin/applications/${backendId}/status`,
+                        {
+                            method: "PATCH",
 
-            updateStatistics();
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                            },
 
+                            body: JSON.stringify({
+                                status: nextStatus
+                            })
+                        }
+                    );
 
-            filterApplications();
+                const result =
+                    await response.json();
 
+                if (!response.ok) {
 
-            openApplicationModal(
-                application.id
-            );
+                    throw new Error(
+                        result.message ||
+                        "Unable to update application."
+                    );
+
+                }
+
+                application.status =
+                    nextStatus;
+
+                updateStatistics();
+
+                filterApplications();
+
+                openApplicationModal(
+                    application.id
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message
+                );
+
+            }
 
         }
     );
@@ -1872,21 +1804,10 @@ if (updateApplication) {
    INITIALIZE
 ================================================== */
 
-function initializeApplications() {
+async function initializeApplications() {
 
-    updateStatistics();
-
-
-    filteredApplications =
-        [...applications];
-
-
-    sortFilteredApplications();
-
-
-    renderApplications();
+    await loadApplicationsFromBackend();
 
 }
-
 
 initializeApplications();

@@ -8,261 +8,110 @@
    TEMPORARY JOB DATA
 ================================================== */
 
-const publishedJobs = [
+let publishedJobs = [];
+async function loadPublishedJobs() {
 
-    {
-        id: "JOB-2026-001",
-        title: "Senior Frontend Developer",
-        company: "ABC Technology",
-        contact: "Mg Aung",
-        category: "IT & Software",
-        categoryId: "it-software",
-        location: "Yangon",
-        workType: "Hybrid",
-        employmentType: "Full-time",
-        salary: "MMK 1,500,000 – 2,000,000",
-        applications: 24,
-        status: "published",
-        publishedAt: "2026-08-25",
-        expiresAt: "2026-09-25",
-        description:
-            "We are looking for an experienced frontend developer to join our growing technology team.",
-        requirements:
-            "3+ years of frontend development experience, strong JavaScript skills and experience with modern frameworks."
-    },
+    try {
 
-    {
-        id: "JOB-2026-002",
-        title: "Digital Marketing Specialist",
-        company: "NextGen Myanmar",
-        contact: "Su Su",
-        category: "Marketing",
-        categoryId: "marketing",
-        location: "Yangon",
-        workType: "On-site",
-        employmentType: "Full-time",
-        salary: "MMK 900,000 – 1,300,000",
-        applications: 18,
-        status: "published",
-        publishedAt: "2026-08-24",
-        expiresAt: "2026-09-20",
-        description:
-            "Join our marketing team and help build campaigns that connect brands with customers.",
-        requirements:
-            "Experience in digital marketing, social media marketing and content strategy."
-    },
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/admin/jobs",
+            {
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
 
-    {
-        id: "JOB-2026-003",
-        title: "UI/UX Designer",
-        company: "Creative Hub",
-        contact: "Ko Min",
-        category: "Design",
-        categoryId: "design",
-        location: "Yangon",
-        workType: "Remote",
-        employmentType: "Full-time",
-        salary: "MMK 1,000,000 – 1,600,000",
-        applications: 31,
-        status: "published",
-        publishedAt: "2026-08-23",
-        expiresAt: "2026-09-15",
-        description:
-            "We are seeking a creative UI/UX designer to create intuitive digital experiences.",
-        requirements:
-            "Strong portfolio, Figma experience and understanding of user-centered design."
-    },
+        const result = await response.json();
 
-    {
-        id: "JOB-2026-004",
-        title: "Senior Accountant",
-        company: "Golden Group",
-        contact: "Ei Ei",
-        category: "Finance & Accounting",
-        categoryId: "finance",
-        location: "Mandalay",
-        workType: "On-site",
-        employmentType: "Full-time",
-        salary: "MMK 1,200,000 – 1,800,000",
-        applications: 12,
-        status: "published",
-        publishedAt: "2026-08-21",
-        expiresAt: "2026-09-12",
-        description:
-            "Manage financial records and support the company's accounting operations.",
-        requirements:
-            "Accounting degree and at least 3 years of relevant experience."
-    },
+        if (!response.ok) {
+            throw new Error(
+                result.message ||
+                "Failed to load published jobs."
+            );
+        }
 
-    {
-        id: "JOB-2026-005",
-        title: "Sales Executive",
-        company: "Prime Solutions",
-        contact: "Aung Zaw",
-        category: "Sales",
-        categoryId: "sales",
-        location: "Yangon",
-        workType: "Hybrid",
-        employmentType: "Full-time",
-        salary: "MMK 700,000 + Commission",
-        applications: 27,
-        status: "published",
-        publishedAt: "2026-08-20",
-        expiresAt: "2026-09-08",
-        description:
-            "Develop new business opportunities and maintain strong relationships with customers.",
-        requirements:
-            "Excellent communication skills and previous sales experience preferred."
-    },
+        publishedJobs = result.data.map(item => ({
 
-    {
-        id: "JOB-2026-006",
-        title: "English Language Teacher",
-        company: "Future Academy",
-        contact: "Thiri",
-        category: "Education",
-        categoryId: "education",
-        location: "Yangon",
-        workType: "On-site",
-        employmentType: "Part-time",
-        salary: "MMK 500,000 – 800,000",
-        applications: 15,
-        status: "published",
-        publishedAt: "2026-08-18",
-        expiresAt: "2026-09-05",
-        description:
-            "Teach English to students and help them improve their communication skills.",
-        requirements:
-            "Strong English communication skills and teaching experience."
-    },
+            id: `JOB-${item.id}`,
 
-    {
-        id: "JOB-2026-007",
-        title: "Civil Engineer",
-        company: "BuildRight Construction",
-        contact: "Kyaw Zin",
-        category: "Engineering",
-        categoryId: "engineering",
-        location: "Naypyidaw",
-        workType: "On-site",
-        employmentType: "Full-time",
-        salary: "MMK 1,300,000 – 1,900,000",
-        applications: 9,
-        status: "published",
-        publishedAt: "2026-08-16",
-        expiresAt: "2026-09-01",
-        description:
-            "Work with our engineering team on construction and infrastructure projects.",
-        requirements:
-            "Civil Engineering degree and experience with construction projects."
-    },
+            title: item.title,
 
-    {
-        id: "JOB-2026-008",
-        title: "Administrative Assistant",
-        company: "Myanmar Business Co.",
-        contact: "Htet Htet",
-        category: "Administration",
-        categoryId: "administration",
-        location: "Yangon",
-        workType: "On-site",
-        employmentType: "Full-time",
-        salary: "MMK 600,000 – 850,000",
-        applications: 21,
-        status: "published",
-        publishedAt: "2026-08-15",
-        expiresAt: "2026-08-30",
-        description:
-            "Support daily office operations and assist the management team.",
-        requirements:
-            "Good organizational and communication skills with basic computer knowledge."
-    },
+            company:
+                item.employer?.company_name ||
+                "Not available",
 
-    {
-        id: "JOB-2026-009",
-        title: "Backend Developer",
-        company: "TechVision",
-        contact: "Myo Min",
-        category: "IT & Software",
-        categoryId: "it-software",
-        location: "Remote",
-        workType: "Remote",
-        employmentType: "Full-time",
-        salary: "MMK 1,600,000 – 2,300,000",
-        applications: 36,
-        status: "published",
-        publishedAt: "2026-08-12",
-        expiresAt: "2026-09-30",
-        description:
-            "Build reliable backend systems and APIs for our growing digital platform.",
-        requirements:
-            "Strong Node.js or similar backend experience and database knowledge."
-    },
+            contact:
+                item.employer?.contact_name ||
+                "Not available",
 
-    {
-        id: "JOB-2026-010",
-        title: "Content Marketing Executive",
-        company: "BrandWorks",
-        contact: "May Thu",
-        category: "Marketing",
-        categoryId: "marketing",
-        location: "Yangon",
-        workType: "Hybrid",
-        employmentType: "Full-time",
-        salary: "MMK 800,000 – 1,200,000",
-        applications: 16,
-        status: "published",
-        publishedAt: "2026-08-10",
-        expiresAt: "2026-08-28",
-        description:
-            "Create engaging content and support brand communication campaigns.",
-        requirements:
-            "Strong writing skills and experience creating digital marketing content."
-    },
+            category:
+                item.category?.name ||
+                "Not available",
 
-    {
-        id: "JOB-2026-011",
-        title: "Graphic Designer",
-        company: "Pixel Studio",
-        contact: "Nandar",
-        category: "Design",
-        categoryId: "design",
-        location: "Yangon",
-        workType: "Remote",
-        employmentType: "Contract",
-        salary: "MMK 700,000 – 1,000,000",
-        applications: 19,
-        status: "closed",
-        publishedAt: "2026-07-28",
-        expiresAt: "2026-08-20",
-        description:
-            "Design marketing materials and digital content for our clients.",
-        requirements:
-            "Strong Adobe Creative Suite or Figma skills and a creative portfolio."
-    },
+            categoryId:
+                item.category?.slug ||
+                "other",
 
-    {
-        id: "JOB-2026-012",
-        title: "HR & Administration Officer",
-        company: "United Myanmar",
-        contact: "Thaw Zin",
-        category: "Administration",
-        categoryId: "administration",
-        location: "Yangon",
-        workType: "On-site",
-        employmentType: "Full-time",
-        salary: "MMK 750,000 – 1,100,000",
-        applications: 14,
-        status: "expired",
-        publishedAt: "2026-07-20",
-        expiresAt: "2026-08-20",
-        description:
-            "Support HR activities and administrative operations across the company.",
-        requirements:
-            "Experience in HR or administration and good communication skills."
+            location:
+                item.location ||
+                "Not specified",
+
+            workType:
+                item.work_mode ||
+                "Not specified",
+
+            employmentType:
+                item.job_type ||
+                "Not specified",
+
+            salary:
+                item.salary_min || item.salary_max
+                    ? `${item.salary_min ?? ""} - ${item.salary_max ?? ""} ${item.currency ?? "MMK"}`
+                    : "Not specified",
+
+            applications: 0,
+
+            status:
+                item.is_active
+                    ? "published"
+                    : "closed",
+
+            publishedAt:
+                item.published_at
+                    ? item.published_at.split("T")[0]
+                    : "",
+
+            expiresAt:
+                item.deadline || "",
+
+            description:
+                item.description ||
+                "No description",
+
+            requirements:
+                "Not available"
+        }));
+
+        filteredJobs = [...publishedJobs];
+
+        sortFilteredJobs();
+
+        currentPageNumber = 1;
+
+        updateStatistics();
+
+        renderAll();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Cannot load published jobs from ALote backend."
+        );
     }
-
-];
+}
 
 
 
@@ -358,8 +207,11 @@ function formatDate(dateString) {
         return "—";
     }
 
-    const date =
-        new Date(dateString + "T00:00:00");
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
 
     return date.toLocaleDateString(
         "en-US",
@@ -369,27 +221,32 @@ function formatDate(dateString) {
             year: "numeric"
         }
     );
-
 }
 
 
 
 function getRelativeDate(dateString) {
 
-    const date =
-        new Date(dateString + "T00:00:00");
+    if (!dateString) {
+        return "—";
+    }
 
-    const today =
-        new Date();
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
+
+    date.setHours(0, 0, 0, 0);
+
+    const today = new Date();
 
     today.setHours(0, 0, 0, 0);
 
-    const difference =
-        Math.round(
-            (today - date) /
-            (1000 * 60 * 60 * 24)
-        );
-
+    const difference = Math.round(
+        (today - date) /
+        (1000 * 60 * 60 * 24)
+    );
 
     if (difference === 0) {
         return "Today";
@@ -404,7 +261,6 @@ function getRelativeDate(dateString) {
     }
 
     return formatDate(dateString);
-
 }
 
 
@@ -1632,13 +1488,12 @@ if (closeJobButton) {
 
     closeJobButton.addEventListener(
         "click",
-        () => {
+        async () => {
 
             const title =
                 document.getElementById(
                     "modalJobTitle"
                 ).textContent;
-
 
             const job =
                 publishedJobs.find(
@@ -1646,32 +1501,74 @@ if (closeJobButton) {
                         item.title === title
                 );
 
-
             if (!job) {
                 return;
             }
-
 
             const confirmed =
                 window.confirm(
                     `Close "${job.title}"?\n\nThis job will no longer accept new applications.`
                 );
 
-
             if (!confirmed) {
                 return;
             }
 
+            try {
 
-            job.status =
-                "closed";
+                closeJobButton.disabled = true;
+                closeJobButton.textContent = "Closing...";
 
+                const jobId =
+                    job.id.replace("JOB-", "");
 
-            closeJobDetails();
+                const response = await fetch(
+                    `http://127.0.0.1:8000/api/admin/jobs/${jobId}/close`,
+                    {
+                        method: "POST",
 
-            applyFilters();
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
 
-            updateStatistics();
+                const result =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    console.error(result);
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to close job."
+                    );
+                }
+
+                closeJobDetails();
+
+                await loadPublishedJobs();
+
+                alert(
+                    "Job closed successfully."
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message ||
+                    "Unable to close job."
+                );
+
+            } finally {
+
+                closeJobButton.disabled = false;
+                closeJobButton.textContent = "Close Job";
+            }
 
         }
     );
@@ -1784,8 +1681,4 @@ function updateCurrentDate() {
 
 updateCurrentDate();
 
-updateStatistics();
-
-sortFilteredJobs();
-
-renderAll();
+loadPublishedJobs();
