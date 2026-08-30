@@ -1,23 +1,15 @@
 /* ==================================================
    ALOTE ADMIN LOGIN
-   TEMPORARY FRONTEND AUTHENTICATION
+   BACKEND AUTHENTICATION
 ================================================== */
 
 
 /* ==================================================
-   TEMPORARY ADMIN ACCOUNT
-   -----------------------------------------------
-   IMPORTANT:
-   This is only for the frontend prototype.
-   Move authentication to the backend later.
+   API
 ================================================== */
 
-const ADMIN_EMAIL =
-    "admin@alote.com";
-
-
-const ADMIN_PASSWORD =
-    "ALoteAdmin@2026";
+const API_BASE_URL =
+    window.ALOTE_CONFIG.API_BASE_URL;
 
 
 /* ==================================================
@@ -25,41 +17,135 @@ const ADMIN_PASSWORD =
 ================================================== */
 
 const loginForm =
-    document.getElementById("adminLoginForm");
+    document.getElementById(
+        "adminLoginForm"
+    );
 
 
 const emailInput =
-    document.getElementById("adminEmail");
+    document.getElementById(
+        "adminEmail"
+    );
 
 
 const passwordInput =
-    document.getElementById("adminPassword");
+    document.getElementById(
+        "adminPassword"
+    );
 
 
 const togglePassword =
-    document.getElementById("togglePassword");
+    document.getElementById(
+        "togglePassword"
+    );
 
 
 const loginError =
-    document.getElementById("loginError");
+    document.getElementById(
+        "loginError"
+    );
 
 
 const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+        "loginButton"
+    );
 
 
 /* ==================================================
-   CHECK EXISTING SESSION
+   EXISTING AUTH CHECK
 ================================================== */
 
-const adminSession =
-    sessionStorage.getItem("alote-admin-session");
+const existingToken =
+    sessionStorage.getItem(
+        "alote-admin-token"
+    );
 
 
-if (adminSession === "authenticated") {
+if (existingToken) {
 
-    window.location.href =
-        "dashboard.html";
+    checkExistingSession();
+
+}
+
+
+/* ==================================================
+   CHECK TOKEN
+================================================== */
+
+async function checkExistingSession() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/admin/me`,
+                {
+                    method:
+                        "GET",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${existingToken}`
+
+                    }
+                }
+            );
+
+
+        if (response.ok) {
+
+            window.location.href =
+                "dashboard.html";
+
+            return;
+
+        }
+
+
+        clearAdminSession();
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin session check error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   CLEAR SESSION
+================================================== */
+
+function clearAdminSession() {
+
+    sessionStorage.removeItem(
+        "alote-admin-token"
+    );
+
+
+    sessionStorage.removeItem(
+        "alote-admin-email"
+    );
+
+
+    sessionStorage.removeItem(
+        "alote-admin-name"
+    );
+
+
+    sessionStorage.removeItem(
+        "alote-admin-session"
+    );
 
 }
 
@@ -68,14 +154,18 @@ if (adminSession === "authenticated") {
    SHOW / HIDE PASSWORD
 ================================================== */
 
-if (togglePassword) {
+if (
+    togglePassword &&
+    passwordInput
+) {
 
     togglePassword.addEventListener(
         "click",
         () => {
 
             const isPassword =
-                passwordInput.type === "password";
+                passwordInput.type ===
+                "password";
 
 
             passwordInput.type =
@@ -104,19 +194,48 @@ if (togglePassword) {
 
 
 /* ==================================================
-   HIDE ERROR WHEN USER TYPES
+   ERROR
 ================================================== */
 
 function hideLoginError() {
 
     if (!loginError) {
+
         return;
+
     }
 
-    loginError.classList.add("hidden");
+
+    loginError.classList.add(
+        "hidden"
+    );
 
 }
 
+
+function showLoginError(message) {
+
+    if (!loginError) {
+
+        return;
+
+    }
+
+
+    loginError.textContent =
+        message;
+
+
+    loginError.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* ==================================================
+   INPUT EVENTS
+================================================== */
 
 emailInput?.addEventListener(
     "input",
@@ -131,109 +250,258 @@ passwordInput?.addEventListener(
 
 
 /* ==================================================
+   BUTTON LOADING
+================================================== */
+
+function setLoginLoading(isLoading) {
+
+    if (!loginButton) {
+
+        return;
+
+    }
+
+
+    loginButton.disabled =
+        isLoading;
+
+
+    loginButton.classList.toggle(
+        "loading",
+        isLoading
+    );
+
+
+    const buttonText =
+        loginButton.querySelector(
+            ".login-button-text"
+        );
+
+
+    if (!buttonText) {
+
+        return;
+
+    }
+
+
+    buttonText.textContent =
+        isLoading
+            ? "Signing in..."
+            : "Sign in";
+
+}
+
+
+/* ==================================================
    LOGIN
 ================================================== */
 
 loginForm?.addEventListener(
     "submit",
-    event => {
+    async event => {
 
         event.preventDefault();
-
-
-        const email =
-            emailInput.value
-                .trim()
-                .toLowerCase();
-
-
-        const password =
-            passwordInput.value;
 
 
         hideLoginError();
 
 
-        /* ------------------------------------------
-           VALIDATE
-        ------------------------------------------ */
+        const email =
+            emailInput?.value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            passwordInput?.value;
+
 
         if (
-            email !== ADMIN_EMAIL.toLowerCase() ||
-            password !== ADMIN_PASSWORD
+            !email ||
+            !password
         ) {
 
-            loginError.textContent =
-                "Invalid email or password.";
-
-            loginError.classList.remove(
-                "hidden"
+            showLoginError(
+                "Please enter your email and password."
             );
-
-            passwordInput.value = "";
-
-            passwordInput.focus();
 
             return;
 
         }
 
 
-        /* ------------------------------------------
-           LOGIN SUCCESS
-        ------------------------------------------ */
-
-        sessionStorage.setItem(
-            "alote-admin-session",
-            "authenticated"
+        setLoginLoading(
+            true
         );
 
 
-        sessionStorage.setItem(
-            "alote-admin-email",
-            ADMIN_EMAIL
-        );
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/admin/login`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+                                email:
+                                    email,
+
+                                password:
+                                    password
+                            })
+
+                    }
+                );
 
 
-        /* ------------------------------------------
-           BUTTON STATE
-        ------------------------------------------ */
-
-        loginButton.classList.add(
-            "loading"
-        );
+            let result = null;
 
 
-        loginButton.disabled = true;
+            try {
+
+                result =
+                    await response.json();
+
+            } catch (error) {
+
+                result = null;
+
+            }
 
 
-        const buttonText =
-            loginButton.querySelector(
-                ".login-button-text"
+            if (!response.ok) {
+
+                if (
+                    response.status === 401
+                ) {
+
+                    showLoginError(
+                        "Invalid email or password."
+                    );
+
+                } else if (
+                    response.status === 422
+                ) {
+
+                    showLoginError(
+                        "Please enter a valid email and password."
+                    );
+
+                } else {
+
+                    showLoginError(
+                        result?.message ||
+                        "Unable to sign in."
+                    );
+
+                }
+
+
+                if (passwordInput) {
+
+                    passwordInput.value =
+                        "";
+
+                    passwordInput.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            if (!result?.token) {
+
+                showLoginError(
+                    "Login token was not received."
+                );
+
+                return;
+
+            }
+
+
+            /* ------------------------------------------
+               SAVE AUTH TOKEN
+            ------------------------------------------ */
+
+            sessionStorage.setItem(
+                "alote-admin-token",
+                result.token
             );
 
 
-        if (buttonText) {
+            sessionStorage.setItem(
+                "alote-admin-session",
+                "authenticated"
+            );
 
-            buttonText.textContent =
-                "Signing in...";
+
+            if (result.user?.email) {
+
+                sessionStorage.setItem(
+                    "alote-admin-email",
+                    result.user.email
+                );
+
+            }
+
+
+            if (result.user?.name) {
+
+                sessionStorage.setItem(
+                    "alote-admin-name",
+                    result.user.name
+                );
+
+            }
+
+
+            /* ------------------------------------------
+               REDIRECT
+            ------------------------------------------ */
+
+            window.location.href =
+                "dashboard.html";
+
+
+        } catch (error) {
+
+            console.error(
+                "Admin login error:",
+                error
+            );
+
+
+            showLoginError(
+                "Unable to connect to the server."
+            );
+
+
+        } finally {
+
+            setLoginLoading(
+                false
+            );
 
         }
-
-
-        /* ------------------------------------------
-           REDIRECT
-        ------------------------------------------ */
-
-        setTimeout(
-            () => {
-
-                window.location.href =
-                    "dashboard.html";
-
-            },
-            400
-        );
 
     }
 );

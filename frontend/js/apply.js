@@ -36,7 +36,7 @@ async function loadJobFromBackend() {
 
         const response =
             await fetch(
-                `http://127.0.0.1:8000/api/jobs/${jobId}`,
+                `${window.ALOTE_CONFIG.API_BASE_URL}/jobs/${jobId}`,
                 {
                     headers: {
                         "Accept": "application/json"
@@ -64,11 +64,11 @@ async function loadJobFromBackend() {
 
         job = {
 
-            id:
-                item.id,
+    id:
+        item.public_id,
 
-            title:
-                item.title,
+    title:
+        item.title,
 
             company:
                 item.employer?.company_name ||
@@ -753,9 +753,9 @@ if (applicationForm) {
             ------------------------------------------ */
 
             formData.append(
-                "job_post_id",
-                job.id
-            );
+    "job_public_id",
+    job.id
+);
 
             formData.append(
                 "full_name",
@@ -776,7 +776,7 @@ if (applicationForm) {
 
                 const response =
                     await fetch(
-                        "http://127.0.0.1:8000/api/applications",
+                        `${window.ALOTE_CONFIG.API_BASE_URL}/applications`,
                         {
                             method: "POST",
                             headers: {

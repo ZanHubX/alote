@@ -14,10 +14,11 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'job_post_id' => [
+
+            'job_public_id' => [
                 'required',
-                'integer',
-                'exists:job_posts,id'
+                'uuid',
+                'exists:job_posts,public_id'
             ],
 
             'full_name' => [
@@ -51,9 +52,10 @@ class ApplicationController extends Controller
             ],
         ]);
 
+
         $job = JobPost::where(
-            'id',
-            $validated['job_post_id']
+            'public_id',
+            $validated['job_public_id']
         )
             ->where(
                 'is_active',
@@ -71,59 +73,63 @@ class ApplicationController extends Controller
 
                 $resumePath =
                     $request
-                    ->file('resume')
-                    ->store(
-                        'resumes',
-                        'public'
-                    );
+                        ->file('resume')
+                        ->store(
+                            'resumes',
+                            'public'
+                        );
 
 
                 $jobSeeker =
                     JobSeeker::create([
+
                         'full_name' =>
-                        $validated['full_name'],
+                            $validated['full_name'],
 
                         'email' =>
-                        $validated['email'],
+                            $validated['email'],
 
                         'phone' =>
-                        $validated['phone'],
+                            $validated['phone'],
 
                         'resume_path' =>
-                        $resumePath,
+                            $resumePath,
                     ]);
 
 
                 return Application::create([
+
                     'job_post_id' =>
-                    $job->id,
+                        $job->id,
 
                     'job_seeker_id' =>
-                    $jobSeeker->id,
+                        $jobSeeker->id,
 
                     'cover_letter' =>
-                    $validated['cover_letter']
-                        ?? null,
+                        $validated['cover_letter']
+                            ?? null,
 
                     'resume_path' =>
-                    $resumePath,
+                        $resumePath,
 
                     'status' =>
-                    'pending',
+                        'pending',
 
                     'applied_at' =>
-                    now(),
+                        now(),
                 ]);
             }
         );
 
 
         return response()->json([
+
             'message' =>
-            'Application submitted successfully.',
+                'Application submitted successfully.',
 
             'data' =>
-            $application
+                $application
+
         ], 201);
     }
 }

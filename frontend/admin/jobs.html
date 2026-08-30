@@ -5,15 +5,9 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="robots"
-        content="noindex, nofollow"
-    >
+    <meta name="robots" content="noindex, nofollow">
 
     <title>Published Jobs | ALote Admin</title>
 
@@ -22,30 +16,21 @@
          ADMIN GLOBAL
     ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="../css/admin/admin-global.css"
-    >
+    <link rel="stylesheet" href="../css/admin/admin-global.css">
 
 
     <!-- ==================================================
          ADMIN LAYOUT
     ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="../css/admin/dashboard.css"
-    >
+    <link rel="stylesheet" href="../css/admin/dashboard.css">
 
 
     <!-- ==================================================
          PAGE STYLES
     ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="../css/admin/published-jobs.css"
-    >
+    <link rel="stylesheet" href="../css/admin/published-jobs.css">
 
 </head>
 
@@ -53,367 +38,31 @@
 <body class="admin-page">
 
 
-<!-- ==================================================
+    <!-- ==================================================
      MOBILE OVERLAY
 ================================================== -->
 
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 
 
-<!-- ==================================================
+    <!-- ==================================================
      SIDEBAR
 ================================================== -->
 
-<aside
-    class="admin-sidebar"
-    id="adminSidebar"
->
-
-
-    <!-- ==================================================
-         BRAND
-    ================================================== -->
-
-    <div class="sidebar-brand">
-
-        <a
-            href="../index.html"
-            class="admin-logo"
-        >
-
-            <img
-                src="../assets/logo/ALotelogo.png"
-                alt="ALote"
-                class="admin-logo-image"
-            >
-
-        </a>
-
-    </div>
-
-
-
-    <!-- ==================================================
-         ADMIN PROFILE
-    ================================================== -->
-
-    <div class="admin-profile">
-
-        <div class="admin-avatar">
-            A
-        </div>
-
-
-        <div class="admin-profile-info">
-
-            <strong>
-                ALote Admin
-            </strong>
-
-            <span>
-                Administrator
-            </span>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- ==================================================
-         NAVIGATION
-    ================================================== -->
-
-    <nav class="admin-navigation">
-
-
-        <div class="nav-section-label">
-            OVERVIEW
-        </div>
-
-
-        <a
-            href="dashboard.html"
-            class="admin-nav-link active"
-            data-page="dashboard"
-        >
-
-            <span class="nav-icon">
-                ▦
-            </span>
-
-            <span>
-                Dashboard
-            </span>
-
-        </a>
-
-
-
-        <div class="nav-section-label">
-            MANAGEMENT
-        </div>
-
-
-        <a
-            href="job-submissions.html"
-            class="admin-nav-link"
-            data-page="submissions"
-        >
-
-            <span class="nav-icon">
-                ◫
-            </span>
-
-            <span>
-                Job Submissions
-            </span>
-
-            <span
-                class="nav-badge"
-                id="pendingJobsBadge"
-            >
-                0
-            </span>
-
-        </a>
-
-
-        <a
-            href="jobs.html"
-            class="admin-nav-link"
-            data-page="jobs"
-        >
-
-            <span class="nav-icon">
-                ◧
-            </span>
-
-            <span>
-                Published Jobs
-            </span>
-
-        </a>
-
-
-        <a
-            href="applications.html"
-            class="admin-nav-link"
-            data-page="applications"
-        >
-
-            <span class="nav-icon">
-                ◎
-            </span>
-
-            <span>
-                Applications
-            </span>
-
-            <span
-                class="nav-badge muted"
-                id="newApplicationsBadge"
-            >
-                0
-            </span>
-
-        </a>
-
-
-
-        <div class="nav-section-label">
-            SYSTEM
-        </div>
-
-
-        <a
-            href="../index.html"
-            class="admin-nav-link"
-        >
-
-            <span class="nav-icon">
-                ↗
-            </span>
-
-            <span>
-                View Website
-            </span>
-
-        </a>
-
-
-    </nav>
-
-
-
-    <!-- ==================================================
-         SIDEBAR FOOTER
-    ================================================== -->
-
-    <div class="sidebar-footer">
-
-        <button
-            type="button"
-            class="logout-button"
-            id="logoutButton"
-        >
-
-            <span class="nav-icon">
-                ⇥
-            </span>
-
-            <span>
-                Sign out
-            </span>
-
-        </button>
-
-    </div>
-
-
-</aside>
-
-
-
-<!-- ==================================================
-     MAIN AREA
-================================================== -->
-
-<div class="admin-main">
-
-
-    <!-- ==================================================
-         TOP BAR
-    ================================================== -->
-
-    <header class="admin-topbar">
-
-
-        <div class="topbar-left">
-
-
-            <!-- Mobile Menu -->
-
-            <button
-                type="button"
-                class="mobile-menu-button"
-                id="mobileMenuButton"
-                aria-label="Open navigation"
-            >
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
-
-
-            <div class="page-heading">
-
-                <span class="page-eyebrow">
-                    ADMINISTRATION
-                </span>
-
-                <h1>
-                    Dashboard
-                </h1>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="topbar-right">
-
-
-            <!-- Current Date -->
-
-            <div class="topbar-date">
-
-                <span class="date-icon">
-                    ◷
-                </span>
-
-                <span id="currentDate">
-                    Today
-                </span>
-
-            </div>
-
-
-            <!-- Admin -->
-
-            <div class="topbar-user">
-
-                <div class="topbar-avatar">
-                    A
-                </div>
-
-                <div>
-
-                    <strong>
-                        Admin
-                    </strong>
-
-                    <span>
-                        ALote
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </header>
-
-
-
-    <!-- ==================================================
-         PAGE CONTENT
-    ================================================== -->
-
-    <section class="published-jobs-page">
+    <aside class="admin-sidebar" id="adminSidebar">
 
 
         <!-- ==================================================
-             PAGE INTRO
-        ================================================== -->
+         BRAND
+    ================================================== -->
 
-        <div class="published-intro">
+        <div class="sidebar-brand">
 
-            <div>
+            <a href="../index.html" class="admin-logo">
 
-                <span class="section-eyebrow">
-                    LIVE JOB BOARD
-                </span>
+                <img src="../assets/logo/ALotelogo.png" alt="ALote" class="admin-logo-image">
 
-                <h2>
-                    Your published opportunities.
-                </h2>
-
-                <p>
-                    Review, manage and monitor every job currently
-                    available to job seekers on ALote.
-                </p>
-
-            </div>
-
-
-            <a
-                href="../jobs.html"
-                class="view-job-board"
-                target="_blank"
-                rel="noopener"
-            >
-                View Job Board
-                <span>↗</span>
             </a>
 
         </div>
@@ -421,747 +70,929 @@
 
 
         <!-- ==================================================
-             STATISTICS
-        ================================================== -->
+         ADMIN PROFILE
+    ================================================== -->
 
-        <div class="published-stats">
+        <div class="admin-profile">
+
+            <div class="admin-avatar">
+                A
+            </div>
 
 
-            <article class="published-stat-card">
+            <div class="admin-profile-info">
 
-                <div class="published-stat-top">
-
-                    <span class="published-stat-label">
-                        Total Published
-                    </span>
-
-                    <span class="published-stat-icon">
-                        ◈
-                    </span>
-
-                </div>
-
-                <strong
-                    class="published-stat-value"
-                    id="totalPublished"
-                >
-                    128
+                <strong>
+                    ALote Admin
                 </strong>
 
-                <span class="published-stat-description">
-                    Jobs currently published
+                <span>
+                    Administrator
                 </span>
 
-            </article>
-
-
-
-            <article class="published-stat-card">
-
-                <div class="published-stat-top">
-
-                    <span class="published-stat-label">
-                        Active
-                    </span>
-
-                    <span class="published-stat-icon success">
-                        ✓
-                    </span>
-
-                </div>
-
-                <strong
-                    class="published-stat-value"
-                    id="activeJobs"
-                >
-                    116
-                </strong>
-
-                <span class="published-stat-description">
-                    Accepting applications
-                </span>
-
-            </article>
-
-
-
-            <article class="published-stat-card">
-
-                <div class="published-stat-top">
-
-                    <span class="published-stat-label">
-                        Expiring Soon
-                    </span>
-
-                    <span class="published-stat-icon warning">
-                        ◷
-                    </span>
-
-                </div>
-
-                <strong
-                    class="published-stat-value"
-                    id="expiringJobs"
-                >
-                    7
-                </strong>
-
-                <span class="published-stat-description">
-                    Within the next 7 days
-                </span>
-
-            </article>
-
-
-
-            <article class="published-stat-card">
-
-                <div class="published-stat-top">
-
-                    <span class="published-stat-label">
-                        Closed
-                    </span>
-
-                    <span class="published-stat-icon muted">
-                        —
-                    </span>
-
-                </div>
-
-                <strong
-                    class="published-stat-value"
-                    id="closedJobs"
-                >
-                    5
-                </strong>
-
-                <span class="published-stat-description">
-                    No longer accepting applications
-                </span>
-
-            </article>
+            </div>
 
         </div>
 
 
 
         <!-- ==================================================
-             JOB MANAGEMENT PANEL
+         NAVIGATION
+    ================================================== -->
+
+        <nav class="admin-navigation">
+
+
+            <div class="nav-section-label">
+                OVERVIEW
+            </div>
+
+
+            <a href="dashboard.html" class="admin-nav-link" data-page="dashboard">
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <div class="nav-section-label">
+                MANAGEMENT
+            </div>
+
+
+            <a href="job-submissions.html" class="admin-nav-link" data-page="submissions">
+
+                <span class="nav-icon">
+                    ◫
+                </span>
+
+                <span>
+                    Job Submissions
+                </span>
+
+                <span class="nav-badge" id="pendingJobsBadge">
+                    0
+                </span>
+
+            </a>
+
+
+            <a href="jobs.html" class="admin-nav-link active" data-page="jobs">
+
+                <span class="nav-icon">
+                    ◧
+                </span>
+
+                <span>
+                    Published Jobs
+                </span>
+
+            </a>
+
+
+            <a href="applications.html" class="admin-nav-link" data-page="applications">
+
+                <span class="nav-icon">
+                    ◎
+                </span>
+
+                <span>
+                    Applications
+                </span>
+
+                <span class="nav-badge muted" id="newApplicationsBadge">
+                    0
+                </span>
+
+            </a>
+
+
+
+            <div class="nav-section-label">
+                SYSTEM
+            </div>
+
+
+            <a href="../index.html" class="admin-nav-link">
+
+                <span class="nav-icon">
+                    ↗
+                </span>
+
+                <span>
+                    View Website
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- ==================================================
+         SIDEBAR FOOTER
+    ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <button type="button" class="logout-button" id="logoutButton">
+
+                <span class="nav-icon">
+                    ⇥
+                </span>
+
+                <span>
+                    Sign out
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- ==================================================
+     MAIN AREA
+================================================== -->
+
+    <div class="admin-main">
+
+
+        <!-- ==================================================
+         TOP BAR
+    ================================================== -->
+
+        <header class="admin-topbar">
+
+
+            <div class="topbar-left">
+
+
+                <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open navigation">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+
+                <div class="page-heading">
+
+                    <span class="page-eyebrow">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Published Jobs
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="topbar-right">
+
+
+                <div class="topbar-date">
+
+                    <span class="date-icon">
+                        ◷
+                    </span>
+
+                    <span id="currentDate">
+                        Today
+                    </span>
+
+                </div>
+
+
+                <div class="topbar-user">
+
+                    <div class="topbar-avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            ALote
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ==================================================
+         PAGE CONTENT
+    ================================================== -->
+
+        <section class="published-jobs-page">
+
+
+            <!-- ==================================================
+             PAGE INTRO
         ================================================== -->
 
-        <section class="published-panel">
-
-
-            <!-- PANEL HEADER -->
-
-            <div class="published-panel-header">
-
+            <div class="published-intro">
 
                 <div>
 
+                    <span class="section-eyebrow">
+                        LIVE JOB BOARD
+                    </span>
+
                     <h2>
-                        All published jobs
+                        Your published opportunities.
                     </h2>
 
                     <p>
-                        Search and manage your live job listings.
+                        Review, manage and monitor every job currently
+                        available to job seekers on ALote.
                     </p>
 
                 </div>
 
 
-                <div class="published-panel-actions">
-
-                    <button
-                        type="button"
-                        class="secondary-button"
-                        id="refreshJobs"
-                    >
-                        <span>↻</span>
-                        Refresh
-                    </button>
-
-                </div>
+                <a href="../jobs.html" class="view-job-board" target="_blank" rel="noopener">
+                    View Job Board
+                    <span>↗</span>
+                </a>
 
             </div>
 
 
 
             <!-- ==================================================
+             STATISTICS
+        ================================================== -->
+
+            <div class="published-stats">
+
+
+                <article class="published-stat-card">
+
+                    <div class="published-stat-top">
+
+                        <span class="published-stat-label">
+                            Total Published
+                        </span>
+
+                        <span class="published-stat-icon">
+                            ◈
+                        </span>
+
+                    </div>
+
+                    <strong class="published-stat-value" id="totalPublished">
+                        0
+                    </strong>
+
+                    <span class="published-stat-description">
+                        Jobs currently published
+                    </span>
+
+                </article>
+
+
+
+                <article class="published-stat-card">
+
+                    <div class="published-stat-top">
+
+                        <span class="published-stat-label">
+                            Active
+                        </span>
+
+                        <span class="published-stat-icon success">
+                            ✓
+                        </span>
+
+                    </div>
+
+                    <strong class="published-stat-value" id="activeJobs">
+                        0
+                    </strong>
+
+                    <span class="published-stat-description">
+                        Accepting applications
+                    </span>
+
+                </article>
+
+
+
+                <article class="published-stat-card">
+
+                    <div class="published-stat-top">
+
+                        <span class="published-stat-label">
+                            Expiring Soon
+                        </span>
+
+                        <span class="published-stat-icon warning">
+                            ◷
+                        </span>
+
+                    </div>
+
+                    <strong class="published-stat-value" id="expiringJobs">
+                        0
+                    </strong>
+
+                    <span class="published-stat-description">
+                        Within the next 7 days
+                    </span>
+
+                </article>
+
+
+
+                <article class="published-stat-card">
+
+                    <div class="published-stat-top">
+
+                        <span class="published-stat-label">
+                            Closed
+                        </span>
+
+                        <span class="published-stat-icon muted">
+                            —
+                        </span>
+
+                    </div>
+
+                    <strong class="published-stat-value" id="closedJobs">
+                        0
+                    </strong>
+
+                    <span class="published-stat-description">
+                        No longer accepting applications
+                    </span>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ==================================================
+             JOB MANAGEMENT PANEL
+        ================================================== -->
+
+            <section class="published-panel">
+
+
+                <div class="published-panel-header">
+
+
+                    <div>
+
+                        <h2>
+                            All published jobs
+                        </h2>
+
+                        <p>
+                            Search and manage your live job listings.
+                        </p>
+
+                    </div>
+
+
+                    <div class="published-panel-actions">
+
+                        <button type="button" class="secondary-button" id="refreshJobs">
+                            <span>↻</span>
+                            Refresh
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
                  FILTER BAR
             ================================================== -->
 
-            <div class="published-toolbar">
+                <div class="published-toolbar">
 
 
-                <div class="published-search">
+                    <div class="published-search">
 
-                    <span
-                        class="published-search-icon"
-                        aria-hidden="true"
-                    >
-                        ⌕
-                    </span>
+                        <span class="published-search-icon" aria-hidden="true">
+                            ⌕
+                        </span>
 
 
-                    <input
-                        type="search"
-                        id="jobSearch"
-                        placeholder="Search jobs, companies or categories..."
-                        autocomplete="off"
-                    >
+                        <input type="search" id="jobSearch" placeholder="Search jobs, companies or categories..."
+                            autocomplete="off">
 
 
-                    <button
-                        type="button"
-                        id="clearJobSearch"
-                        class="published-search-clear"
-                        aria-label="Clear search"
-                    >
-                        ×
-                    </button>
+                        <button type="button" id="clearJobSearch" class="published-search-clear"
+                            aria-label="Clear search">
+                            ×
+                        </button>
 
-                </div>
+                    </div>
 
 
 
-                <div class="published-filters">
+                    <div class="published-filters">
 
 
-                    <select
-                        id="statusFilter"
-                        class="published-select"
-                    >
+                        <select id="statusFilter" class="published-select">
 
-                        <option value="all">
-                            All statuses
-                        </option>
+                            <option value="all">
+                                All statuses
+                            </option>
 
-                        <option value="published">
-                            Published
-                        </option>
+                            <option value="published">
+                                Published
+                            </option>
 
-                        <option value="closed">
-                            Closed
-                        </option>
+                            <option value="closed">
+                                Closed
+                            </option>
 
-                        <option value="expired">
-                            Expired
-                        </option>
+                            <option value="expired">
+                                Expired
+                            </option>
 
-                    </select>
+                        </select>
 
 
 
-                    <select
-                        id="categoryFilter"
-                        class="published-select"
-                    >
+                        <select id="categoryFilter" class="published-select">
 
-                        <option value="all">
-                            All categories
-                        </option>
+                            <option value="all">
+                                All categories
+                            </option>
 
-                        <option value="it-software">
-                            IT & Software
-                        </option>
+                            <option value="it-software">
+                                IT & Software
+                            </option>
 
-                        <option value="marketing">
-                            Marketing
-                        </option>
+                            <option value="marketing">
+                                Marketing
+                            </option>
 
-                        <option value="design">
-                            Design
-                        </option>
+                            <option value="design">
+                                Design
+                            </option>
 
-                        <option value="finance">
-                            Finance & Accounting
-                        </option>
+                            <option value="finance">
+                                Finance & Accounting
+                            </option>
 
-                        <option value="sales">
-                            Sales
-                        </option>
+                            <option value="sales">
+                                Sales
+                            </option>
 
-                        <option value="education">
-                            Education
-                        </option>
+                            <option value="education">
+                                Education
+                            </option>
 
-                        <option value="engineering">
-                            Engineering
-                        </option>
+                            <option value="engineering">
+                                Engineering
+                            </option>
 
-                        <option value="administration">
-                            Administration
-                        </option>
+                            <option value="administration">
+                                Administration
+                            </option>
 
-                    </select>
+                        </select>
 
 
 
-                    <select
-                        id="sortJobs"
-                        class="published-select"
-                    >
+                        <select id="sortJobs" class="published-select">
 
-                        <option value="newest">
-                            Newest first
-                        </option>
+                            <option value="newest">
+                                Newest first
+                            </option>
 
-                        <option value="oldest">
-                            Oldest first
-                        </option>
+                            <option value="oldest">
+                                Oldest first
+                            </option>
 
-                        <option value="company">
-                            Company A–Z
-                        </option>
+                            <option value="company">
+                                Company A–Z
+                            </option>
 
-                        <option value="expiry">
-                            Expiring soon
-                        </option>
+                            <option value="expiry">
+                                Expiring soon
+                            </option>
 
-                    </select>
+                        </select>
+
+                    </div>
 
                 </div>
 
-            </div>
 
 
-
-            <!-- ==================================================
+                <!-- ==================================================
                  RESULTS SUMMARY
             ================================================== -->
 
-            <div class="published-results-bar">
+                <div class="published-results-bar">
 
-                <div>
+                    <div>
 
-                    <strong id="resultsCount">
-                        128 jobs
-                    </strong>
+                        <strong id="resultsCount">
+                            0 jobs
+                        </strong>
 
-                    <span>
-                        currently listed
-                    </span>
+                        <span>
+                            currently listed
+                        </span>
+
+                    </div>
+
+
+                    <button type="button" id="resetFilters" class="reset-filters">
+                        Reset filters
+                    </button>
 
                 </div>
 
 
-                <button
-                    type="button"
-                    id="resetFilters"
-                    class="reset-filters"
-                >
-                    Reset filters
-                </button>
 
-            </div>
-
-
-
-            <!-- ==================================================
+                <!-- ==================================================
                  DESKTOP TABLE
             ================================================== -->
 
-            <div class="published-table-wrapper">
+                <div class="published-table-wrapper">
 
-                <table class="published-table">
+                    <table class="published-table">
 
-                    <thead>
+                        <thead>
 
-                        <tr>
+                            <tr>
 
-                            <th>
-                                JOB
-                            </th>
+                                <th>
+                                    JOB
+                                </th>
 
-                            <th>
-                                COMPANY
-                            </th>
+                                <th>
+                                    COMPANY
+                                </th>
 
-                            <th>
-                                CATEGORY
-                            </th>
+                                <th>
+                                    CATEGORY
+                                </th>
 
-                            <th>
-                                LOCATION
-                            </th>
+                                <th>
+                                    LOCATION
+                                </th>
 
-                            <th>
-                                APPLICATIONS
-                            </th>
+                                <th>
+                                    APPLICATIONS
+                                </th>
 
-                            <th>
-                                PUBLISHED
-                            </th>
+                                <th>
+                                    PUBLISHED
+                                </th>
 
-                            <th>
-                                STATUS
-                            </th>
+                                <th>
+                                    STATUS
+                                </th>
 
-                            <th>
-                                ACTION
-                            </th>
+                                <th>
+                                    ACTION
+                                </th>
 
-                        </tr>
+                            </tr>
 
-                    </thead>
-
-
-                    <tbody id="publishedJobsTableBody">
-                        <!-- Generated by published-jobs.js -->
-                    </tbody>
-
-                </table>
-
-            </div>
+                        </thead>
 
 
+                        <tbody id="publishedJobsTableBody">
+                        </tbody>
 
-            <!-- ==================================================
+                    </table>
+
+                </div>
+
+
+
+                <!-- ==================================================
                  MOBILE JOB LIST
             ================================================== -->
 
-            <div
-                class="published-mobile-list"
-                id="publishedJobsMobileList"
-            >
-                <!-- Generated by published-jobs.js -->
-            </div>
+                <div class="published-mobile-list" id="publishedJobsMobileList">
+                </div>
 
 
 
-            <!-- ==================================================
+                <!-- ==================================================
                  EMPTY STATE
             ================================================== -->
 
-            <div
-                class="published-empty hidden"
-                id="publishedEmpty"
-            >
+                <div class="published-empty hidden" id="publishedEmpty">
 
-                <div class="published-empty-icon">
-                    ⌕
+                    <div class="published-empty-icon">
+                        ⌕
+                    </div>
+
+                    <h3>
+                        No jobs found
+                    </h3>
+
+                    <p>
+                        Try changing your search or filter settings.
+                    </p>
+
+                    <button type="button" class="secondary-button" id="emptyReset">
+                        Reset filters
+                    </button>
+
                 </div>
 
-                <h3>
-                    No jobs found
-                </h3>
-
-                <p>
-                    Try changing your search or filter settings.
-                </p>
-
-                <button
-                    type="button"
-                    class="secondary-button"
-                    id="emptyReset"
-                >
-                    Reset filters
-                </button>
-
-            </div>
 
 
-
-            <!-- ==================================================
+                <!-- ==================================================
                  PAGINATION
             ================================================== -->
 
-            <div class="published-pagination">
+                <div class="published-pagination">
 
 
-                <span id="paginationInfo">
-                    Showing 1–6 of 128 jobs
-                </span>
-
-
-                <div class="pagination-controls">
-
-                    <button
-                        type="button"
-                        id="previousPage"
-                        class="pagination-button"
-                        aria-label="Previous page"
-                    >
-                        ←
-                    </button>
-
-
-                    <span
-                        class="pagination-current"
-                        id="currentPage"
-                    >
-                        1
+                    <span id="paginationInfo">
+                        Showing 0 jobs
                     </span>
 
 
-                    <button
-                        type="button"
-                        id="nextPage"
-                        class="pagination-button"
-                        aria-label="Next page"
-                    >
-                        →
-                    </button>
+                    <div class="pagination-controls">
+
+                        <button type="button" id="previousPage" class="pagination-button" aria-label="Previous page">
+                            ←
+                        </button>
+
+
+                        <span class="pagination-current" id="currentPage">
+                            1
+                        </span>
+
+
+                        <button type="button" id="nextPage" class="pagination-button" aria-label="Next page">
+                            →
+                        </button>
+
+                    </div>
+
 
                 </div>
 
-            </div>
+            </section>
 
         </section>
 
-    </section>
-
-</main>
+    </div>
 
 
 
-<!-- ==================================================
+    <!-- ==================================================
      JOB DETAILS MODAL
 ================================================== -->
 
-<div
-    class="admin-modal hidden"
-    id="jobDetailsModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modalJobTitle"
->
+    <div class="admin-modal hidden" id="jobDetailsModal" role="dialog" aria-modal="true"
+        aria-labelledby="modalJobTitle">
 
-    <div class="admin-modal-card">
+        <div class="admin-modal-card">
 
 
-        <div class="admin-modal-header">
-
-            <div>
-
-                <span class="modal-eyebrow">
-                    PUBLISHED JOB
-                </span>
-
-                <h2 id="modalJobTitle">
-                    —
-                </h2>
-
-                <span
-                    class="modal-job-id"
-                    id="modalJobId"
-                >
-                    —
-                </span>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="modal-close"
-                id="closeJobModal"
-                aria-label="Close"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-
-        <div class="admin-modal-body">
-
-
-            <!-- COMPANY -->
-
-            <div class="modal-company">
-
-                <div
-                    class="modal-company-avatar"
-                    id="modalCompanyAvatar"
-                >
-                    A
-                </div>
+            <div class="admin-modal-header">
 
                 <div>
 
-                    <strong id="modalCompany">
-                        —
-                    </strong>
+                    <span class="modal-eyebrow">
+                        PUBLISHED JOB
+                    </span>
 
-                    <span id="modalCompanyContact">
+                    <h2 id="modalJobTitle">
+                        —
+                    </h2>
+
+                    <span class="modal-job-id" id="modalJobId">
                         —
                     </span>
 
                 </div>
 
-            </div>
 
-
-
-            <!-- JOB INFORMATION -->
-
-            <div class="modal-section">
-
-                <div class="modal-section-heading">
-                    Job Information
-                </div>
-
-
-                <div class="modal-info-grid">
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Category
-                        </span>
-
-                        <strong id="modalCategory">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Location
-                        </span>
-
-                        <strong id="modalLocation">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Work Type
-                        </span>
-
-                        <strong id="modalWorkType">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Employment
-                        </span>
-
-                        <strong id="modalEmployment">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Salary
-                        </span>
-
-                        <strong id="modalSalary">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Applications
-                        </span>
-
-                        <strong id="modalApplications">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
+                <button type="button" class="modal-close" id="closeJobModal" aria-label="Close">
+                    ×
+                </button>
 
             </div>
 
 
 
-            <!-- DESCRIPTION -->
-
-            <div class="modal-section">
-
-                <div class="modal-section-heading">
-                    Description
-                </div>
-
-                <p
-                    class="modal-description"
-                    id="modalDescription"
-                >
-                    —
-                </p>
-
-            </div>
+            <div class="admin-modal-body">
 
 
+                <div class="modal-company">
 
-            <!-- REQUIREMENTS -->
-
-            <div class="modal-section">
-
-                <div class="modal-section-heading">
-                    Requirements
-                </div>
-
-                <p
-                    class="modal-description"
-                    id="modalRequirements"
-                >
-                    —
-                </p>
-
-            </div>
-
-
-
-            <!-- PUBLICATION -->
-
-            <div class="modal-section modal-publication-section">
-
-                <div class="modal-section-heading">
-                    Publication
-                </div>
-
-
-                <div class="modal-publication-grid">
+                    <div class="modal-company-avatar" id="modalCompanyAvatar">
+                        A
+                    </div>
 
                     <div>
 
-                        <span>
-                            Published
-                        </span>
-
-                        <strong id="modalPublishedDate">
+                        <strong id="modalCompany">
                             —
                         </strong>
+
+                        <span id="modalCompanyContact">
+                            —
+                        </span>
 
                     </div>
 
+                </div>
 
-                    <div>
 
-                        <span>
-                            Expires
-                        </span>
 
-                        <strong id="modalExpiryDate">
-                            —
-                        </strong>
+                <div class="modal-section">
+
+                    <div class="modal-section-heading">
+                        Job Information
+                    </div>
+
+
+                    <div class="modal-info-grid">
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Category
+                            </span>
+
+                            <strong id="modalCategory">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Location
+                            </span>
+
+                            <strong id="modalLocation">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Work Type
+                            </span>
+
+                            <strong id="modalWorkType">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Employment
+                            </span>
+
+                            <strong id="modalEmployment">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Salary
+                            </span>
+
+                            <strong id="modalSalary">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Applications
+                            </span>
+
+                            <strong id="modalApplications">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="modal-section">
+
+                    <div class="modal-section-heading">
+                        Description
+                    </div>
+
+                    <p class="modal-description" id="modalDescription">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="modal-section">
+
+                    <div class="modal-section-heading">
+                        Requirements
+                    </div>
+
+                    <p class="modal-description" id="modalRequirements">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="modal-section modal-publication-section">
+
+                    <div class="modal-section-heading">
+                        Publication
+                    </div>
+
+
+                    <div class="modal-publication-grid">
+
+                        <div>
+
+                            <span>
+                                Published
+                            </span>
+
+                            <strong id="modalPublishedDate">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Expires
+                            </span>
+
+                            <strong id="modalExpiryDate">
+                                —
+                            </strong>
+
+                        </div>
 
                     </div>
 
@@ -1169,42 +1000,26 @@
 
             </div>
 
-        </div>
 
 
+            <div class="admin-modal-footer">
 
-        <!-- MODAL FOOTER -->
-
-        <div class="admin-modal-footer">
-
-            <a
-                href="#"
-                class="modal-view-public"
-                id="viewPublicJob"
-                target="_blank"
-                rel="noopener"
-            >
-                View Public Job ↗
-            </a>
+                <a href="#" class="modal-view-public" id="viewPublicJob" target="_blank" rel="noopener">
+                    View Public Job ↗
+                </a>
 
 
-            <div class="modal-footer-actions">
+                <div class="modal-footer-actions">
 
-                <button
-                    type="button"
-                    class="secondary-button"
-                    id="closeJobButton"
-                >
-                    Close Job
-                </button>
+                    <button type="button" class="secondary-button" id="closeJobButton">
+                        Close Job
+                    </button>
 
-                <button
-                    type="button"
-                    class="primary-button"
-                    id="editJobButton"
-                >
-                    Edit Job
-                </button>
+                    <button type="button" class="primary-button" id="editJobButton">
+                        Edit Job
+                    </button>
+
+                </div>
 
             </div>
 
@@ -1212,84 +1027,61 @@
 
     </div>
 
-</div>
 
 
-
-<!-- ==================================================
+    <!-- ==================================================
      CONFIRMATION MODAL
 ================================================== -->
 
-<div
-    class="admin-modal hidden"
-    id="confirmModal"
-    role="dialog"
-    aria-modal="true"
->
+    <div class="admin-modal hidden" id="confirmModal" role="dialog" aria-modal="true">
 
-    <div class="confirm-card">
+        <div class="confirm-card">
 
 
-        <div
-            class="confirm-icon"
-            id="confirmIcon"
-        >
-            !
-        </div>
+            <div class="confirm-icon" id="confirmIcon">
+                !
+            </div>
 
 
-        <span
-            class="modal-eyebrow"
-            id="confirmEyebrow"
-        >
-            CLOSE JOB
-        </span>
+            <span class="modal-eyebrow" id="confirmEyebrow">
+                CLOSE JOB
+            </span>
 
 
-        <h2 id="confirmTitle">
-            Close this job?
-        </h2>
+            <h2 id="confirmTitle">
+                Close this job?
+            </h2>
 
 
-        <p id="confirmMessage">
-            This job will no longer accept new applications.
-        </p>
+            <p id="confirmMessage">
+                This job will no longer accept new applications.
+            </p>
 
 
-        <div class="confirm-actions">
+            <div class="confirm-actions">
 
-            <button
-                type="button"
-                class="secondary-button"
-                id="confirmCancel"
-            >
-                Cancel
-            </button>
+                <button type="button" class="secondary-button" id="confirmCancel">
+                    Cancel
+                </button>
 
 
-            <button
-                type="button"
-                class="danger-button"
-                id="confirmProceed"
-            >
-                Close Job
-            </button>
+                <button type="button" class="danger-button" id="confirmProceed">
+                    Close Job
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
 
-
-<!-- ==================================================
+    <!-- ==================================================
      SCRIPTS
 ================================================== -->
-
-<script src="../js/admin/dashboard.js"></script>
-
-<script src="../js/admin/published-jobs.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/admin/published-jobs.js"></script>
 
 
 </body>

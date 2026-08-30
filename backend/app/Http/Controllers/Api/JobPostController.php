@@ -22,14 +22,15 @@ class JobPostController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($publicId)
     {
         $job = JobPost::with([
             'employer',
             'category'
         ])
             ->where('is_active', true)
-            ->findOrFail($id);
+            ->where('public_id', $publicId)
+            ->firstOrFail();
 
         return response()->json([
             'data' => $job

@@ -4,43 +4,93 @@
 
 
 /* ==================================================
-   ADMIN AUTHENTICATION
-   ------------------------------------------
-   Temporary frontend authentication.
-   Later this will be replaced by real backend
-   authentication.
+   API + ADMIN AUTHENTICATION
 ================================================== */
 
-const adminSession =
-    sessionStorage.getItem("alote-admin-session");
+const API_BASE_URL =
+    window.ALOTE_CONFIG.API_BASE_URL;
 
 
-if (!adminSession) {
+const adminToken =
+    sessionStorage.getItem(
+        "alote-admin-token"
+    );
 
-    window.location.href = "login.html";
+
+if (!adminToken) {
+
+    window.location.href =
+        "login.html";
 
 }
 
 
 /* ==================================================
-   TEMPORARY DASHBOARD DATA
-   ------------------------------------------
-   This is intentionally temporary.
-   Your partner can replace this section with
-   API/database data later.
+   AUTH HEADERS
+================================================== */
+
+function getAuthHeaders() {
+
+    return {
+
+        "Accept":
+            "application/json",
+
+        "Authorization":
+            `Bearer ${adminToken}`
+
+    };
+
+}
+
+
+/* ==================================================
+   CLEAR ADMIN SESSION
+================================================== */
+
+function clearAdminSession() {
+
+    sessionStorage.removeItem(
+        "alote-admin-token"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-session"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-email"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-name"
+    );
+
+}
+
+
+/* ==================================================
+   DASHBOARD DATA
 ================================================== */
 
 let dashboardData = {
 
     statistics: {
+
         totalJobs: 0,
+
         pendingJobs: 0,
+
         totalApplications: 0,
+
         newApplications: 0,
 
         todayVisitors: 0,
+
         totalVisitors: 0,
+
         totalPageViews: 0
+
     },
 
     pendingSubmissions: [],
@@ -50,25 +100,51 @@ let dashboardData = {
 };
 
 
+/* ==================================================
+   LOAD DASHBOARD
+================================================== */
+
 async function loadDashboardFromBackend() {
 
     try {
 
         const response =
             await fetch(
-                "http://127.0.0.1:8000/api/admin/dashboard",
+                `${API_BASE_URL}/admin/dashboard`,
                 {
-                    headers: {
-                        "Accept": "application/json"
-                    }
+
+                    method:
+                        "GET",
+
+                    headers:
+                        getAuthHeaders()
+
                 }
             );
+
+
+        /* ------------------------------------------
+           UNAUTHORIZED
+        ------------------------------------------ */
+
+        if (
+            response.status === 401
+        ) {
+
+            clearAdminSession();
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Unable to load dashboard."
+                `Unable to load dashboard. Status: ${response.status}`
             );
 
         }
@@ -77,23 +153,37 @@ async function loadDashboardFromBackend() {
         const result =
             await response.json();
 
+
         const data =
             result.data;
 
 
+        if (!data) {
+
+            throw new Error(
+                "Dashboard data was not received."
+            );
+
+        }
+
+
+        /* ------------------------------------------
+           STATISTICS
+        ------------------------------------------ */
+
         dashboardData.statistics = {
 
             totalJobs:
-                data.total_jobs,
+                data.total_jobs ?? 0,
 
             pendingJobs:
-                data.pending_submissions,
+                data.pending_submissions ?? 0,
 
             totalApplications:
-                data.total_applications,
+                data.total_applications ?? 0,
 
             newApplications:
-                data.new_applications,
+                data.new_applications ?? 0,
 
             todayVisitors:
                 data.today_visitors ?? 0,
@@ -106,9 +196,21 @@ async function loadDashboardFromBackend() {
 
         };
 
-    
+
+        /* ------------------------------------------
+           PENDING SUBMISSIONS
+        ------------------------------------------ */
+
+        const pendingSubmissions =
+            Array.isArray(
+                data.recent_pending_submissions
+            )
+                ? data.recent_pending_submissions
+                : [];
+
+
         dashboardData.pendingSubmissions =
-            data.recent_pending_submissions.map(
+            pendingSubmissions.map(
                 item => ({
 
                     id:
@@ -141,8 +243,11 @@ async function loadDashboardFromBackend() {
                             ).toLocaleDateString(
                                 "en-US",
                                 {
-                                    month: "short",
-                                    day: "numeric"
+                                    month:
+                                        "short",
+
+                                    day:
+                                        "numeric"
                                 }
                             )
                             : "",
@@ -153,57 +258,116 @@ async function loadDashboardFromBackend() {
                 })
             );
 
+
+        /* ------------------------------------------
+           RECENT APPLICATIONS
+        ------------------------------------------ */
+
+        const recentApplications =
+            Array.isArray(
+                data.recent_applications
+            )
+                ? data.recent_applications
+                : [];
+
+
         dashboardData.recentApplications =
-            data.recent_applications.map(
-                item => ({
+            recentApplications.map(
+                item => {
 
-                    name:
-                        item.job_seeker?.full_name ||
-                        "Not available",
+                    const rawStatus =
+                        item.status ||
+                        "pending";
 
-                    job:
-                        item.job_post?.title ||
-                        "Not available",
 
-                    company:
-                        item.job_post?.employer?.company_name ||
-                        "Not available",
+                    let status =
+                        rawStatus;
 
-                    status:
-                        item.status === "pending"
-                            ? "New"
-                            : item.status === "review"
-                                ? "Under Review"
-                                : item.status
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                item.status.slice(1),
 
-                    time:
-                        item.applied_at
-                            ? new Date(
-                                item.applied_at
-                            ).toLocaleDateString(
-                                "en-US",
-                                {
-                                    month: "short",
-                                    day: "numeric"
-                                }
-                            )
-                            : ""
+                    if (
+                        rawStatus === "pending"
+                    ) {
 
-                })
+                        status =
+                            "New";
+
+                    } else if (
+                        rawStatus === "review"
+                    ) {
+
+                        status =
+                            "Under Review";
+
+                    } else {
+
+                        status =
+                            rawStatus
+                                .charAt(0)
+                                .toUpperCase() +
+                            rawStatus.slice(1);
+
+                    }
+
+
+                    return {
+
+                        name:
+                            item.job_seeker
+                                ?.full_name ||
+                            "Not available",
+
+                        job:
+                            item.job_post
+                                ?.title ||
+                            "Not available",
+
+                        company:
+                            item.job_post
+                                ?.employer
+                                ?.company_name ||
+                            "Not available",
+
+                        status:
+                            status,
+
+                        time:
+                            item.applied_at
+                                ? new Date(
+                                    item.applied_at
+                                ).toLocaleDateString(
+                                    "en-US",
+                                    {
+                                        month:
+                                            "short",
+
+                                        day:
+                                            "numeric"
+                                    }
+                                )
+                                : ""
+
+                    };
+
+                }
             );
+
+
+        return true;
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Dashboard loading error:",
+            error
+        );
+
+
+        return false;
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -212,10 +376,11 @@ async function loadDashboardFromBackend() {
 
 function getElement(id) {
 
-    return document.getElementById(id);
+    return document.getElementById(
+        id
+    );
 
 }
-
 
 
 /* ==================================================
@@ -223,20 +388,55 @@ function getElement(id) {
 ================================================== */
 
 function renderStatistics() {
+
     const todayVisitors =
-        getElement("todayVisitors");
+        getElement(
+            "todayVisitors"
+        );
+
 
     const totalVisitors =
-        getElement("totalVisitors");
+        getElement(
+            "totalVisitors"
+        );
+
 
     const totalPageViews =
-        getElement("totalPageViews");
+        getElement(
+            "totalPageViews"
+        );
+
+
+    const totalJobs =
+        getElement(
+            "totalJobs"
+        );
+
+
+    const pendingJobs =
+        getElement(
+            "pendingJobs"
+        );
+
+
+    const totalApplications =
+        getElement(
+            "totalApplications"
+        );
+
+
+    const newApplications =
+        getElement(
+            "newApplications"
+        );
 
 
     if (todayVisitors) {
 
         todayVisitors.textContent =
-            dashboardData.statistics.todayVisitors;
+            dashboardData
+                .statistics
+                .todayVisitors;
 
     }
 
@@ -244,7 +444,9 @@ function renderStatistics() {
     if (totalVisitors) {
 
         totalVisitors.textContent =
-            dashboardData.statistics.totalVisitors;
+            dashboardData
+                .statistics
+                .totalVisitors;
 
     }
 
@@ -252,26 +454,19 @@ function renderStatistics() {
     if (totalPageViews) {
 
         totalPageViews.textContent =
-            dashboardData.statistics.totalPageViews;
+            dashboardData
+                .statistics
+                .totalPageViews;
 
     }
-    const totalJobs =
-        getElement("totalJobs");
-
-    const pendingJobs =
-        getElement("pendingJobs");
-
-    const totalApplications =
-        getElement("totalApplications");
-
-    const newApplications =
-        getElement("newApplications");
 
 
     if (totalJobs) {
 
         totalJobs.textContent =
-            dashboardData.statistics.totalJobs;
+            dashboardData
+                .statistics
+                .totalJobs;
 
     }
 
@@ -279,7 +474,9 @@ function renderStatistics() {
     if (pendingJobs) {
 
         pendingJobs.textContent =
-            dashboardData.statistics.pendingJobs;
+            dashboardData
+                .statistics
+                .pendingJobs;
 
     }
 
@@ -287,7 +484,9 @@ function renderStatistics() {
     if (totalApplications) {
 
         totalApplications.textContent =
-            dashboardData.statistics.totalApplications;
+            dashboardData
+                .statistics
+                .totalApplications;
 
     }
 
@@ -295,24 +494,35 @@ function renderStatistics() {
     if (newApplications) {
 
         newApplications.textContent =
-            dashboardData.statistics.newApplications;
+            dashboardData
+                .statistics
+                .newApplications;
 
     }
 
 
-    /* Sidebar badges */
+    /* ------------------------------------------
+       SIDEBAR BADGES
+    ------------------------------------------ */
 
     const pendingBadge =
-        getElement("pendingJobsBadge");
+        getElement(
+            "pendingJobsBadge"
+        );
+
 
     const applicationsBadge =
-        getElement("newApplicationsBadge");
+        getElement(
+            "newApplicationsBadge"
+        );
 
 
     if (pendingBadge) {
 
         pendingBadge.textContent =
-            dashboardData.statistics.pendingJobs;
+            dashboardData
+                .statistics
+                .pendingJobs;
 
     }
 
@@ -320,12 +530,13 @@ function renderStatistics() {
     if (applicationsBadge) {
 
         applicationsBadge.textContent =
-            dashboardData.statistics.newApplications;
+            dashboardData
+                .statistics
+                .newApplications;
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -335,16 +546,21 @@ function renderStatistics() {
 function renderPendingSubmissions() {
 
     const container =
-        getElement("pendingSubmissions");
+        getElement(
+            "pendingSubmissions"
+        );
 
 
     if (!container) {
+
         return;
+
     }
 
 
     const submissions =
-        dashboardData.pendingSubmissions;
+        dashboardData
+            .pendingSubmissions;
 
 
     if (!submissions.length) {
@@ -369,6 +585,7 @@ function renderPendingSubmissions() {
 
         `;
 
+
         return;
 
     }
@@ -376,92 +593,100 @@ function renderPendingSubmissions() {
 
     container.innerHTML =
         submissions
-            .slice(0, 3)
-            .map(submission => `
+            .slice(
+                0,
+                3
+            )
+            .map(
+                submission => `
 
-                <article
-                    class="submission-item"
-                    data-id="${submission.id}"
-                >
+                    <article
+                        class="submission-item"
+                        data-id="${escapeHTML(
+                            submission.id
+                        )}"
+                    >
 
+                        <div class="submission-company-avatar">
 
-                    <div class="submission-company-avatar">
-
-                        ${getInitials(
-                            submission.company
-                        )}
-
-                    </div>
-
-
-                    <div class="submission-info">
-
-                        <strong>
-                            ${escapeHTML(
-                                submission.title
-                            )}
-                        </strong>
-
-
-                        <span class="submission-company">
-
-                            ${escapeHTML(
+                            ${getInitials(
                                 submission.company
                             )}
 
-                        </span>
+                        </div>
 
 
-                        <span class="submission-meta">
+                        <div class="submission-info">
 
-                            ${escapeHTML(
-                                submission.location
-                            )}
+                            <strong>
 
-                            ·
+                                ${escapeHTML(
+                                    submission.title
+                                )}
 
-                            ${escapeHTML(
-                                submission.workType
-                            )}
-
-                            ·
-
-                            ${escapeHTML(
-                                submission.employmentType
-                            )}
-
-                        </span>
-
-                    </div>
+                            </strong>
 
 
-                    <div class="submission-right">
+                            <span class="submission-company">
 
-                        <span class="status-pill pending">
-                            ${escapeHTML(
-                                submission.status
-                            )}
-                        </span>
+                                ${escapeHTML(
+                                    submission.company
+                                )}
 
-
-                        <span class="submission-time">
-
-                            ${escapeHTML(
-                                submission.submitted
-                            )}
-
-                        </span>
-
-                    </div>
+                            </span>
 
 
-                </article>
+                            <span class="submission-meta">
 
-            `)
+                                ${escapeHTML(
+                                    submission.location
+                                )}
+
+                                ·
+
+                                ${escapeHTML(
+                                    submission.workType
+                                )}
+
+                                ·
+
+                                ${escapeHTML(
+                                    submission.employmentType
+                                )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="submission-right">
+
+                            <span class="status-pill pending">
+
+                                ${escapeHTML(
+                                    submission.status
+                                )}
+
+                            </span>
+
+
+                            <span class="submission-time">
+
+                                ${escapeHTML(
+                                    submission.submitted
+                                )}
+
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                `
+            )
             .join("");
 
 }
-
 
 
 /* ==================================================
@@ -471,16 +696,21 @@ function renderPendingSubmissions() {
 function renderRecentApplications() {
 
     const container =
-        getElement("recentApplications");
+        getElement(
+            "recentApplications"
+        );
 
 
     if (!container) {
+
         return;
+
     }
 
 
     const applications =
-        dashboardData.recentApplications;
+        dashboardData
+            .recentApplications;
 
 
     if (!applications.length) {
@@ -505,6 +735,7 @@ function renderRecentApplications() {
 
         `;
 
+
         return;
 
     }
@@ -512,91 +743,95 @@ function renderRecentApplications() {
 
     container.innerHTML =
         applications
-            .slice(0, 4)
-            .map(application => `
+            .slice(
+                0,
+                4
+            )
+            .map(
+                application => `
 
-                <article
-                    class="application-item"
-                >
+                    <article
+                        class="application-item"
+                    >
 
+                        <div class="application-avatar">
 
-                    <div class="application-avatar">
-
-                        ${getInitials(
-                            application.name
-                        )}
-
-                    </div>
-
-
-                    <div class="application-info">
-
-                        <strong>
-
-                            ${escapeHTML(
+                            ${getInitials(
                                 application.name
                             )}
 
-                        </strong>
+                        </div>
 
 
-                        <span>
+                        <div class="application-info">
 
-                            Applied for
+                            <strong>
 
-                            <b>
                                 ${escapeHTML(
-                                    application.job
+                                    application.name
                                 )}
-                            </b>
 
-                        </span>
-
-
-                        <small>
-
-                            ${escapeHTML(
-                                application.company
-                            )}
-
-                        </small>
-
-                    </div>
+                            </strong>
 
 
-                    <div class="application-right">
+                            <span>
 
-                        <span
-                            class="status-pill ${getStatusClass(
-                                application.status
-                            )}"
-                        >
+                                Applied for
 
-                            ${escapeHTML(
-                                application.status
-                            )}
+                                <b>
 
-                        </span>
+                                    ${escapeHTML(
+                                        application.job
+                                    )}
 
+                                </b>
 
-                        <time>
-
-                            ${escapeHTML(
-                                application.time
-                            )}
-
-                        </time>
-
-                    </div>
+                            </span>
 
 
-                </article>
+                            <small>
 
-            `)
+                                ${escapeHTML(
+                                    application.company
+                                )}
+
+                            </small>
+
+                        </div>
+
+
+                        <div class="application-right">
+
+                            <span
+                                class="status-pill ${getStatusClass(
+                                    application.status
+                                )}"
+                            >
+
+                                ${escapeHTML(
+                                    application.status
+                                )}
+
+                            </span>
+
+
+                            <time>
+
+                                ${escapeHTML(
+                                    application.time
+                                )}
+
+                            </time>
+
+                        </div>
+
+                    </article>
+
+                `
+            )
             .join("");
 
 }
-
 
 
 /* ==================================================
@@ -605,16 +840,16 @@ function renderRecentApplications() {
 
 function getStatusClass(status) {
 
-    const normalized =
-        String(status)
-            .toLowerCase()
-            .replace(/\s+/g, "-");
-
-
-    return normalized;
+    return String(
+        status
+    )
+        .toLowerCase()
+        .replace(
+            /\s+/g,
+            "-"
+        );
 
 }
-
 
 
 /* ==================================================
@@ -624,41 +859,61 @@ function getStatusClass(status) {
 function getInitials(value) {
 
     if (!value) {
+
         return "A";
+
     }
 
 
     return value
         .trim()
         .split(/\s+/)
-        .slice(0, 2)
-        .map(word =>
-            word.charAt(0).toUpperCase()
+        .slice(
+            0,
+            2
+        )
+        .map(
+            word =>
+                word
+                    .charAt(0)
+                    .toUpperCase()
         )
         .join("");
 
 }
 
 
-
 /* ==================================================
    SECURITY
-   ------------------------------------------
-   Prevent temporary data from being inserted
-   as executable HTML.
 ================================================== */
 
 function escapeHTML(value) {
 
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
-
 
 
 /* ==================================================
@@ -668,11 +923,15 @@ function escapeHTML(value) {
 function renderCurrentDate() {
 
     const dateElement =
-        getElement("currentDate");
+        getElement(
+            "currentDate"
+        );
 
 
     if (!dateElement) {
+
         return;
+
     }
 
 
@@ -684,15 +943,21 @@ function renderCurrentDate() {
         now.toLocaleDateString(
             "en-US",
             {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                year: "numeric"
+                weekday:
+                    "short",
+
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                year:
+                    "numeric"
             }
         );
 
 }
-
 
 
 /* ==================================================
@@ -702,13 +967,21 @@ function renderCurrentDate() {
 function initializeMobileSidebar() {
 
     const menuButton =
-        getElement("mobileMenuButton");
+        getElement(
+            "mobileMenuButton"
+        );
+
 
     const sidebar =
-        getElement("adminSidebar");
+        getElement(
+            "adminSidebar"
+        );
+
 
     const overlay =
-        getElement("sidebarOverlay");
+        getElement(
+            "sidebarOverlay"
+        );
 
 
     if (
@@ -724,9 +997,15 @@ function initializeMobileSidebar() {
 
     function openSidebar() {
 
-        sidebar.classList.add("open");
+        sidebar.classList.add(
+            "open"
+        );
 
-        overlay.classList.add("visible");
+
+        overlay.classList.add(
+            "visible"
+        );
+
 
         document.body.classList.add(
             "sidebar-open"
@@ -737,9 +1016,15 @@ function initializeMobileSidebar() {
 
     function closeSidebar() {
 
-        sidebar.classList.remove("open");
+        sidebar.classList.remove(
+            "open"
+        );
 
-        overlay.classList.remove("visible");
+
+        overlay.classList.remove(
+            "visible"
+        );
+
 
         document.body.classList.remove(
             "sidebar-open"
@@ -776,21 +1061,20 @@ function initializeMobileSidebar() {
     );
 
 
-    /* Close sidebar after navigation */
-
     sidebar
         .querySelectorAll("a")
-        .forEach(link => {
+        .forEach(
+            link => {
 
-            link.addEventListener(
-                "click",
-                closeSidebar
-            );
+                link.addEventListener(
+                    "click",
+                    closeSidebar
+                );
 
-        });
+            }
+        );
 
 }
-
 
 
 /* ==================================================
@@ -807,34 +1091,42 @@ function setActivePage() {
 
 
     document
-        .querySelectorAll(".admin-nav-link")
-        .forEach(link => {
+        .querySelectorAll(
+            ".admin-nav-link"
+        )
+        .forEach(
+            link => {
 
-            const href =
-                link.getAttribute("href");
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
 
 
-            if (!href) {
-                return;
+                if (!href) {
+
+                    return;
+
+                }
+
+
+                const linkPage =
+                    href
+                        .split("/")
+                        .pop()
+                        .toLowerCase();
+
+
+                link.classList.toggle(
+                    "active",
+                    linkPage ===
+                        currentPage
+                );
+
             }
-
-
-            const linkPage =
-                href
-                    .split("/")
-                    .pop()
-                    .toLowerCase();
-
-
-            link.classList.toggle(
-                "active",
-                linkPage === currentPage
-            );
-
-        });
+        );
 
 }
-
 
 
 /* ==================================================
@@ -844,18 +1136,21 @@ function setActivePage() {
 function initializeLogout() {
 
     const logoutButton =
-        getElement("logoutButton");
+        getElement(
+            "logoutButton"
+        );
 
 
     if (!logoutButton) {
+
         return;
+
     }
 
 
     logoutButton.addEventListener(
         "click",
-        () => {
-
+        async () => {
 
             const confirmed =
                 window.confirm(
@@ -864,23 +1159,49 @@ function initializeLogout() {
 
 
             if (!confirmed) {
+
                 return;
+
             }
 
 
-            sessionStorage.removeItem(
-                "alote-admin-session"
-            );
+            try {
+
+                await fetch(
+                    `${API_BASE_URL}/admin/logout`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers:
+                            getAuthHeaders()
+
+                    }
+                );
 
 
-            window.location.href =
-                "login.html";
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            } finally {
+
+                clearAdminSession();
+
+
+                window.location.href =
+                    "login.html";
+
+            }
 
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -898,14 +1219,22 @@ function protectAdminHistory() {
 }
 
 
-
 /* ==================================================
    INITIALIZE DASHBOARD
 ================================================== */
 
 async function initializeDashboard() {
 
-    await loadDashboardFromBackend();
+    const loaded =
+        await loadDashboardFromBackend();
+
+
+    if (!loaded) {
+
+        return;
+
+    }
+
 
     renderStatistics();
 
@@ -924,7 +1253,6 @@ async function initializeDashboard() {
     protectAdminHistory();
 
 }
-
 
 
 /* ==================================================

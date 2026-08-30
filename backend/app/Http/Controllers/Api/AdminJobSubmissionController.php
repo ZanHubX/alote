@@ -24,6 +24,39 @@ class AdminJobSubmissionController extends Controller
         ]);
     }
 
+
+    /* ==================================================
+       APPROVE PAYMENT
+    ================================================== */
+
+    public function approvePayment($id)
+    {
+        $submission = JobSubmission::with('payment')
+            ->findOrFail($id);
+
+        if (!$submission->payment) {
+            return response()->json([
+                'message' => 'Payment record not found.'
+            ], 404);
+        }
+
+        $payment = $submission->payment;
+
+        $payment->status = 'paid';
+        $payment->paid_at = now();
+        $payment->save();
+
+        return response()->json([
+            'message' => 'Payment approved successfully.',
+            'data' => $payment
+        ]);
+    }
+
+
+    /* ==================================================
+       APPROVE JOB
+    ================================================== */
+
     public function approve($id)
     {
         $submission = JobSubmission::findOrFail($id);
@@ -49,11 +82,10 @@ class AdminJobSubmissionController extends Controller
                     'salary_max' => $submission->salary_max,
                     'salary_text' => $submission->salary_text,
                     'currency' => $submission->currency,
-                    'requirements' =>
-                    $submission->requirements,
 
-                    'responsibilities' =>
-                    $submission->responsibilities,
+                    'requirements' => $submission->requirements,
+                    'responsibilities' => $submission->responsibilities,
+
                     'apply_email' => $submission->apply_email,
                     'apply_link' => $submission->apply_link,
 
@@ -73,6 +105,11 @@ class AdminJobSubmissionController extends Controller
             'message' => 'Job approved and published successfully.'
         ]);
     }
+
+
+    /* ==================================================
+       REJECT JOB
+    ================================================== */
 
     public function reject($id)
     {

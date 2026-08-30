@@ -458,9 +458,7 @@ function changeLanguage(language) {
 
 
     if (!selectedLanguage) {
-
         return;
-
     }
 
 
@@ -618,20 +616,17 @@ function translateSelectOptions() {
 
                 const translationsMap = {
 
-                    "Remote":
-                    {
+                    "Remote": {
                         en: "Remote",
                         my: "အဝေးမှ"
                     },
 
-                    "Hybrid":
-                    {
+                    "Hybrid": {
                         en: "Hybrid",
                         my: "Hybrid"
                     },
 
-                    "On-site":
-                    {
+                    "On-site": {
                         en: "On-site",
                         my: "ရုံးတက်"
                     }
@@ -670,20 +665,17 @@ function translateSelectOptions() {
 
                 const translationsMap = {
 
-                    "Full-time":
-                    {
+                    "Full-time": {
                         en: "Full-time",
                         my: "အချိန်ပြည့်"
                     },
 
-                    "Part-time":
-                    {
+                    "Part-time": {
                         en: "Part-time",
                         my: "အချိန်ပိုင်း"
                     },
 
-                    "Internship":
-                    {
+                    "Internship": {
                         en: "Internship",
                         my: "အလုပ်သင်"
                     }
@@ -725,26 +717,22 @@ async function loadCategories() {
 
 
     if (!category) {
-
         return;
-
     }
 
 
     try {
 
         const response =
-            await fetch(
-                "http://127.0.0.1:8000/api/categories",
-                {
-                    headers: {
-
-                        "Accept":
-                            "application/json"
-
-                    }
-                }
-            );
+    await fetch(
+        `${window.ALOTE_CONFIG.API_BASE_URL}/categories`,
+        {
+            headers: {
+                "Accept":
+                    "application/json"
+            }
+        }
+    );
 
 
         if (!response.ok) {
@@ -760,11 +748,13 @@ async function loadCategories() {
             await response.json();
 
 
+
         /* ------------------------------------------
            CLEAR OLD OPTIONS
         ------------------------------------------ */
 
         category.innerHTML = "";
+
 
 
         /* ------------------------------------------
@@ -778,6 +768,7 @@ async function loadCategories() {
 
 
         defaultOption.value = "";
+
 
         defaultOption.textContent =
             translations[
@@ -795,6 +786,7 @@ async function loadCategories() {
         );
 
 
+
         /* ------------------------------------------
            CATEGORY DATA
         ------------------------------------------ */
@@ -808,9 +800,7 @@ async function loadCategories() {
         categories.forEach(item => {
 
             if (!item || !item.name) {
-
                 return;
-
             }
 
 
@@ -843,10 +833,6 @@ async function loadCategories() {
         );
 
 
-        /* ------------------------------------------
-           ERROR OPTION
-        ------------------------------------------ */
-
         category.innerHTML = "";
 
 
@@ -857,6 +843,7 @@ async function loadCategories() {
 
 
         errorOption.value = "";
+
 
         errorOption.textContent =
             currentLanguage === "my"
@@ -892,16 +879,12 @@ function validateDeadline() {
 
 
     if (!deadline) {
-
         return true;
-
     }
 
 
     if (!deadline.value) {
-
         return false;
-
     }
 
 
@@ -988,13 +971,11 @@ function createPostingRequest(formData) {
         createdAt:
             new Date().toISOString(),
 
-
         reviewedAt:
             null,
 
         publishedAt:
             null,
-
 
         rejectionReason:
             null,
@@ -1121,6 +1102,7 @@ if (postingForm) {
             event.preventDefault();
 
 
+
             /* ------------------------------------------
                HTML VALIDATION
             ------------------------------------------ */
@@ -1131,6 +1113,7 @@ if (postingForm) {
 
                 return;
             }
+
 
 
             /* ------------------------------------------
@@ -1149,6 +1132,7 @@ if (postingForm) {
             }
 
 
+
             /* ------------------------------------------
                COLLECT DATA
             ------------------------------------------ */
@@ -1163,6 +1147,7 @@ if (postingForm) {
                 createPostingRequest(
                     formData
                 );
+
 
 
             /* ------------------------------------------
@@ -1253,6 +1238,7 @@ if (postingForm) {
             };
 
 
+
             /* ------------------------------------------
                DISABLE BUTTON
             ------------------------------------------ */
@@ -1265,7 +1251,8 @@ if (postingForm) {
 
             if (submitButton) {
 
-                submitButton.disabled = true;
+                submitButton.disabled =
+                    true;
 
 
                 const text =
@@ -1286,19 +1273,20 @@ if (postingForm) {
             }
 
 
+
             /* ------------------------------------------
                SEND TO BACKEND
             ------------------------------------------ */
 
             try {
 
-                const response =
-                    await fetch(
-                        "http://127.0.0.1:8000/api/job-submissions",
-                        {
+                    const response =
+                        await fetch(
+                            `${window.ALOTE_CONFIG.API_BASE_URL}/job-submissions`,
+                            {
 
-                            method:
-                                "POST",
+                                method:
+                                    "POST",
 
                             headers: {
 
@@ -1342,6 +1330,7 @@ if (postingForm) {
                 }
 
 
+
                 /* ------------------------------------------
                    SAVE SUCCESS DATA
                 ------------------------------------------ */
@@ -1356,6 +1345,7 @@ if (postingForm) {
                         postingRequest
                     )
                 );
+
 
 
                 /* ------------------------------------------

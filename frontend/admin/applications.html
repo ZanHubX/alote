@@ -5,10 +5,7 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         Applications — ALote Admin
@@ -19,24 +16,16 @@
          GLOBAL ADMIN CSS
     ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="../css/admin/admin-global.css"
-    >
+    <link rel="stylesheet" href="../css/admin/admin-global.css">
 
 
     <!-- ==================================================
          APPLICATIONS CSS
     ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="../css/admin/applications.css"
-    >
-    <link
-        rel="stylesheet"
-        href="../css/admin/dashboard.css"
-    >
+    <link rel="stylesheet" href="../css/admin/applications.css">
+
+    <link rel="stylesheet" href="../css/admin/dashboard.css">
 
 </head>
 
@@ -44,535 +33,754 @@
 <body class="admin-page">
 
 
-<!-- ==================================================
+    <!-- ==================================================
      MOBILE OVERLAY
 ================================================== -->
 
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 
 
-<!-- ==================================================
+    <!-- ==================================================
      SIDEBAR
 ================================================== -->
 
-<aside
-    class="admin-sidebar"
-    id="adminSidebar"
->
+    <aside class="admin-sidebar" id="adminSidebar">
 
 
-    <!-- ==================================================
+        <!-- ==================================================
          BRAND
     ================================================== -->
 
-    <div class="sidebar-brand">
+        <div class="sidebar-brand">
 
-        <a
-            href="../index.html"
-            class="admin-logo"
-        >
+            <a href="../index.html" class="admin-logo">
 
-            <img
-                src="../assets/logo/ALotelogo.png"
-                alt="ALote"
-                class="admin-logo-image"
-            >
+                <img src="../assets/logo/ALotelogo.png" alt="ALote" class="admin-logo-image">
 
-        </a>
+            </a>
 
-    </div>
+        </div>
 
 
 
-    <!-- ==================================================
+        <!-- ==================================================
          ADMIN PROFILE
     ================================================== -->
 
-    <div class="admin-profile">
+        <div class="admin-profile">
 
-        <div class="admin-avatar">
-            A
+            <div class="admin-avatar">
+                A
+            </div>
+
+
+            <div class="admin-profile-info">
+
+                <strong>
+                    ALote Admin
+                </strong>
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
         </div>
 
 
-        <div class="admin-profile-info">
 
-            <strong>
-                ALote Admin
-            </strong>
-
-            <span>
-                Administrator
-            </span>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- ==================================================
+        <!-- ==================================================
          NAVIGATION
     ================================================== -->
 
-    <nav class="admin-navigation">
+        <nav class="admin-navigation">
 
 
-        <div class="nav-section-label">
-            OVERVIEW
+            <div class="nav-section-label">
+                OVERVIEW
+            </div>
+
+
+            <a href="dashboard.html" class="admin-nav-link" data-page="dashboard">
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <div class="nav-section-label">
+                MANAGEMENT
+            </div>
+
+
+            <a href="job-submissions.html" class="admin-nav-link" data-page="submissions">
+
+                <span class="nav-icon">
+                    ◫
+                </span>
+
+                <span>
+                    Job Submissions
+                </span>
+
+                <span class="nav-badge" id="pendingJobsBadge">
+                    0
+                </span>
+
+            </a>
+
+
+            <a href="jobs.html" class="admin-nav-link" data-page="jobs">
+
+                <span class="nav-icon">
+                    ◧
+                </span>
+
+                <span>
+                    Published Jobs
+                </span>
+
+            </a>
+
+
+            <a href="applications.html" class="admin-nav-link active" data-page="applications">
+
+                <span class="nav-icon">
+                    ◎
+                </span>
+
+                <span>
+                    Applications
+                </span>
+
+                <span class="nav-badge muted" id="newApplicationsBadge">
+                    0
+                </span>
+
+            </a>
+
+
+
+            <div class="nav-section-label">
+                SYSTEM
+            </div>
+
+
+            <a href="../index.html" class="admin-nav-link">
+
+                <span class="nav-icon">
+                    ↗
+                </span>
+
+                <span>
+                    View Website
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- ==================================================
+         SIDEBAR FOOTER
+    ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <button type="button" class="logout-button" id="logoutButton">
+
+                <span class="nav-icon">
+                    ⇥
+                </span>
+
+                <span>
+                    Sign out
+                </span>
+
+            </button>
+
         </div>
 
 
-        <a
-            href="dashboard.html"
-            class="admin-nav-link"
-            data-page="dashboard"
-        >
-
-            <span class="nav-icon">
-                ▦
-            </span>
-
-            <span>
-                Dashboard
-            </span>
-
-        </a>
-
-
-
-        <div class="nav-section-label">
-            MANAGEMENT
-        </div>
-
-
-        <a
-            href="job-submissions.html"
-            class="admin-nav-link"
-            data-page="submissions"
-        >
-
-            <span class="nav-icon">
-                ◫
-            </span>
-
-            <span>
-                Job Submissions
-            </span>
-
-            <span
-                class="nav-badge"
-                id="pendingJobsBadge"
-            >
-                0
-            </span>
-
-        </a>
-
-
-        <a
-            href="jobs.html"
-            class="admin-nav-link"
-            data-page="jobs"
-        >
-
-            <span class="nav-icon">
-                ◧
-            </span>
-
-            <span>
-                Published Jobs
-            </span>
-
-        </a>
-
-
-        <!-- APPLICATIONS = ACTIVE -->
-
-        <a
-            href="applications.html"
-            class="admin-nav-link active"
-            data-page="applications"
-        >
-
-            <span class="nav-icon">
-                ◎
-            </span>
-
-            <span>
-                Applications
-            </span>
-
-            <span
-                class="nav-badge muted"
-                id="newApplicationsBadge"
-            >
-                0
-            </span>
-
-        </a>
-
-
-
-        <div class="nav-section-label">
-            SYSTEM
-        </div>
-
-
-        <a
-            href="../index.html"
-            class="admin-nav-link"
-        >
-
-            <span class="nav-icon">
-                ↗
-            </span>
-
-            <span>
-                View Website
-            </span>
-
-        </a>
-
-
-    </nav>
+    </aside>
 
 
 
     <!-- ==================================================
-         SIDEBAR FOOTER
+     MAIN AREA
+================================================== -->
+
+    <div class="admin-main">
+
+
+        <!-- ==================================================
+         TOP BAR
     ================================================== -->
 
-    <div class="sidebar-footer">
+        <header class="admin-topbar">
 
-        <button
-            type="button"
-            class="logout-button"
-            id="logoutButton"
-        >
 
-            <span class="nav-icon">
-                ⇥
-            </span>
+            <div class="topbar-left">
 
-            <span>
-                Sign out
-            </span>
 
-        </button>
+                <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open navigation">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+
+                <div class="page-heading">
+
+                    <span class="page-eyebrow">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Applications
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="topbar-right">
+
+
+                <div class="topbar-date">
+
+                    <span class="date-icon">
+                        ◷
+                    </span>
+
+                    <span id="currentDate">
+                        Today
+                    </span>
+
+                </div>
+
+
+                <div class="topbar-user">
+
+                    <div class="topbar-avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            ALote
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ==================================================
+         APPLICATIONS MAIN CONTENT
+    ================================================== -->
+
+        <main class="applications-content">
+
+
+            <!-- ==================================================
+             PAGE INTRO
+        ================================================== -->
+
+            <section class="applications-intro">
+
+                <div>
+
+                    <span class="content-eyebrow">
+                        CANDIDATE ACTIVITY
+                    </span>
+
+                    <h2>
+                        Applications
+                    </h2>
+
+                    <p>
+                        Review and manage applications submitted
+                        by job seekers.
+                    </p>
+
+                </div>
+
+
+                <button type="button" class="refresh-button" id="refreshApplications">
+
+                    <span>
+                        ↻
+                    </span>
+
+                    Refresh
+
+                </button>
+
+            </section>
+
+
+
+            <!-- ==================================================
+             APPLICATION STATISTICS
+        ================================================== -->
+
+            <section class="application-stats">
+
+
+                <article class="application-stat-card">
+
+                    <div class="stat-card-top">
+
+                        <span class="stat-icon purple">
+                            ◎
+                        </span>
+
+                        <span class="stat-trend">
+                            All
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Total Applications
+                        </span>
+
+                        <strong id="totalApplications">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+
+                <article class="application-stat-card">
+
+                    <div class="stat-card-top">
+
+                        <span class="stat-icon blue">
+                            ◷
+                        </span>
+
+                        <span class="stat-trend">
+                            New
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            New Applications
+                        </span>
+
+                        <strong id="newApplications">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+
+                <article class="application-stat-card">
+
+                    <div class="stat-card-top">
+
+                        <span class="stat-icon orange">
+                            ◐
+                        </span>
+
+                        <span class="stat-trend">
+                            Review
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Under Review
+                        </span>
+
+                        <strong id="reviewApplications">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+
+                <article class="application-stat-card">
+
+                    <div class="stat-card-top">
+
+                        <span class="stat-icon green">
+                            ✓
+                        </span>
+
+                        <span class="stat-trend">
+                            Hired
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Hired
+                        </span>
+
+                        <strong id="hiredApplications">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+             FILTER / SEARCH TOOLBAR
+        ================================================== -->
+
+            <section class="applications-toolbar">
+
+
+                <div class="application-search">
+
+                    <span class="search-icon">
+                        ⌕
+                    </span>
+
+                    <input type="text" id="applicationSearch" placeholder="Search applicants, jobs or companies..."
+                        autocomplete="off">
+
+                    <button type="button" id="clearApplicationSearch" class="search-clear" aria-label="Clear search">
+                        ×
+                    </button>
+
+                </div>
+
+
+
+                <div class="application-filters">
+
+
+                    <select id="statusFilter" class="application-filter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="new">
+                            New
+                        </option>
+
+                        <option value="review">
+                            Under Review
+                        </option>
+
+                        <option value="shortlisted">
+                            Shortlisted
+                        </option>
+
+                        <option value="interview">
+                            Interview
+                        </option>
+
+                        <option value="hired">
+                            Hired
+                        </option>
+
+                        <option value="rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="jobFilter" class="application-filter">
+
+                        <option value="all">
+                            All Jobs
+                        </option>
+
+                        <option value="frontend">
+                            Senior Frontend Developer
+                        </option>
+
+                        <option value="marketing">
+                            Digital Marketing Specialist
+                        </option>
+
+                        <option value="designer">
+                            UI/UX Designer
+                        </option>
+
+                        <option value="accountant">
+                            Senior Accountant
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="sortApplications" class="application-filter">
+
+                        <option value="newest">
+                            Newest First
+                        </option>
+
+                        <option value="oldest">
+                            Oldest First
+                        </option>
+
+                        <option value="name">
+                            Applicant Name
+                        </option>
+
+                        <option value="status">
+                            Status
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+             RESULTS HEADER
+        ================================================== -->
+
+            <section class="applications-results-header">
+
+                <div>
+
+                    <strong id="resultsCount">
+                        0 applications
+                    </strong>
+
+                    <span>
+                        matching your filters
+                    </span>
+
+                </div>
+
+
+                <button type="button" id="resetFilters" class="reset-filters">
+                    Reset filters
+                </button>
+
+            </section>
+
+
+
+            <!-- ==================================================
+             APPLICATION TABLE
+        ================================================== -->
+
+            <section class="applications-table-card">
+
+
+                <div class="table-wrapper">
+
+                    <table class="applications-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Applicant
+                                </th>
+
+                                <th>
+                                    Applied For
+                                </th>
+
+                                <th>
+                                    Company
+                                </th>
+
+                                <th>
+                                    Applied
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="applicationsTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                 MOBILE APPLICATION LIST
+            ================================================== -->
+
+                <div class="applications-mobile-list" id="applicationsMobileList">
+                </div>
+
+
+
+                <!-- ==================================================
+                 EMPTY STATE
+            ================================================== -->
+
+                <div class="applications-empty hidden" id="applicationsEmpty">
+
+                    <div class="empty-icon">
+                        ◎
+                    </div>
+
+                    <h3>
+                        No applications found
+                    </h3>
+
+                    <p>
+                        Try changing your search or filter settings.
+                    </p>
+
+                    <button type="button" id="emptyReset" class="empty-reset">
+                        Reset filters
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                 PAGINATION
+            ================================================== -->
+
+                <div class="applications-pagination">
+
+
+                    <span id="paginationInfo">
+                        Showing 0 applications
+                    </span>
+
+
+                    <div class="pagination-controls">
+
+                        <button type="button" id="previousPage" class="pagination-button" disabled>
+                            ←
+                        </button>
+
+
+                        <span class="pagination-current" id="currentPage">
+                            1
+                        </span>
+
+
+                        <button type="button" id="nextPage" class="pagination-button" disabled>
+                            →
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
 
     </div>
 
 
-</aside>
-
-
-
-<!-- ==================================================
-     MAIN AREA
-================================================== -->
-
-<div class="admin-main">
-
 
     <!-- ==================================================
-         TOP BAR
-    ================================================== -->
+     APPLICATION DETAILS MODAL
+================================================== -->
 
-    <header class="admin-topbar">
-
-
-        <div class="topbar-left">
+    <div class="application-modal hidden" id="applicationModal">
 
 
-            <!-- Mobile Menu -->
-
-            <button
-                type="button"
-                class="mobile-menu-button"
-                id="mobileMenuButton"
-                aria-label="Open navigation"
-            >
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
+        <div class="application-modal-card">
 
 
-            <div class="page-heading">
-
-                <span class="page-eyebrow">
-                    ADMINISTRATION
-                </span>
-
-                <h1>
-                    Applications
-                </h1>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="topbar-right">
-
-
-            <!-- Current Date -->
-
-            <div class="topbar-date">
-
-                <span class="date-icon">
-                    ◷
-                </span>
-
-                <span id="currentDate">
-                    Today
-                </span>
-
-            </div>
-
-
-            <!-- Admin -->
-
-            <div class="topbar-user">
-
-                <div class="topbar-avatar">
-                    A
-                </div>
+            <div class="application-modal-header">
 
                 <div>
 
-                    <strong>
-                        Admin
-                    </strong>
+                    <span class="modal-eyebrow">
+                        APPLICATION
+                    </span>
 
-                    <span>
-                        ALote
+                    <h2 id="modalApplicantName">
+                        Applicant Name
+                    </h2>
+
+                    <span id="modalApplicationId">
+                        APP-2026-001
                     </span>
 
                 </div>
 
-            </div>
 
-        </div>
-
-
-    </header>
-
-
-
-    <!-- ==================================================
-         APPLICATIONS MAIN CONTENT
-    ================================================== -->
-
-    <main class="applications-content">
-
-
-        <!-- ==================================================
-             PAGE INTRO
-        ================================================== -->
-
-        <section class="applications-intro">
-
-            <div>
-
-                <span class="content-eyebrow">
-                    CANDIDATE ACTIVITY
-                </span>
-
-                <h2>
-                    Applications
-                </h2>
-
-                <p>
-                    Review and manage applications submitted
-                    by job seekers.
-                </p>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="refresh-button"
-                id="refreshApplications"
-            >
-
-                <span>
-                    ↻
-                </span>
-
-                Refresh
-
-            </button>
-
-        </section>
-
-
-
-        <!-- ==================================================
-             APPLICATION STATISTICS
-        ================================================== -->
-
-        <section class="application-stats">
-
-
-            <article class="application-stat-card">
-
-                <div class="stat-card-top">
-
-                    <span class="stat-icon purple">
-                        ◎
-                    </span>
-
-                    <span class="stat-trend">
-                        All
-                    </span>
-
-                </div>
-
-                <div class="stat-card-content">
-
-                    <span>
-                        Total Applications
-                    </span>
-
-                    <strong id="totalApplications">
-                        0
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="application-stat-card">
-
-                <div class="stat-card-top">
-
-                    <span class="stat-icon blue">
-                        ◷
-                    </span>
-
-                    <span class="stat-trend">
-                        New
-                    </span>
-
-                </div>
-
-                <div class="stat-card-content">
-
-                    <span>
-                        New Applications
-                    </span>
-
-                    <strong id="newApplications">
-                        0
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="application-stat-card">
-
-                <div class="stat-card-top">
-
-                    <span class="stat-icon orange">
-                        ◐
-                    </span>
-
-                    <span class="stat-trend">
-                        Review
-                    </span>
-
-                </div>
-
-                <div class="stat-card-content">
-
-                    <span>
-                        Under Review
-                    </span>
-
-                    <strong id="reviewApplications">
-                        0
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="application-stat-card">
-
-                <div class="stat-card-top">
-
-                    <span class="stat-icon green">
-                        ✓
-                    </span>
-
-                    <span class="stat-trend">
-                        Hired
-                    </span>
-
-                </div>
-
-                <div class="stat-card-content">
-
-                    <span>
-                        Hired
-                    </span>
-
-                    <strong id="hiredApplications">
-                        0
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-        </section>
-
-
-
-        <!-- ==================================================
-             FILTER / SEARCH TOOLBAR
-        ================================================== -->
-
-        <section class="applications-toolbar">
-
-
-            <div class="application-search">
-
-                <span class="search-icon">
-                    ⌕
-                </span>
-
-                <input
-                    type="text"
-                    id="applicationSearch"
-                    placeholder="Search applicants, jobs or companies..."
-                    autocomplete="off"
-                >
-
-                <button
-                    type="button"
-                    id="clearApplicationSearch"
-                    class="search-clear"
-                    aria-label="Clear search"
-                >
+                <button type="button" class="modal-close" id="closeApplicationModal" aria-label="Close">
                     ×
                 </button>
 
@@ -580,588 +788,218 @@
 
 
 
-            <div class="application-filters">
+            <div class="application-modal-body">
 
 
-                <select
-                    id="statusFilter"
-                    class="application-filter"
-                >
+                <div class="modal-applicant-card">
 
-                    <option value="all">
-                        All Status
-                    </option>
 
-                    <option value="new">
-                        New
-                    </option>
-
-                    <option value="review">
-                        Under Review
-                    </option>
-
-                    <option value="shortlisted">
-                        Shortlisted
-                    </option>
-
-                    <option value="interview">
-                        Interview
-                    </option>
-
-                    <option value="hired">
-                        Hired
-                    </option>
-
-                    <option value="rejected">
-                        Rejected
-                    </option>
-
-                </select>
-
-
-
-                <select
-                    id="jobFilter"
-                    class="application-filter"
-                >
-
-                    <option value="all">
-                        All Jobs
-                    </option>
-
-                    <option value="frontend">
-                        Senior Frontend Developer
-                    </option>
-
-                    <option value="marketing">
-                        Digital Marketing Specialist
-                    </option>
-
-                    <option value="designer">
-                        UI/UX Designer
-                    </option>
-
-                    <option value="accountant">
-                        Senior Accountant
-                    </option>
-
-                </select>
-
-
-
-                <select
-                    id="sortApplications"
-                    class="application-filter"
-                >
-
-                    <option value="newest">
-                        Newest First
-                    </option>
-
-                    <option value="oldest">
-                        Oldest First
-                    </option>
-
-                    <option value="name">
-                        Applicant Name
-                    </option>
-
-                    <option value="status">
-                        Status
-                    </option>
-
-                </select>
-
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ==================================================
-             RESULTS HEADER
-        ================================================== -->
-
-        <section class="applications-results-header">
-
-            <div>
-
-                <strong id="resultsCount">
-                    0 applications
-                </strong>
-
-                <span>
-                    matching your filters
-                </span>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="resetFilters"
-                class="reset-filters"
-            >
-                Reset filters
-            </button>
-
-        </section>
-
-
-
-        <!-- ==================================================
-             APPLICATION TABLE
-        ================================================== -->
-
-        <section class="applications-table-card">
-
-
-            <div class="table-wrapper">
-
-                <table class="applications-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Applicant
-                            </th>
-
-                            <th>
-                                Applied For
-                            </th>
-
-                            <th>
-                                Company
-                            </th>
-
-                            <th>
-                                Applied
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody
-                        id="applicationsTableBody"
-                    >
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-
-            <!-- ==================================================
-                 MOBILE APPLICATION LIST
-            ================================================== -->
-
-            <div
-                class="applications-mobile-list"
-                id="applicationsMobileList"
-            >
-            </div>
-
-
-
-            <!-- ==================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                class="applications-empty hidden"
-                id="applicationsEmpty"
-            >
-
-                <div class="empty-icon">
-                    ◎
-                </div>
-
-                <h3>
-                    No applications found
-                </h3>
-
-                <p>
-                    Try changing your search or filter settings.
-                </p>
-
-                <button
-                    type="button"
-                    id="emptyReset"
-                    class="empty-reset"
-                >
-                    Reset filters
-                </button>
-
-            </div>
-
-
-
-            <!-- ==================================================
-                 PAGINATION
-            ================================================== -->
-
-            <div class="applications-pagination">
-
-
-                <span id="paginationInfo">
-                    Showing 0 applications
-                </span>
-
-
-                <div class="pagination-controls">
-
-                    <button
-                        type="button"
-                        id="previousPage"
-                        class="pagination-button"
-                        disabled
-                    >
-                        ←
-                    </button>
-
-
-                    <span
-                        class="pagination-current"
-                        id="currentPage"
-                    >
-                        1
-                    </span>
-
-
-                    <button
-                        type="button"
-                        id="nextPage"
-                        class="pagination-button"
-                        disabled
-                    >
-                        →
-                    </button>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-    </main>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     APPLICATION DETAILS MODAL
-================================================== -->
-
-<div
-    class="application-modal hidden"
-    id="applicationModal"
->
-
-
-    <div class="application-modal-card">
-
-
-        <!-- Modal Header -->
-
-        <div class="application-modal-header">
-
-            <div>
-
-                <span class="modal-eyebrow">
-                    APPLICATION
-                </span>
-
-                <h2 id="modalApplicantName">
-                    Applicant Name
-                </h2>
-
-                <span id="modalApplicationId">
-                    APP-2026-001
-                </span>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="modal-close"
-                id="closeApplicationModal"
-                aria-label="Close"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-
-        <!-- Modal Body -->
-
-        <div class="application-modal-body">
-
-
-            <!-- Applicant -->
-
-            <div class="modal-applicant-card">
-
-
-                <div
-                    class="modal-applicant-avatar"
-                    id="modalApplicantAvatar"
-                >
-                    JS
-                </div>
-
-
-                <div>
-
-                    <strong id="modalApplicantFullName">
-                        John Smith
-                    </strong>
-
-                    <span id="modalApplicantEmail">
-                        john@example.com
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- Application Information -->
-
-            <div class="modal-section">
-
-                <span class="modal-section-title">
-                    APPLICATION DETAILS
-                </span>
-
-
-                <div class="modal-info-grid">
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Applied For
-                        </span>
-
-                        <strong id="modalJobTitle">
-                            Senior Frontend Developer
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Company
-                        </span>
-
-                        <strong id="modalCompany">
-                            ABC Technology
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Location
-                        </span>
-
-                        <strong id="modalLocation">
-                            Yangon
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Work Type
-                        </span>
-
-                        <strong id="modalWorkType">
-                            Hybrid
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Applied Date
-                        </span>
-
-                        <strong id="modalAppliedDate">
-                            Aug 28, 2026
-                        </strong>
-
-                    </div>
-
-
-                    <div class="modal-info-item">
-
-                        <span>
-                            Status
-                        </span>
-
-                        <strong
-                            id="modalApplicationStatus"
-                        >
-                            New
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Cover Letter -->
-
-            <div class="modal-section">
-
-                <span class="modal-section-title">
-                    COVER LETTER
-                </span>
-
-                <p id="modalCoverLetter">
-                    Applicant cover letter will appear here.
-                </p>
-
-            </div>
-
-
-
-            <!-- Resume -->
-
-            <div class="modal-section">
-
-                <span class="modal-section-title">
-                    RESUME
-                </span>
-
-
-                <div class="resume-card">
-
-                    <div class="resume-icon">
-                        PDF
+                    <div class="modal-applicant-avatar" id="modalApplicantAvatar">
+                        JS
                     </div>
 
 
                     <div>
 
-                        <strong>
-                            Applicant Resume
+                        <strong id="modalApplicantFullName">
+                            John Smith
                         </strong>
 
-                        <span>
-                            Resume.pdf
+                        <span id="modalApplicantEmail">
+                            john@example.com
                         </span>
 
                     </div>
 
 
-                    <button
-                        type="button"
-                        id="viewResume"
-                        class="resume-button"
-                    >
-                        View
+                </div>
+
+
+
+                <div class="modal-section">
+
+                    <span class="modal-section-title">
+                        APPLICATION DETAILS
+                    </span>
+
+
+                    <div class="modal-info-grid">
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Applied For
+                            </span>
+
+                            <strong id="modalJobTitle">
+                                Senior Frontend Developer
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Company
+                            </span>
+
+                            <strong id="modalCompany">
+                                ABC Technology
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Location
+                            </span>
+
+                            <strong id="modalLocation">
+                                Yangon
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Work Type
+                            </span>
+
+                            <strong id="modalWorkType">
+                                Hybrid
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Applied Date
+                            </span>
+
+                            <strong id="modalAppliedDate">
+                                Aug 28, 2026
+                            </strong>
+
+                        </div>
+
+
+                        <div class="modal-info-item">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong id="modalApplicationStatus">
+                                New
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="modal-section">
+
+                    <span class="modal-section-title">
+                        COVER LETTER
+                    </span>
+
+                    <p id="modalCoverLetter">
+                        Applicant cover letter will appear here.
+                    </p>
+
+                </div>
+
+
+
+                <div class="modal-section">
+
+                    <span class="modal-section-title">
+                        RESUME
+                    </span>
+
+
+                    <div class="resume-card">
+
+                        <div class="resume-icon">
+                            PDF
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Applicant Resume
+                            </strong>
+
+                            <span>
+                                Resume.pdf
+                            </span>
+
+                        </div>
+
+
+                        <button type="button" id="viewResume" class="resume-button">
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="application-modal-footer">
+
+
+                <button type="button" id="rejectApplication" class="modal-danger-button">
+                    Reject
+                </button>
+
+
+                <div class="modal-footer-actions">
+
+                    <button type="button" id="closeModalButton" class="modal-secondary-button">
+                        Close
+                    </button>
+
+
+                    <button type="button" id="updateApplication" class="modal-primary-button">
+                        Update Status
                     </button>
 
                 </div>
 
-            </div>
-
-
-        </div>
-
-
-
-        <!-- Modal Footer -->
-
-        <div class="application-modal-footer">
-
-
-            <button
-                type="button"
-                id="rejectApplication"
-                class="modal-danger-button"
-            >
-                Reject
-            </button>
-
-
-            <div class="modal-footer-actions">
-
-                <button
-                    type="button"
-                    id="closeModalButton"
-                    class="modal-secondary-button"
-                >
-                    Close
-                </button>
-
-
-                <button
-                    type="button"
-                    id="updateApplication"
-                    class="modal-primary-button"
-                >
-                    Update Status
-                </button>
 
             </div>
 
 
         </div>
-
 
     </div>
 
-</div>
 
 
-
-<!-- ==================================================
+    <!-- ==================================================
      JAVASCRIPT
 ================================================== -->
-
-<script src="../js/admin/dashboard.js"></script>
-
-<script src="../js/admin/applications.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/admin/applications.js"></script>
 
 
 </body>

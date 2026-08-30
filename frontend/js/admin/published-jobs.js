@@ -1,130 +1,295 @@
 /* ==================================================
    ALOTE ADMIN — PUBLISHED JOBS
-   Temporary data for frontend development
 ================================================== */
 
 
 /* ==================================================
-   TEMPORARY JOB DATA
+   API + ADMIN AUTH
+================================================== */
+
+const API_BASE_URL =
+    window.ALOTE_CONFIG.API_BASE_URL;
+
+
+const adminToken =
+    sessionStorage.getItem(
+        "alote-admin-token"
+    );
+
+
+if (!adminToken) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ==================================================
+   AUTH HEADERS
+================================================== */
+
+function getAuthHeaders() {
+
+    return {
+
+        "Accept":
+            "application/json",
+
+        "Content-Type":
+            "application/json",
+
+        "Authorization":
+            `Bearer ${adminToken}`
+
+    };
+
+}
+
+
+/* ==================================================
+   CLEAR ADMIN SESSION
+================================================== */
+
+function clearAdminSession() {
+
+    sessionStorage.removeItem(
+        "alote-admin-token"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-session"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-email"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-name"
+    );
+
+}
+
+
+/* ==================================================
+   HANDLE UNAUTHORIZED
+================================================== */
+
+function handleUnauthorized(response) {
+
+    if (
+        response.status !== 401
+    ) {
+
+        return false;
+
+    }
+
+
+    clearAdminSession();
+
+
+    window.location.href =
+        "login.html";
+
+
+    return true;
+
+}
+
+
+/* ==================================================
+   JOB DATA
 ================================================== */
 
 let publishedJobs = [];
+
+
+/* ==================================================
+   LOAD PUBLISHED JOBS
+================================================== */
+
 async function loadPublishedJobs() {
 
     try {
 
-        const response = await fetch(
-            "http://127.0.0.1:8000/api/admin/jobs",
-            {
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-        );
+        const response =
+            await fetch(
+                `${API_BASE_URL}/admin/jobs`,
+                {
 
-        const result = await response.json();
+                    method:
+                        "GET",
+
+                    headers:
+                        getAuthHeaders()
+
+                }
+            );
+
+
+        if (
+            handleUnauthorized(
+                response
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const result =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 result.message ||
                 "Failed to load published jobs."
             );
+
         }
 
-        publishedJobs = result.data.map(item => ({
 
-            id: `JOB-${item.id}`,
+        const data =
+            Array.isArray(
+                result.data
+            )
+                ? result.data
+                : [];
 
-            title: item.title,
 
-            company:
-                item.employer?.company_name ||
-                "Not available",
+        publishedJobs =
+            data.map(
+                item => ({
 
-            contact:
-                item.employer?.contact_name ||
-                "Not available",
+                    id:
+                        `JOB-${item.id}`,
 
-            category:
-                item.category?.name ||
-                "Not available",
+                    title:
+                        item.title,
 
-            categoryId:
-                item.category?.slug ||
-                "other",
+                    company:
+                        item.employer
+                            ?.company_name ||
+                        "Not available",
 
-            location:
-                item.location ||
-                "Not specified",
+                    contact:
+                        item.employer
+                            ?.contact_name ||
+                        "Not available",
 
-            workType:
-                item.work_mode ||
-                "Not specified",
+                    category:
+                        item.category
+                            ?.name ||
+                        "Not available",
 
-            employmentType:
-                item.job_type ||
-                "Not specified",
+                    categoryId:
+                        item.category
+                            ?.slug ||
+                        "other",
 
-            salary:
-                item.salary_min || item.salary_max
-                    ? `${item.salary_min ?? ""} - ${item.salary_max ?? ""} ${item.currency ?? "MMK"}`
-                    : "Not specified",
+                    location:
+                        item.location ||
+                        "Not specified",
 
-            applications: 0,
+                    workType:
+                        item.work_mode ||
+                        "Not specified",
 
-            status:
-                item.is_active
-                    ? "published"
-                    : "closed",
+                    employmentType:
+                        item.job_type ||
+                        "Not specified",
 
-            publishedAt:
-                item.published_at
-                    ? item.published_at.split("T")[0]
-                    : "",
+                    salary:
+                        item.salary_min ||
+                            item.salary_max
 
-            expiresAt:
-                item.deadline || "",
+                            ? `${item.salary_min ?? ""} - ${item.salary_max ?? ""} ${item.currency ?? "MMK"}`
 
-            description:
-                item.description ||
-                "No description",
+                            : "Not specified",
 
-            requirements:
-                "Not available"
-        }));
+                    applications:
+                        item.applications_count ?? 0,
 
-        filteredJobs = [...publishedJobs];
+                    status:
+                        item.is_active
+                            ? "published"
+                            : "closed",
+
+                    publishedAt:
+                        item.published_at
+                            ? item.published_at.split(
+                                "T"
+                            )[0]
+                            : "",
+
+                    expiresAt:
+                        item.deadline ||
+                        "",
+
+                    description:
+                        item.description ||
+                        "No description",
+
+                    requirements:
+                        "Not available"
+
+                })
+            );
+
+
+        filteredJobs =
+            [...publishedJobs];
+
 
         sortFilteredJobs();
 
-        currentPageNumber = 1;
+
+        currentPageNumber =
+            1;
+
 
         updateStatistics();
 
+
         renderAll();
+
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Published jobs loading error:",
+            error
+        );
+
 
         alert(
             "Cannot load published jobs from ALote backend."
         );
-    }
-}
 
+    }
+
+}
 
 
 /* ==================================================
    STATE
 ================================================== */
 
-let filteredJobs = [...publishedJobs];
+let filteredJobs =
+    [...publishedJobs];
 
-let currentPageNumber = 1;
 
-const jobsPerPage = 6;
+let currentPageNumber =
+    1;
 
+
+const jobsPerPage =
+    6;
 
 
 /* ==================================================
@@ -132,69 +297,99 @@ const jobsPerPage = 6;
 ================================================== */
 
 const jobSearch =
-    document.getElementById("jobSearch");
+    document.getElementById(
+        "jobSearch"
+    );
+
 
 const clearJobSearch =
-    document.getElementById("clearJobSearch");
+    document.getElementById(
+        "clearJobSearch"
+    );
+
 
 const statusFilter =
-    document.getElementById("statusFilter");
+    document.getElementById(
+        "statusFilter"
+    );
+
 
 const categoryFilter =
-    document.getElementById("categoryFilter");
+    document.getElementById(
+        "categoryFilter"
+    );
+
 
 const sortJobs =
-    document.getElementById("sortJobs");
+    document.getElementById(
+        "sortJobs"
+    );
+
 
 const resetFilters =
-    document.getElementById("resetFilters");
+    document.getElementById(
+        "resetFilters"
+    );
+
 
 const emptyReset =
-    document.getElementById("emptyReset");
+    document.getElementById(
+        "emptyReset"
+    );
+
 
 const refreshJobs =
-    document.getElementById("refreshJobs");
+    document.getElementById(
+        "refreshJobs"
+    );
+
 
 const tableBody =
     document.getElementById(
         "publishedJobsTableBody"
     );
 
+
 const mobileList =
     document.getElementById(
         "publishedJobsMobileList"
     );
+
 
 const publishedEmpty =
     document.getElementById(
         "publishedEmpty"
     );
 
+
 const resultsCount =
     document.getElementById(
         "resultsCount"
     );
+
 
 const paginationInfo =
     document.getElementById(
         "paginationInfo"
     );
 
+
 const currentPage =
     document.getElementById(
         "currentPage"
     );
+
 
 const previousPage =
     document.getElementById(
         "previousPage"
     );
 
+
 const nextPage =
     document.getElementById(
         "nextPage"
     );
-
 
 
 /* ==================================================
@@ -204,65 +399,136 @@ const nextPage =
 function formatDate(dateString) {
 
     if (!dateString) {
+
         return "—";
+
     }
 
-    const date = new Date(dateString);
 
-    if (Number.isNaN(date.getTime())) {
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
         return "—";
+
     }
+
 
     return date.toLocaleDateString(
         "en-US",
         {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
+
+            month:
+                "short",
+
+            day:
+                "numeric",
+
+            year:
+                "numeric"
+
         }
     );
+
 }
 
 
-
-function getRelativeDate(dateString) {
+function getRelativeDate(
+    dateString
+) {
 
     if (!dateString) {
+
         return "—";
+
     }
 
-    const date = new Date(dateString);
 
-    if (Number.isNaN(date.getTime())) {
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
         return "—";
+
     }
 
-    date.setHours(0, 0, 0, 0);
 
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-
-    const difference = Math.round(
-        (today - date) /
-        (1000 * 60 * 60 * 24)
+    date.setHours(
+        0,
+        0,
+        0,
+        0
     );
 
-    if (difference === 0) {
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const difference =
+        Math.round(
+            (today - date) /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (
+        difference === 0
+    ) {
+
         return "Today";
+
     }
 
-    if (difference === 1) {
+
+    if (
+        difference === 1
+    ) {
+
         return "Yesterday";
+
     }
 
-    if (difference > 1 && difference < 30) {
+
+    if (
+        difference > 1 &&
+        difference < 30
+    ) {
+
         return `${difference} days ago`;
+
     }
 
-    return formatDate(dateString);
-}
 
+    return formatDate(
+        dateString
+    );
+
+}
 
 
 /* ==================================================
@@ -272,18 +538,26 @@ function getRelativeDate(dateString) {
 function getInitials(name) {
 
     if (!name) {
+
         return "A";
+
     }
+
 
     return name
         .split(" ")
-        .map(word => word.charAt(0))
+        .map(
+            word =>
+                word.charAt(0)
+        )
         .join("")
-        .substring(0, 2)
+        .substring(
+            0,
+            2
+        )
         .toUpperCase();
 
 }
-
 
 
 /* ==================================================
@@ -294,18 +568,22 @@ function getStatusLabel(status) {
 
     const labels = {
 
-        published: "Published",
+        published:
+            "Published",
 
-        closed: "Closed",
+        closed:
+            "Closed",
 
-        expired: "Expired"
+        expired:
+            "Expired"
 
     };
 
-    return labels[status] || status;
+
+    return labels[status] ||
+        status;
 
 }
-
 
 
 /* ==================================================
@@ -315,7 +593,9 @@ function getStatusLabel(status) {
 function renderTable() {
 
     if (!tableBody) {
+
         return;
+
     }
 
 
@@ -323,15 +603,23 @@ function renderTable() {
         (currentPageNumber - 1) *
         jobsPerPage;
 
+
     const end =
-        start + jobsPerPage;
+        start +
+        jobsPerPage;
+
 
     const pageJobs =
-        filteredJobs.slice(start, end);
+        filteredJobs.slice(
+            start,
+            end
+        );
 
 
     tableBody.innerHTML =
-        pageJobs.map(job => `
+        pageJobs
+            .map(
+                job => `
 
             <tr>
 
@@ -340,13 +628,21 @@ function renderTable() {
                     <div class="table-job-cell">
 
                         <div class="table-job-avatar">
-                            ${getInitials(job.title)}
+
+                            ${getInitials(
+                    job.title
+                )}
+
                         </div>
 
                         <div class="table-job-info">
 
                             <strong>
-                                ${escapeHtml(job.title)}
+
+                                ${escapeHtml(
+                    job.title
+                )}
+
                             </strong>
 
                             <span>
@@ -365,11 +661,19 @@ function renderTable() {
                     <div class="table-company">
 
                         <strong>
-                            ${escapeHtml(job.company)}
+
+                            ${escapeHtml(
+                    job.company
+                )}
+
                         </strong>
 
                         <span>
-                            ${escapeHtml(job.contact)}
+
+                            ${escapeHtml(
+                    job.contact
+                )}
+
                         </span>
 
                     </div>
@@ -380,7 +684,11 @@ function renderTable() {
                 <td>
 
                     <span class="category-pill">
-                        ${escapeHtml(job.category)}
+
+                        ${escapeHtml(
+                    job.category
+                )}
+
                     </span>
 
                 </td>
@@ -389,7 +697,11 @@ function renderTable() {
                 <td>
 
                     <span class="table-location">
-                        ${escapeHtml(job.location)}
+
+                        ${escapeHtml(
+                    job.location
+                )}
+
                     </span>
 
                 </td>
@@ -398,7 +710,9 @@ function renderTable() {
                 <td>
 
                     <span class="application-count">
+
                         ${job.applications}
+
                     </span>
 
                 </td>
@@ -409,11 +723,19 @@ function renderTable() {
                     <div class="table-date">
 
                         <strong>
-                            ${formatDate(job.publishedAt)}
+
+                            ${formatDate(
+                    job.publishedAt
+                )}
+
                         </strong>
 
                         <span>
-                            ${getRelativeDate(job.publishedAt)}
+
+                            ${getRelativeDate(
+                    job.publishedAt
+                )}
+
                         </span>
 
                     </div>
@@ -426,7 +748,11 @@ function renderTable() {
                     <span
                         class="job-status ${job.status}"
                     >
-                        ${getStatusLabel(job.status)}
+
+                        ${getStatusLabel(
+                    job.status
+                )}
+
                     </span>
 
                 </td>
@@ -434,22 +760,35 @@ function renderTable() {
 
                 <td>
 
-                    <button
-                        type="button"
-                        class="table-action"
-                        data-view-job="${job.id}"
-                    >
-                        View
-                    </button>
+    <div class="table-actions">
 
-                </td>
+        <button
+            type="button"
+            class="table-action"
+            data-view-job="${job.id}"
+        >
+            View
+        </button>
+
+        <button
+            type="button"
+            class="table-action delete-action"
+            data-delete-job="${job.id}"
+        >
+            Delete
+        </button>
+
+    </div>
+
+</td>
 
             </tr>
 
-        `).join("");
+        `
+            )
+            .join("");
 
 }
-
 
 
 /* ==================================================
@@ -459,7 +798,9 @@ function renderTable() {
 function renderMobileCards() {
 
     if (!mobileList) {
+
         return;
+
     }
 
 
@@ -467,15 +808,23 @@ function renderMobileCards() {
         (currentPageNumber - 1) *
         jobsPerPage;
 
+
     const end =
-        start + jobsPerPage;
+        start +
+        jobsPerPage;
+
 
     const pageJobs =
-        filteredJobs.slice(start, end);
+        filteredJobs.slice(
+            start,
+            end
+        );
 
 
     mobileList.innerHTML =
-        pageJobs.map(job => `
+        pageJobs
+            .map(
+                job => `
 
             <article class="mobile-job-card">
 
@@ -485,17 +834,29 @@ function renderMobileCards() {
                     <div class="mobile-job-identity">
 
                         <div class="table-job-avatar">
-                            ${getInitials(job.title)}
+
+                            ${getInitials(
+                    job.title
+                )}
+
                         </div>
 
                         <div>
 
                             <strong>
-                                ${escapeHtml(job.title)}
+
+                                ${escapeHtml(
+                    job.title
+                )}
+
                             </strong>
 
                             <span>
-                                ${escapeHtml(job.company)}
+
+                                ${escapeHtml(
+                    job.company
+                )}
+
                             </span>
 
                         </div>
@@ -506,7 +867,11 @@ function renderMobileCards() {
                     <span
                         class="job-status ${job.status}"
                     >
-                        ${getStatusLabel(job.status)}
+
+                        ${getStatusLabel(
+                    job.status
+                )}
+
                     </span>
 
                 </div>
@@ -516,15 +881,27 @@ function renderMobileCards() {
                 <div class="mobile-job-meta">
 
                     <span>
-                        ${escapeHtml(job.category)}
+
+                        ${escapeHtml(
+                    job.category
+                )}
+
                     </span>
 
                     <span>
-                        ${escapeHtml(job.location)}
+
+                        ${escapeHtml(
+                    job.location
+                )}
+
                     </span>
 
                     <span>
-                        ${escapeHtml(job.workType)}
+
+                        ${escapeHtml(
+                    job.workType
+                )}
+
                     </span>
 
                 </div>
@@ -553,7 +930,11 @@ function renderMobileCards() {
                         </span>
 
                         <strong>
-                            ${formatDate(job.publishedAt)}
+
+                            ${formatDate(
+                    job.publishedAt
+                )}
+
                         </strong>
 
                     </div>
@@ -571,10 +952,11 @@ function renderMobileCards() {
 
             </article>
 
-        `).join("");
+        `
+            )
+            .join("");
 
 }
-
 
 
 /* ==================================================
@@ -585,77 +967,99 @@ function applyFilters() {
 
     const searchTerm =
         jobSearch
+
             ? jobSearch.value
                 .trim()
                 .toLowerCase()
+
             : "";
 
 
     const selectedStatus =
         statusFilter
+
             ? statusFilter.value
+
             : "all";
 
 
     const selectedCategory =
         categoryFilter
+
             ? categoryFilter.value
+
             : "all";
 
 
     filteredJobs =
-        publishedJobs.filter(job => {
+        publishedJobs.filter(
+            job => {
 
 
-            const matchesSearch =
-                !searchTerm ||
+                const matchesSearch =
+                    !searchTerm ||
 
-                job.title
-                    .toLowerCase()
-                    .includes(searchTerm) ||
+                    job.title
+                        .toLowerCase()
+                        .includes(
+                            searchTerm
+                        ) ||
 
-                job.company
-                    .toLowerCase()
-                    .includes(searchTerm) ||
+                    job.company
+                        .toLowerCase()
+                        .includes(
+                            searchTerm
+                        ) ||
 
-                job.category
-                    .toLowerCase()
-                    .includes(searchTerm) ||
+                    job.category
+                        .toLowerCase()
+                        .includes(
+                            searchTerm
+                        ) ||
 
-                job.location
-                    .toLowerCase()
-                    .includes(searchTerm);
-
-
-            const matchesStatus =
-                selectedStatus === "all" ||
-                job.status === selectedStatus;
-
-
-            const matchesCategory =
-                selectedCategory === "all" ||
-                job.categoryId === selectedCategory;
+                    job.location
+                        .toLowerCase()
+                        .includes(
+                            searchTerm
+                        );
 
 
-            return (
-                matchesSearch &&
-                matchesStatus &&
-                matchesCategory
-            );
+                const matchesStatus =
+                    selectedStatus ===
+                    "all" ||
 
-        });
+                    job.status ===
+                    selectedStatus;
+
+
+                const matchesCategory =
+                    selectedCategory ===
+                    "all" ||
+
+                    job.categoryId ===
+                    selectedCategory;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus &&
+                    matchesCategory
+                );
+
+            }
+        );
 
 
     sortFilteredJobs();
 
 
-    currentPageNumber = 1;
+    currentPageNumber =
+        1;
 
 
     renderAll();
 
 }
-
 
 
 /* ==================================================
@@ -666,51 +1070,85 @@ function sortFilteredJobs() {
 
     const sortValue =
         sortJobs
+
             ? sortJobs.value
+
             : "newest";
 
 
-    filteredJobs.sort((a, b) => {
+    filteredJobs.sort(
+        (a, b) => {
 
-        if (sortValue === "newest") {
+            if (
+                sortValue ===
+                "newest"
+            ) {
 
-            return new Date(b.publishedAt)
-                - new Date(a.publishedAt);
+                return (
+                    new Date(
+                        b.publishedAt
+                    ) -
+                    new Date(
+                        a.publishedAt
+                    )
+                );
+
+            }
+
+
+            if (
+                sortValue ===
+                "oldest"
+            ) {
+
+                return (
+                    new Date(
+                        a.publishedAt
+                    ) -
+                    new Date(
+                        b.publishedAt
+                    )
+                );
+
+            }
+
+
+            if (
+                sortValue ===
+                "company"
+            ) {
+
+                return a.company
+                    .localeCompare(
+                        b.company
+                    );
+
+            }
+
+
+            if (
+                sortValue ===
+                "expiry"
+            ) {
+
+                return (
+                    new Date(
+                        a.expiresAt
+                    ) -
+                    new Date(
+                        b.expiresAt
+                    )
+                );
+
+            }
+
+
+            return 0;
 
         }
-
-
-        if (sortValue === "oldest") {
-
-            return new Date(a.publishedAt)
-                - new Date(b.publishedAt);
-
-        }
-
-
-        if (sortValue === "company") {
-
-            return a.company.localeCompare(
-                b.company
-            );
-
-        }
-
-
-        if (sortValue === "expiry") {
-
-            return new Date(a.expiresAt)
-                - new Date(b.expiresAt);
-
-        }
-
-
-        return 0;
-
-    });
+    );
 
 }
-
 
 
 /* ==================================================
@@ -725,19 +1163,25 @@ function updateStatistics() {
 
     const active =
         publishedJobs.filter(
-            job => job.status === "published"
+            job =>
+                job.status ===
+                "published"
         ).length;
 
 
     const closed =
         publishedJobs.filter(
-            job => job.status === "closed"
+            job =>
+                job.status ===
+                "closed"
         ).length;
 
 
     const expired =
         publishedJobs.filter(
-            job => job.status === "expired"
+            job =>
+                job.status ===
+                "expired"
         ).length;
 
 
@@ -746,15 +1190,18 @@ function updateStatistics() {
             "totalPublished"
         );
 
+
     const activeJobs =
         document.getElementById(
             "activeJobs"
         );
 
+
     const closedJobs =
         document.getElementById(
             "closedJobs"
         );
+
 
     const expiringJobs =
         document.getElementById(
@@ -763,17 +1210,26 @@ function updateStatistics() {
 
 
     if (totalPublished) {
-        totalPublished.textContent = total;
+
+        totalPublished.textContent =
+            total;
+
     }
 
 
     if (activeJobs) {
-        activeJobs.textContent = active;
+
+        activeJobs.textContent =
+            active;
+
     }
 
 
     if (closedJobs) {
-        closedJobs.textContent = closed;
+
+        closedJobs.textContent =
+            closed;
+
     }
 
 
@@ -782,11 +1238,20 @@ function updateStatistics() {
         const today =
             new Date();
 
-        today.setHours(0, 0, 0, 0);
+
+        today.setHours(
+            0,
+            0,
+            0,
+            0
+        );
 
 
         const sevenDays =
-            new Date(today);
+            new Date(
+                today
+            );
+
 
         sevenDays.setDate(
             today.getDate() + 7
@@ -794,26 +1259,33 @@ function updateStatistics() {
 
 
         const expiring =
-            publishedJobs.filter(job => {
+            publishedJobs.filter(
+                job => {
 
-                if (job.status !== "published") {
-                    return false;
-                }
+                    if (
+                        job.status !==
+                        "published"
+                    ) {
+
+                        return false;
+
+                    }
 
 
-                const expiry =
-                    new Date(
-                        job.expiresAt +
-                        "T00:00:00"
+                    const expiry =
+                        new Date(
+                            job.expiresAt +
+                            "T00:00:00"
+                        );
+
+
+                    return (
+                        expiry >= today &&
+                        expiry <= sevenDays
                     );
 
-
-                return (
-                    expiry >= today &&
-                    expiry <= sevenDays
-                );
-
-            }).length;
+                }
+            ).length;
 
 
         expiringJobs.textContent =
@@ -822,7 +1294,6 @@ function updateStatistics() {
     }
 
 }
-
 
 
 /* ==================================================
@@ -847,12 +1318,16 @@ function updateResults() {
         Math.max(
             1,
             Math.ceil(
-                total / jobsPerPage
+                total /
+                jobsPerPage
             )
         );
 
 
-    if (currentPageNumber > totalPages) {
+    if (
+        currentPageNumber >
+        totalPages
+    ) {
 
         currentPageNumber =
             totalPages;
@@ -862,14 +1337,17 @@ function updateResults() {
 
     const start =
         total === 0
+
             ? 0
+
             : (currentPageNumber - 1) *
-              jobsPerPage + 1;
+            jobsPerPage + 1;
 
 
     const end =
         Math.min(
-            currentPageNumber * jobsPerPage,
+            currentPageNumber *
+            jobsPerPage,
             total
         );
 
@@ -878,7 +1356,9 @@ function updateResults() {
 
         paginationInfo.textContent =
             total === 0
+
                 ? "No jobs found"
+
                 : `Showing ${start}–${end} of ${total} jobs`;
 
     }
@@ -888,7 +1368,9 @@ function updateResults() {
 
         currentPage.textContent =
             total === 0
+
                 ? "0"
+
                 : currentPageNumber;
 
     }
@@ -905,12 +1387,12 @@ function updateResults() {
     if (nextPage) {
 
         nextPage.disabled =
-            currentPageNumber >= totalPages;
+            currentPageNumber >=
+            totalPages;
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -956,7 +1438,6 @@ function updateEmptyState() {
 }
 
 
-
 /* ==================================================
    RENDER ALL
 ================================================== */
@@ -974,7 +1455,6 @@ function renderAll() {
 }
 
 
-
 /* ==================================================
    RESET FILTERS
 ================================================== */
@@ -982,22 +1462,34 @@ function renderAll() {
 function resetAllFilters() {
 
     if (jobSearch) {
-        jobSearch.value = "";
+
+        jobSearch.value =
+            "";
+
     }
 
 
     if (statusFilter) {
-        statusFilter.value = "all";
+
+        statusFilter.value =
+            "all";
+
     }
 
 
     if (categoryFilter) {
-        categoryFilter.value = "all";
+
+        categoryFilter.value =
+            "all";
+
     }
 
 
     if (sortJobs) {
-        sortJobs.value = "newest";
+
+        sortJobs.value =
+            "newest";
+
     }
 
 
@@ -1017,13 +1509,13 @@ function resetAllFilters() {
     sortFilteredJobs();
 
 
-    currentPageNumber = 1;
+    currentPageNumber =
+        1;
 
 
     renderAll();
 
 }
-
 
 
 /* ==================================================
@@ -1052,7 +1544,6 @@ if (jobSearch) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1089,7 +1580,6 @@ if (sortJobs) {
 }
 
 
-
 /* ==================================================
    CLEAR SEARCH
 ================================================== */
@@ -1101,12 +1591,17 @@ if (clearJobSearch) {
         () => {
 
             if (jobSearch) {
-                jobSearch.value = "";
+
+                jobSearch.value =
+                    "";
+
             }
+
 
             clearJobSearch.classList.remove(
                 "visible"
             );
+
 
             applyFilters();
 
@@ -1114,7 +1609,6 @@ if (clearJobSearch) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1141,7 +1635,6 @@ if (emptyReset) {
 }
 
 
-
 /* ==================================================
    REFRESH
 ================================================== */
@@ -1150,9 +1643,10 @@ if (refreshJobs) {
 
     refreshJobs.addEventListener(
         "click",
-        () => {
+        async () => {
 
-            refreshJobs.disabled = true;
+            refreshJobs.disabled =
+                true;
 
 
             const originalHTML =
@@ -1163,33 +1657,20 @@ if (refreshJobs) {
                 "<span>↻</span> Refreshing...";
 
 
-            setTimeout(() => {
-
-                filteredJobs =
-                    [...publishedJobs];
-
-                sortFilteredJobs();
-
-                currentPageNumber = 1;
-
-                renderAll();
-
-                updateStatistics();
+            await loadPublishedJobs();
 
 
-                refreshJobs.disabled =
-                    false;
+            refreshJobs.disabled =
+                false;
 
-                refreshJobs.innerHTML =
-                    originalHTML;
 
-            }, 500);
+            refreshJobs.innerHTML =
+                originalHTML;
 
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -1202,9 +1683,13 @@ if (previousPage) {
         "click",
         () => {
 
-            if (currentPageNumber > 1) {
+            if (
+                currentPageNumber >
+                1
+            ) {
 
                 currentPageNumber--;
+
 
                 renderAll();
 
@@ -1236,6 +1721,7 @@ if (nextPage) {
 
                 currentPageNumber++;
 
+
                 renderAll();
 
             }
@@ -1244,7 +1730,6 @@ if (nextPage) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1256,20 +1741,24 @@ const jobDetailsModal =
         "jobDetailsModal"
     );
 
+
 const closeJobModal =
     document.getElementById(
         "closeJobModal"
     );
+
 
 const viewPublicJob =
     document.getElementById(
         "viewPublicJob"
     );
 
+
 const closeJobButton =
     document.getElementById(
         "closeJobButton"
     );
+
 
 const editJobButton =
     document.getElementById(
@@ -1277,96 +1766,122 @@ const editJobButton =
     );
 
 
-
-function openJobDetails(jobId) {
+function openJobDetails(
+    jobId
+) {
 
     const job =
         publishedJobs.find(
-            item => item.id === jobId
+            item =>
+                item.id ===
+                jobId
         );
 
 
-    if (!job || !jobDetailsModal) {
+    if (
+        !job ||
+        !jobDetailsModal
+    ) {
+
         return;
+
     }
 
 
     document.getElementById(
         "modalJobTitle"
-    ).textContent = job.title;
+    ).textContent =
+        job.title;
 
 
     document.getElementById(
         "modalJobId"
-    ).textContent = job.id;
+    ).textContent =
+        job.id;
 
 
     document.getElementById(
         "modalCompany"
-    ).textContent = job.company;
+    ).textContent =
+        job.company;
 
 
     document.getElementById(
         "modalCompanyContact"
-    ).textContent = job.contact;
+    ).textContent =
+        job.contact;
 
 
     document.getElementById(
         "modalCompanyAvatar"
     ).textContent =
-        getInitials(job.company);
+        getInitials(
+            job.company
+        );
 
 
     document.getElementById(
         "modalCategory"
-    ).textContent = job.category;
+    ).textContent =
+        job.category;
 
 
     document.getElementById(
         "modalLocation"
-    ).textContent = job.location;
+    ).textContent =
+        job.location;
 
 
     document.getElementById(
         "modalWorkType"
-    ).textContent = job.workType;
+    ).textContent =
+        job.workType;
 
 
     document.getElementById(
         "modalEmployment"
-    ).textContent = job.employmentType;
+    ).textContent =
+        job.employmentType;
 
 
     document.getElementById(
         "modalSalary"
-    ).textContent = job.salary;
+    ).textContent =
+        job.salary;
 
 
     document.getElementById(
         "modalApplications"
-    ).textContent = job.applications;
+    ).textContent =
+        job.applications;
 
 
     document.getElementById(
         "modalDescription"
-    ).textContent = job.description;
+    ).textContent =
+        job.description;
 
 
     document.getElementById(
         "modalRequirements"
-    ).textContent = job.requirements;
+    ).textContent =
+        job.requirements;
 
 
     document.getElementById(
         "modalPublishedDate"
     ).textContent =
-        formatDate(job.publishedAt);
+        formatDate(
+            job.publishedAt
+        );
 
 
     document.getElementById(
         "modalExpiryDate"
     ).textContent =
-        formatDate(job.expiresAt);
+        formatDate(
+            job.expiresAt
+        );
 
 
     if (viewPublicJob) {
@@ -1380,8 +1895,11 @@ function openJobDetails(jobId) {
     if (closeJobButton) {
 
         closeJobButton.style.display =
-            job.status === "published"
+            job.status ===
+                "published"
+
                 ? "inline-flex"
+
                 : "none";
 
     }
@@ -1398,11 +1916,12 @@ function openJobDetails(jobId) {
 }
 
 
-
 function closeJobDetails() {
 
     if (!jobDetailsModal) {
+
         return;
+
     }
 
 
@@ -1415,7 +1934,6 @@ function closeJobDetails() {
         "";
 
 }
-
 
 
 /* ==================================================
@@ -1433,19 +1951,23 @@ document.addEventListener(
 
 
         if (!viewButton) {
+
             return;
+
         }
 
 
         const jobId =
-            viewButton.dataset.viewJob;
+            viewButton.dataset
+                .viewJob;
 
 
-        openJobDetails(jobId);
+        openJobDetails(
+            jobId
+        );
 
     }
 );
-
 
 
 if (closeJobModal) {
@@ -1478,7 +2000,113 @@ if (jobDetailsModal) {
 
 }
 
+/* ==================================================
+   DELETE JOB
+================================================== */
 
+document.addEventListener(
+    "click",
+    async event => {
+
+        const deleteButton =
+            event.target.closest(
+                "[data-delete-job]"
+            );
+
+        if (!deleteButton) {
+            return;
+        }
+
+        const jobId =
+            deleteButton.dataset.deleteJob;
+
+        const job =
+            publishedJobs.find(
+                item =>
+                    item.id === jobId
+            );
+
+        if (!job) {
+            return;
+        }
+
+        const confirmed =
+            window.confirm(
+                `Delete "${job.title}"?\n\nThis will permanently delete this job.`
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            deleteButton.disabled = true;
+            deleteButton.textContent = "Deleting...";
+
+            const databaseId =
+                job.id.replace(
+                    "JOB-",
+                    ""
+                );
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/admin/jobs/${databaseId}`,
+                    {
+                        method: "DELETE",
+                        headers: getAuthHeaders()
+                    }
+                );
+
+            if (
+                handleUnauthorized(
+                    response
+                )
+            ) {
+                return;
+            }
+
+            const result =
+                await response.json();
+
+            if (!response.ok) {
+
+                console.error(result);
+
+                throw new Error(
+                    result.message ||
+                    "Unable to delete job."
+                );
+            }
+
+            await loadPublishedJobs();
+
+            alert(
+                "Job deleted successfully."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Delete job error:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "Unable to delete job."
+            );
+
+        } finally {
+
+            deleteButton.disabled = false;
+            deleteButton.textContent = "Delete";
+
+        }
+
+    }
+);
 
 /* ==================================================
    CLOSE JOB
@@ -1495,86 +2123,137 @@ if (closeJobButton) {
                     "modalJobTitle"
                 ).textContent;
 
+
             const job =
                 publishedJobs.find(
                     item =>
-                        item.title === title
+                        item.title ===
+                        title
                 );
 
+
             if (!job) {
+
                 return;
+
             }
+
 
             const confirmed =
                 window.confirm(
                     `Close "${job.title}"?\n\nThis job will no longer accept new applications.`
                 );
 
+
             if (!confirmed) {
+
                 return;
+
             }
+
 
             try {
 
-                closeJobButton.disabled = true;
-                closeJobButton.textContent = "Closing...";
+                closeJobButton.disabled =
+                    true;
+
+
+                closeJobButton.textContent =
+                    "Closing...";
+
 
                 const jobId =
-                    job.id.replace("JOB-", "");
+                    job.id.replace(
+                        "JOB-",
+                        ""
+                    );
 
-                const response = await fetch(
-                    `http://127.0.0.1:8000/api/admin/jobs/${jobId}/close`,
-                    {
-                        method: "POST",
 
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/admin/jobs/${jobId}/close`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers:
+                                getAuthHeaders()
+
                         }
-                    }
-                );
+                    );
+
+
+                if (
+                    handleUnauthorized(
+                        response
+                    )
+                ) {
+
+                    return;
+
+                }
+
 
                 const result =
                     await response.json();
 
+
                 if (!response.ok) {
 
-                    console.error(result);
+                    console.error(
+                        result
+                    );
+
 
                     throw new Error(
                         result.message ||
                         "Unable to close job."
                     );
+
                 }
+
 
                 closeJobDetails();
 
+
                 await loadPublishedJobs();
+
 
                 alert(
                     "Job closed successfully."
                 );
 
+
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Close job error:",
+                    error
+                );
+
 
                 alert(
                     error.message ||
                     "Unable to close job."
                 );
 
+
             } finally {
 
-                closeJobButton.disabled = false;
-                closeJobButton.textContent = "Close Job";
+                closeJobButton.disabled =
+                    false;
+
+
+                closeJobButton.textContent =
+                    "Close Job";
+
             }
 
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -1597,7 +2276,6 @@ if (editJobButton) {
 }
 
 
-
 /* ==================================================
    ESC KEY
 ================================================== */
@@ -1607,11 +2285,15 @@ document.addEventListener(
     event => {
 
         if (
-            event.key === "Escape" &&
+            event.key ===
+            "Escape" &&
+
             jobDetailsModal &&
-            !jobDetailsModal.classList.contains(
-                "hidden"
-            )
+
+            !jobDetailsModal.classList
+                .contains(
+                    "hidden"
+                )
         ) {
 
             closeJobDetails();
@@ -1622,22 +2304,37 @@ document.addEventListener(
 );
 
 
-
 /* ==================================================
    HTML ESCAPE
 ================================================== */
 
 function escapeHtml(value) {
 
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
-
 
 
 /* ==================================================
@@ -1653,7 +2350,9 @@ function updateCurrentDate() {
 
 
     if (!dateElement) {
+
         return;
+
     }
 
 
@@ -1665,14 +2364,20 @@ function updateCurrentDate() {
         today.toLocaleDateString(
             "en-US",
             {
-                month: "short",
-                day: "numeric",
-                year: "numeric"
+
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                year:
+                    "numeric"
+
             }
         );
 
 }
-
 
 
 /* ==================================================

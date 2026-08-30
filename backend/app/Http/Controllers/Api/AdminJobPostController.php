@@ -13,6 +13,7 @@ class AdminJobPostController extends Controller
             'employer',
             'category'
         ])
+            ->withCount('applications')
             ->latest('published_at')
             ->get();
 
@@ -30,6 +31,17 @@ class AdminJobPostController extends Controller
 
         return response()->json([
             'message' => 'Job closed successfully.'
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $job = JobPost::findOrFail($id);
+
+        $job->delete();
+
+        return response()->json([
+            'message' => 'Job deleted successfully.'
         ]);
     }
 }

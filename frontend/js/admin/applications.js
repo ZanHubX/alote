@@ -1,14 +1,118 @@
 /* ==================================================
    ALOTE ADMIN — APPLICATIONS
-   Temporary Frontend Data
 ================================================== */
 
 
 /* ==================================================
-   TEMPORARY APPLICATION DATA
+   API + ADMIN AUTH
+================================================== */
+
+const API_BASE_URL =
+    window.ALOTE_CONFIG.API_BASE_URL;
+
+
+const STORAGE_BASE_URL =
+    window.ALOTE_CONFIG.STORAGE_BASE_URL;
+
+
+const adminToken =
+    sessionStorage.getItem(
+        "alote-admin-token"
+    );
+
+
+if (!adminToken) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ==================================================
+   AUTH HEADERS
+================================================== */
+
+function getAuthHeaders() {
+
+    return {
+
+        "Accept":
+            "application/json",
+
+        "Content-Type":
+            "application/json",
+
+        "Authorization":
+            `Bearer ${adminToken}`
+
+    };
+
+}
+
+
+/* ==================================================
+   CLEAR ADMIN SESSION
+================================================== */
+
+function clearAdminSession() {
+
+    sessionStorage.removeItem(
+        "alote-admin-token"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-session"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-email"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-name"
+    );
+
+}
+
+
+/* ==================================================
+   HANDLE UNAUTHORIZED
+================================================== */
+
+function handleUnauthorized(response) {
+
+    if (
+        response.status !== 401
+    ) {
+
+        return false;
+
+    }
+
+
+    clearAdminSession();
+
+
+    window.location.href =
+        "login.html";
+
+
+    return true;
+
+}
+
+
+/* ==================================================
+   APPLICATION DATA
 ================================================== */
 
 let applications = [];
+
+
+/* ==================================================
+   LOAD APPLICATIONS
+================================================== */
 
 async function loadApplicationsFromBackend() {
 
@@ -16,92 +120,152 @@ async function loadApplicationsFromBackend() {
 
         const response =
             await fetch(
-                "http://127.0.0.1:8000/api/admin/applications",
+                `${API_BASE_URL}/admin/applications`,
                 {
-                    headers: {
-                        "Accept": "application/json"
-                    }
+
+                    method:
+                        "GET",
+
+                    headers:
+                        getAuthHeaders()
+
                 }
             );
 
-        if (!response.ok) {
-            throw new Error(
-                "Unable to load applications."
-            );
+
+        if (
+            handleUnauthorized(
+                response
+            )
+        ) {
+
+            return;
+
         }
+
 
         const result =
             await response.json();
 
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Unable to load applications."
+            );
+
+        }
+
+
+        const data =
+            Array.isArray(
+                result.data
+            )
+                ? result.data
+                : [];
+
+
         applications =
-            result.data.map(item => ({
-
-                id:
-                    `APP-${item.id}`,
-
-                applicant: {
-                    name:
-                        item.job_seeker?.full_name ||
-                        "Not available",
-
-                    email:
-                        item.job_seeker?.email ||
-                        "Not available"
-                },
-
-                job: {
-                    title:
-                        item.job_post?.title ||
-                        "Not available",
+            data.map(
+                item => ({
 
                     id:
-                        item.job_post?.id
-                            ? `JOB-${item.job_post.id}`
-                            : "Not available"
-                },
+                        `APP-${item.id}`,
 
-                company:
-                    item.job_post?.employer?.company_name ||
-                    "Not available",
+                    applicant: {
 
-                location:
-                    item.job_post?.location ||
-                    "Not specified",
+                        name:
+                            item.job_seeker
+                                ?.full_name ||
+                            "Not available",
 
-                workType:
-                    item.job_post?.work_mode ||
-                    "Not specified",
+                        email:
+                            item.job_seeker
+                                ?.email ||
+                            "Not available"
 
-                appliedDate:
-                    item.applied_at
-                        ? item.applied_at.substring(0, 10)
-                        : "",
+                    },
 
-                status:
-                    item.status === "pending"
-                        ? "new"
-                        : item.status,
+                    job: {
 
-                coverLetter:
-                    item.cover_letter ||
-                    "No cover letter.",
+                        title:
+                            item.job_post
+                                ?.title ||
+                            "Not available",
 
-                resume:
-                    item.resume_path || ""
-            }));
+                        id:
+                            item.job_post
+                                ?.id
+                                ? `JOB-${item.job_post.id}`
+                                : "Not available"
+
+                    },
+
+                    company:
+                        item.job_post
+                            ?.employer
+                            ?.company_name ||
+                        "Not available",
+
+                    location:
+                        item.job_post
+                            ?.location ||
+                        "Not specified",
+
+                    workType:
+                        item.job_post
+                            ?.work_mode ||
+                        "Not specified",
+
+                    appliedDate:
+                        item.applied_at
+                            ? item.applied_at
+                                .substring(
+                                    0,
+                                    10
+                                )
+                            : "",
+
+                    status:
+                        item.status ===
+                            "pending"
+
+                            ? "new"
+
+                            : item.status,
+
+                    coverLetter:
+                        item.cover_letter ||
+                        "No cover letter.",
+
+                    resume:
+                        item.resume_path ||
+                        ""
+
+                })
+            );
+
 
         filteredApplications =
             [...applications];
 
+
         updateStatistics();
+
 
         sortFilteredApplications();
 
+
         renderApplications();
+
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Applications loading error:",
+            error
+        );
 
     }
 
@@ -112,12 +276,16 @@ async function loadApplicationsFromBackend() {
    STATE
 ================================================== */
 
-let filteredApplications = [...applications];
+let filteredApplications =
+    [...applications];
 
-let currentPageNumber = 1;
 
-const applicationsPerPage = 6;
+let currentPageNumber =
+    1;
 
+
+const applicationsPerPage =
+    6;
 
 
 /* ==================================================
@@ -129,76 +297,89 @@ const tableBody =
         "applicationsTableBody"
     );
 
+
 const mobileList =
     document.getElementById(
         "applicationsMobileList"
     );
+
 
 const emptyState =
     document.getElementById(
         "applicationsEmpty"
     );
 
+
 const searchInput =
     document.getElementById(
         "applicationSearch"
     );
+
 
 const clearSearch =
     document.getElementById(
         "clearApplicationSearch"
     );
 
+
 const statusFilter =
     document.getElementById(
         "statusFilter"
     );
+
 
 const jobFilter =
     document.getElementById(
         "jobFilter"
     );
 
+
 const sortApplications =
     document.getElementById(
         "sortApplications"
     );
+
 
 const resetFilters =
     document.getElementById(
         "resetFilters"
     );
 
+
 const emptyReset =
     document.getElementById(
         "emptyReset"
     );
+
 
 const previousPage =
     document.getElementById(
         "previousPage"
     );
 
+
 const nextPage =
     document.getElementById(
         "nextPage"
     );
+
 
 const currentPage =
     document.getElementById(
         "currentPage"
     );
 
+
 const resultsCount =
     document.getElementById(
         "resultsCount"
     );
 
+
 const paginationInfo =
     document.getElementById(
         "paginationInfo"
     );
-
 
 
 /* ==================================================
@@ -210,91 +391,107 @@ const applicationModal =
         "applicationModal"
     );
 
+
 const closeApplicationModal =
     document.getElementById(
         "closeApplicationModal"
     );
+
 
 const closeModalButton =
     document.getElementById(
         "closeModalButton"
     );
 
+
 const modalApplicantName =
     document.getElementById(
         "modalApplicantName"
     );
+
 
 const modalApplicationId =
     document.getElementById(
         "modalApplicationId"
     );
 
+
 const modalApplicantFullName =
     document.getElementById(
         "modalApplicantFullName"
     );
+
 
 const modalApplicantEmail =
     document.getElementById(
         "modalApplicantEmail"
     );
 
+
 const modalApplicantAvatar =
     document.getElementById(
         "modalApplicantAvatar"
     );
+
 
 const modalJobTitle =
     document.getElementById(
         "modalJobTitle"
     );
 
+
 const modalCompany =
     document.getElementById(
         "modalCompany"
     );
+
 
 const modalLocation =
     document.getElementById(
         "modalLocation"
     );
 
+
 const modalWorkType =
     document.getElementById(
         "modalWorkType"
     );
+
 
 const modalAppliedDate =
     document.getElementById(
         "modalAppliedDate"
     );
 
+
 const modalApplicationStatus =
     document.getElementById(
         "modalApplicationStatus"
     );
+
 
 const modalCoverLetter =
     document.getElementById(
         "modalCoverLetter"
     );
 
+
 const viewResume =
     document.getElementById(
         "viewResume"
     );
+
 
 const rejectApplication =
     document.getElementById(
         "rejectApplication"
     );
 
+
 const updateApplication =
     document.getElementById(
         "updateApplication"
     );
-
 
 
 /* ==================================================
@@ -303,29 +500,70 @@ const updateApplication =
 
 function getInitials(name) {
 
+    if (!name) {
+
+        return "A";
+
+    }
+
+
     return name
         .split(" ")
-        .map(word => word.charAt(0))
+        .map(
+            word =>
+                word.charAt(0)
+        )
         .join("")
-        .substring(0, 2)
+        .substring(
+            0,
+            2
+        )
         .toUpperCase();
 
 }
 
 
-function formatDate(dateString) {
+function formatDate(
+    dateString
+) {
+
+    if (!dateString) {
+
+        return "—";
+
+    }
+
 
     const date =
         new Date(
             `${dateString}T00:00:00`
         );
 
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "—";
+
+    }
+
+
     return date.toLocaleDateString(
         "en-US",
         {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
+
+            month:
+                "short",
+
+            day:
+                "numeric",
+
+            year:
+                "numeric"
+
         }
     );
 
@@ -336,24 +574,31 @@ function formatStatus(status) {
 
     const labels = {
 
-        new: "New",
+        new:
+            "New",
 
-        review: "Under Review",
+        review:
+            "Under Review",
 
-        shortlisted: "Shortlisted",
+        shortlisted:
+            "Shortlisted",
 
-        interview: "Interview",
+        interview:
+            "Interview",
 
-        hired: "Hired",
+        hired:
+            "Hired",
 
-        rejected: "Rejected"
+        rejected:
+            "Rejected"
 
     };
 
-    return labels[status] || status;
+
+    return labels[status] ||
+        status;
 
 }
-
 
 
 /* ==================================================
@@ -369,21 +614,24 @@ function updateStatistics() {
     const newCount =
         applications.filter(
             application =>
-                application.status === "new"
+                application.status ===
+                "new"
         ).length;
 
 
     const reviewCount =
         applications.filter(
             application =>
-                application.status === "review"
+                application.status ===
+                "review"
         ).length;
 
 
     const hiredCount =
         applications.filter(
             application =>
-                application.status === "hired"
+                application.status ===
+                "hired"
         ).length;
 
 
@@ -392,15 +640,18 @@ function updateStatistics() {
             "totalApplications"
         );
 
+
     const newElement =
         document.getElementById(
             "newApplications"
         );
 
+
     const reviewElement =
         document.getElementById(
             "reviewApplications"
         );
+
 
     const hiredElement =
         document.getElementById(
@@ -451,6 +702,7 @@ function updateStatistics() {
         badge.textContent =
             newCount;
 
+
         badge.classList.toggle(
             "muted",
             newCount === 0
@@ -461,7 +713,6 @@ function updateStatistics() {
 }
 
 
-
 /* ==================================================
    FILTER APPLICATIONS
 ================================================== */
@@ -470,21 +721,27 @@ function filterApplications() {
 
     const search =
         searchInput
+
             ? searchInput.value
                 .trim()
                 .toLowerCase()
+
             : "";
 
 
     const selectedStatus =
         statusFilter
+
             ? statusFilter.value
+
             : "all";
 
 
     const selectedJob =
         jobFilter
+
             ? jobFilter.value
+
             : "all";
 
 
@@ -496,32 +753,50 @@ function filterApplications() {
                 const matchesSearch =
                     !search ||
 
-                    application.applicant.name
+                    application.applicant
+                        .name
                         .toLowerCase()
-                        .includes(search) ||
+                        .includes(
+                            search
+                        ) ||
 
-                    application.applicant.email
+                    application.applicant
+                        .email
                         .toLowerCase()
-                        .includes(search) ||
+                        .includes(
+                            search
+                        ) ||
 
-                    application.job.title
+                    application.job
+                        .title
                         .toLowerCase()
-                        .includes(search) ||
+                        .includes(
+                            search
+                        ) ||
 
                     application.company
                         .toLowerCase()
-                        .includes(search);
+                        .includes(
+                            search
+                        );
 
 
                 const matchesStatus =
-                    selectedStatus === "all" ||
-                    application.status === selectedStatus;
+                    selectedStatus ===
+                    "all" ||
+
+                    application.status ===
+                    selectedStatus;
 
 
-                let matchesJob = true;
+                let matchesJob =
+                    true;
 
 
-                if (selectedJob !== "all") {
+                if (
+                    selectedJob !==
+                    "all"
+                ) {
 
                     const jobMap = {
 
@@ -541,8 +816,11 @@ function filterApplications() {
 
 
                     matchesJob =
-                        application.job.title ===
-                        jobMap[selectedJob];
+                        application.job
+                            .title ===
+                        jobMap[
+                        selectedJob
+                        ];
 
                 }
 
@@ -560,7 +838,8 @@ function filterApplications() {
     sortFilteredApplications();
 
 
-    currentPageNumber = 1;
+    currentPageNumber =
+        1;
 
 
     updateSearchClear();
@@ -571,7 +850,6 @@ function filterApplications() {
 }
 
 
-
 /* ==================================================
    SORT
 ================================================== */
@@ -580,58 +858,86 @@ function sortFilteredApplications() {
 
     const sort =
         sortApplications
+
             ? sortApplications.value
+
             : "newest";
 
 
-    if (sort === "newest") {
+    if (
+        sort ===
+        "newest"
+    ) {
 
         filteredApplications.sort(
             (a, b) =>
-                new Date(b.appliedDate) -
-                new Date(a.appliedDate)
-        );
-
-    }
-
-
-    else if (sort === "oldest") {
-
-        filteredApplications.sort(
-            (a, b) =>
-                new Date(a.appliedDate) -
-                new Date(b.appliedDate)
-        );
-
-    }
-
-
-    else if (sort === "name") {
-
-        filteredApplications.sort(
-            (a, b) =>
-                a.applicant.name.localeCompare(
-                    b.applicant.name
+                new Date(
+                    b.appliedDate
+                ) -
+                new Date(
+                    a.appliedDate
                 )
         );
 
     }
 
 
-    else if (sort === "status") {
+    else if (
+        sort ===
+        "oldest"
+    ) {
 
         filteredApplications.sort(
             (a, b) =>
-                formatStatus(a.status)
+                new Date(
+                    a.appliedDate
+                ) -
+                new Date(
+                    b.appliedDate
+                )
+        );
+
+    }
+
+
+    else if (
+        sort ===
+        "name"
+    ) {
+
+        filteredApplications.sort(
+            (a, b) =>
+                a.applicant
+                    .name
                     .localeCompare(
-                        formatStatus(b.status)
+                        b.applicant
+                            .name
+                    )
+        );
+
+    }
+
+
+    else if (
+        sort ===
+        "status"
+    ) {
+
+        filteredApplications.sort(
+            (a, b) =>
+                formatStatus(
+                    a.status
+                )
+                    .localeCompare(
+                        formatStatus(
+                            b.status
+                        )
                     )
         );
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -707,7 +1013,8 @@ function renderApplications() {
 
 
     const hasResults =
-        pageApplications.length > 0;
+        pageApplications.length >
+        0;
 
 
     if (emptyState) {
@@ -723,8 +1030,8 @@ function renderApplications() {
     if (tableBody) {
 
         tableBody.parentElement
-            .parentElement
-            .classList.toggle(
+            ?.parentElement
+            ?.classList.toggle(
                 "hidden",
                 !hasResults
             );
@@ -755,12 +1062,13 @@ function renderApplications() {
 }
 
 
-
 /* ==================================================
    TABLE ROW
 ================================================== */
 
-function renderTableRow(application) {
+function renderTableRow(
+    application
+) {
 
     return `
 
@@ -773,8 +1081,10 @@ function renderTableRow(application) {
                     <div class="applicant-avatar">
 
                         ${getInitials(
-                            application.applicant.name
-                        )}
+        application
+            .applicant
+            .name
+    )}
 
                     </div>
 
@@ -782,11 +1092,19 @@ function renderTableRow(application) {
                     <div class="applicant-info">
 
                         <strong>
-                            ${application.applicant.name}
+                            ${escapeHTML(
+        application
+            .applicant
+            .name
+    )}
                         </strong>
 
                         <span>
-                            ${application.applicant.email}
+                            ${escapeHTML(
+        application
+            .applicant
+            .email
+    )}
                         </span>
 
                     </div>
@@ -801,11 +1119,19 @@ function renderTableRow(application) {
                 <div class="application-job">
 
                     <strong>
-                        ${application.job.title}
+                        ${escapeHTML(
+        application
+            .job
+            .title
+    )}
                     </strong>
 
                     <span>
-                        ${application.job.id}
+                        ${escapeHTML(
+        application
+            .job
+            .id
+    )}
                     </span>
 
                 </div>
@@ -816,7 +1142,11 @@ function renderTableRow(application) {
             <td>
 
                 <span class="application-company">
-                    ${application.company}
+
+                    ${escapeHTML(
+        application.company
+    )}
+
                 </span>
 
             </td>
@@ -827,8 +1157,8 @@ function renderTableRow(application) {
                 <span class="application-date">
 
                     ${formatDate(
-                        application.appliedDate
-                    )}
+        application.appliedDate
+    )}
 
                 </span>
 
@@ -838,12 +1168,16 @@ function renderTableRow(application) {
             <td>
 
                 <span
-                    class="application-status ${application.status}"
+                    class="application-status ${escapeHTML(
+        application.status
+    )}"
                 >
 
-                    ${formatStatus(
-                        application.status
-                    )}
+                    ${escapeHTML(
+        formatStatus(
+            application.status
+        )
+    )}
 
                 </span>
 
@@ -852,15 +1186,31 @@ function renderTableRow(application) {
 
             <td>
 
-                <button
-                    type="button"
-                    class="application-action"
-                    data-application-id="${application.id}"
-                >
-                    View
-                </button>
+    <div class="application-actions">
 
-            </td>
+        <button
+            type="button"
+            class="application-action"
+            data-application-id="${escapeHTML(
+                application.id
+            )}"
+        >
+            View
+        </button>
+
+        <button
+            type="button"
+            class="application-delete-action"
+            data-delete-application="${escapeHTML(
+                application.id
+            )}"
+        >
+            Delete
+        </button>
+
+    </div>
+
+</td>
 
         </tr>
 
@@ -869,12 +1219,13 @@ function renderTableRow(application) {
 }
 
 
-
 /* ==================================================
    MOBILE CARD
 ================================================== */
 
-function renderMobileCard(application) {
+function renderMobileCard(
+    application
+) {
 
     return `
 
@@ -890,8 +1241,10 @@ function renderMobileCard(application) {
                     <div class="applicant-avatar">
 
                         ${getInitials(
-                            application.applicant.name
-                        )}
+        application
+            .applicant
+            .name
+    )}
 
                     </div>
 
@@ -899,11 +1252,19 @@ function renderMobileCard(application) {
                     <div class="mobile-applicant-info">
 
                         <strong>
-                            ${application.applicant.name}
+                            ${escapeHTML(
+        application
+            .applicant
+            .name
+    )}
                         </strong>
 
                         <span>
-                            ${application.applicant.email}
+                            ${escapeHTML(
+        application
+            .applicant
+            .email
+    )}
                         </span>
 
                     </div>
@@ -912,12 +1273,16 @@ function renderMobileCard(application) {
 
 
                 <span
-                    class="application-status ${application.status}"
+                    class="application-status ${escapeHTML(
+        application.status
+    )}"
                 >
 
-                    ${formatStatus(
-                        application.status
-                    )}
+                    ${escapeHTML(
+        formatStatus(
+            application.status
+        )
+    )}
 
                 </span>
 
@@ -929,11 +1294,17 @@ function renderMobileCard(application) {
             <div class="mobile-application-job">
 
                 <strong>
-                    ${application.job.title}
+                    ${escapeHTML(
+        application
+            .job
+            .title
+    )}
                 </strong>
 
                 <span>
-                    ${application.company}
+                    ${escapeHTML(
+        application.company
+    )}
                 </span>
 
             </div>
@@ -945,8 +1316,8 @@ function renderMobileCard(application) {
                 <span class="mobile-application-date">
 
                     ${formatDate(
-                        application.appliedDate
-                    )}
+        application.appliedDate
+    )}
 
                 </span>
 
@@ -954,7 +1325,9 @@ function renderMobileCard(application) {
                 <button
                     type="button"
                     class="application-action"
-                    data-application-id="${application.id}"
+                    data-application-id="${escapeHTML(
+        application.id
+    )}"
                 >
                     View Application
                 </button>
@@ -967,7 +1340,6 @@ function renderMobileCard(application) {
     `;
 
 }
-
 
 
 /* ==================================================
@@ -983,7 +1355,9 @@ function updatePagination(
 
     const visibleStart =
         total === 0
+
             ? 0
+
             : start + 1;
 
 
@@ -997,10 +1371,9 @@ function updatePagination(
     if (resultsCount) {
 
         resultsCount.textContent =
-            `${total} ${
-                total === 1
-                    ? "application"
-                    : "applications"
+            `${total} ${total === 1
+                ? "application"
+                : "applications"
             }`;
 
     }
@@ -1013,13 +1386,7 @@ function updatePagination(
 
                 ? "Showing 0 applications"
 
-                : `Showing ${
-                    visibleStart
-                }–${
-                    visibleEnd
-                } of ${
-                    total
-                } applications`;
+                : `Showing ${visibleStart}–${visibleEnd} of ${total} applications`;
 
     }
 
@@ -1035,7 +1402,8 @@ function updatePagination(
     if (previousPage) {
 
         previousPage.disabled =
-            currentPageNumber <= 1;
+            currentPageNumber <=
+            1;
 
     }
 
@@ -1043,12 +1411,12 @@ function updatePagination(
     if (nextPage) {
 
         nextPage.disabled =
-            currentPageNumber >= totalPages;
+            currentPageNumber >=
+            totalPages;
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -1061,37 +1429,44 @@ function attachApplicationActions() {
         .querySelectorAll(
             ".application-action"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const id =
-                        button.dataset
-                            .applicationId;
+                        const id =
+                            button.dataset
+                                .applicationId;
 
-                    openApplicationModal(id);
 
-                }
-            );
+                        openApplicationModal(
+                            id
+                        );
 
-        });
+                    }
+                );
+
+            }
+        );
 
 }
-
 
 
 /* ==================================================
    OPEN APPLICATION MODAL
 ================================================== */
 
-function openApplicationModal(id) {
+function openApplicationModal(
+    id
+) {
 
     const application =
         applications.find(
             item =>
-                item.id === id
+                item.id ===
+                id
         );
 
 
@@ -1102,58 +1477,116 @@ function openApplicationModal(id) {
     }
 
 
-    modalApplicantName.textContent =
-        application.applicant.name;
+    if (modalApplicantName) {
+
+        modalApplicantName.textContent =
+            application
+                .applicant
+                .name;
+
+    }
 
 
-    modalApplicationId.textContent =
-        application.id;
+    if (modalApplicationId) {
+
+        modalApplicationId.textContent =
+            application.id;
+
+    }
 
 
-    modalApplicantFullName.textContent =
-        application.applicant.name;
+    if (modalApplicantFullName) {
+
+        modalApplicantFullName.textContent =
+            application
+                .applicant
+                .name;
+
+    }
 
 
-    modalApplicantEmail.textContent =
-        application.applicant.email;
+    if (modalApplicantEmail) {
+
+        modalApplicantEmail.textContent =
+            application
+                .applicant
+                .email;
+
+    }
 
 
-    modalApplicantAvatar.textContent =
-        getInitials(
-            application.applicant.name
-        );
+    if (modalApplicantAvatar) {
+
+        modalApplicantAvatar.textContent =
+            getInitials(
+                application
+                    .applicant
+                    .name
+            );
+
+    }
 
 
-    modalJobTitle.textContent =
-        application.job.title;
+    if (modalJobTitle) {
+
+        modalJobTitle.textContent =
+            application
+                .job
+                .title;
+
+    }
 
 
-    modalCompany.textContent =
-        application.company;
+    if (modalCompany) {
+
+        modalCompany.textContent =
+            application.company;
+
+    }
 
 
-    modalLocation.textContent =
-        application.location;
+    if (modalLocation) {
+
+        modalLocation.textContent =
+            application.location;
+
+    }
 
 
-    modalWorkType.textContent =
-        application.workType;
+    if (modalWorkType) {
+
+        modalWorkType.textContent =
+            application.workType;
+
+    }
 
 
-    modalAppliedDate.textContent =
-        formatDate(
-            application.appliedDate
-        );
+    if (modalAppliedDate) {
+
+        modalAppliedDate.textContent =
+            formatDate(
+                application.appliedDate
+            );
+
+    }
 
 
-    modalApplicationStatus.textContent =
-        formatStatus(
-            application.status
-        );
+    if (modalApplicationStatus) {
+
+        modalApplicationStatus.textContent =
+            formatStatus(
+                application.status
+            );
+
+    }
 
 
-    modalCoverLetter.textContent =
-        application.coverLetter;
+    if (modalCoverLetter) {
+
+        modalCoverLetter.textContent =
+            application.coverLetter;
+
+    }
 
 
     if (viewResume) {
@@ -1166,7 +1599,8 @@ function openApplicationModal(id) {
 
     if (rejectApplication) {
 
-        rejectApplication.dataset.applicationId =
+        rejectApplication.dataset
+            .applicationId =
             application.id;
 
     }
@@ -1174,15 +1608,20 @@ function openApplicationModal(id) {
 
     if (updateApplication) {
 
-        updateApplication.dataset.applicationId =
+        updateApplication.dataset
+            .applicationId =
             application.id;
 
     }
 
 
-    applicationModal.classList.remove(
-        "hidden"
-    );
+    if (applicationModal) {
+
+        applicationModal.classList.remove(
+            "hidden"
+        );
+
+    }
 
 
     document.body.style.overflow =
@@ -1191,16 +1630,19 @@ function openApplicationModal(id) {
 }
 
 
-
 /* ==================================================
    CLOSE APPLICATION MODAL
 ================================================== */
 
 function closeModal() {
 
-    applicationModal.classList.add(
-        "hidden"
-    );
+    if (applicationModal) {
+
+        applicationModal.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     document.body.style.overflow =
@@ -1255,11 +1697,16 @@ document.addEventListener(
     event => {
 
         if (
-            event.key === "Escape" &&
+            event.key ===
+            "Escape" &&
+
             applicationModal &&
-            !applicationModal.classList.contains(
-                "hidden"
-            )
+
+            !applicationModal
+                .classList
+                .contains(
+                    "hidden"
+                )
         ) {
 
             closeModal();
@@ -1270,14 +1717,16 @@ document.addEventListener(
 );
 
 
-
 /* ==================================================
    SEARCH CLEAR BUTTON
 ================================================== */
 
 function updateSearchClear() {
 
-    if (!clearSearch || !searchInput) {
+    if (
+        !clearSearch ||
+        !searchInput
+    ) {
 
         return;
 
@@ -1285,7 +1734,8 @@ function updateSearchClear() {
 
 
     const hasValue =
-        searchInput.value.length > 0;
+        searchInput.value.length >
+        0;
 
 
     clearSearch.classList.toggle(
@@ -1312,17 +1762,21 @@ if (clearSearch) {
         "click",
         () => {
 
-            searchInput.value = "";
+            if (searchInput) {
 
-            filterApplications();
+                searchInput.value =
+                    "";
 
-            searchInput.focus();
+                filterApplications();
+
+                searchInput.focus();
+
+            }
 
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -1359,7 +1813,6 @@ if (sortApplications) {
 }
 
 
-
 /* ==================================================
    RESET FILTERS
 ================================================== */
@@ -1368,7 +1821,8 @@ function resetApplicationFilters() {
 
     if (searchInput) {
 
-        searchInput.value = "";
+        searchInput.value =
+            "";
 
     }
 
@@ -1397,7 +1851,8 @@ function resetApplicationFilters() {
     }
 
 
-    currentPageNumber = 1;
+    currentPageNumber =
+        1;
 
 
     filteredApplications =
@@ -1435,7 +1890,6 @@ if (emptyReset) {
 }
 
 
-
 /* ==================================================
    PAGINATION EVENTS
 ================================================== */
@@ -1447,10 +1901,12 @@ if (previousPage) {
         () => {
 
             if (
-                currentPageNumber > 1
+                currentPageNumber >
+                1
             ) {
 
                 currentPageNumber--;
+
 
                 renderApplications();
 
@@ -1470,7 +1926,8 @@ if (nextPage) {
 
             const totalPages =
                 Math.ceil(
-                    filteredApplications.length /
+                    filteredApplications
+                        .length /
                     applicationsPerPage
                 );
 
@@ -1482,6 +1939,7 @@ if (nextPage) {
 
                 currentPageNumber++;
 
+
                 renderApplications();
 
             }
@@ -1490,7 +1948,6 @@ if (nextPage) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1507,44 +1964,32 @@ if (refreshApplications) {
 
     refreshApplications.addEventListener(
         "click",
-        () => {
+        async () => {
 
             refreshApplications
-                .querySelector("span")
+                .querySelector(
+                    "span"
+                )
                 ?.classList.add(
                     "refreshing"
                 );
 
 
-            setTimeout(
-                () => {
+            await loadApplicationsFromBackend();
 
-                    filteredApplications =
-                        [...applications];
 
-                    sortFilteredApplications();
-
-                    currentPageNumber = 1;
-
-                    updateStatistics();
-
-                    renderApplications();
-
-                    refreshApplications
-                        .querySelector("span")
-                        ?.classList.remove(
-                            "refreshing"
-                        );
-
-                },
-                350
-            );
+            refreshApplications
+                .querySelector(
+                    "span"
+                )
+                ?.classList.remove(
+                    "refreshing"
+                );
 
         }
     );
 
 }
-
 
 
 /* ==================================================
@@ -1558,7 +2003,9 @@ if (viewResume) {
         () => {
 
             const resume =
-                viewResume.dataset.resume;
+                viewResume.dataset
+                    .resume;
+
 
             if (!resume) {
 
@@ -1566,15 +2013,20 @@ if (viewResume) {
                     "Resume not available."
                 );
 
+
                 return;
+
             }
 
+
             const resumeUrl =
-                `http://127.0.0.1:8000/storage/${resume}`;
+                `${STORAGE_BASE_URL}/${resume}`;
+
 
             window.open(
                 resumeUrl,
-                "_blank"
+                "_blank",
+                "noopener,noreferrer"
             );
 
         }
@@ -1582,7 +2034,115 @@ if (viewResume) {
 
 }
 
+/* ==================================================
+   DELETE APPLICATION
+================================================== */
 
+document.addEventListener(
+    "click",
+    async event => {
+
+        const deleteButton =
+            event.target.closest(
+                "[data-delete-application]"
+            );
+
+        if (!deleteButton) {
+            return;
+        }
+
+        const applicationId =
+            deleteButton.dataset
+                .deleteApplication;
+
+        const application =
+            applications.find(
+                item =>
+                    item.id ===
+                    applicationId
+            );
+
+        if (!application) {
+            return;
+        }
+
+        const confirmed =
+            window.confirm(
+                `Delete application from ${application.applicant.name}?\n\nThis will permanently delete the application and uploaded resume.`
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        const backendId =
+            application.id.replace(
+                "APP-",
+                ""
+            );
+
+        try {
+
+            deleteButton.disabled = true;
+            deleteButton.textContent = "Deleting...";
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/admin/applications/${backendId}`,
+                    {
+                        method: "DELETE",
+                        headers: getAuthHeaders()
+                    }
+                );
+
+            if (
+                handleUnauthorized(
+                    response
+                )
+            ) {
+                return;
+            }
+
+            const result =
+                await response.json();
+
+            if (!response.ok) {
+
+                console.error(result);
+
+                throw new Error(
+                    result.message ||
+                    "Unable to delete application."
+                );
+            }
+
+            await loadApplicationsFromBackend();
+
+            alert(
+                "Application deleted successfully."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Delete application error:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "Unable to delete application."
+            );
+
+        } finally {
+
+            deleteButton.disabled = false;
+            deleteButton.textContent = "Delete";
+
+        }
+
+    }
+);
 
 /* ==================================================
    REJECT APPLICATION
@@ -1602,7 +2162,8 @@ if (rejectApplication) {
             const application =
                 applications.find(
                     item =>
-                        item.id === id
+                        item.id ===
+                        id
                 );
 
 
@@ -1615,8 +2176,7 @@ if (rejectApplication) {
 
             const confirmed =
                 confirm(
-                    `Reject the application from ${application.applicant.name
-                    }?`
+                    `Reject the application from ${application.applicant.name}?`
                 );
 
 
@@ -1636,20 +2196,40 @@ if (rejectApplication) {
 
             try {
 
+                rejectApplication.disabled =
+                    true;
+
+
                 const response =
                     await fetch(
-                        `http://127.0.0.1:8000/api/admin/applications/${backendId}/status`,
+                        `${API_BASE_URL}/admin/applications/${backendId}/status`,
                         {
-                            method: "PATCH",
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                status: "rejected"
-                            })
+
+                            method:
+                                "PATCH",
+
+                            headers:
+                                getAuthHeaders(),
+
+                            body:
+                                JSON.stringify({
+                                    status:
+                                        "rejected"
+                                })
+
                         }
                     );
+
+
+                if (
+                    handleUnauthorized(
+                        response
+                    )
+                ) {
+
+                    return;
+
+                }
 
 
                 const result =
@@ -1662,6 +2242,7 @@ if (rejectApplication) {
                         result.message ||
                         "Unable to reject application."
                     );
+
                 }
 
 
@@ -1680,11 +2261,22 @@ if (rejectApplication) {
 
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Reject application error:",
+                    error
+                );
+
 
                 alert(
-                    error.message
+                    error.message ||
+                    "Unable to reject application."
                 );
+
+
+            } finally {
+
+                rejectApplication.disabled =
+                    false;
 
             }
 
@@ -1692,7 +2284,6 @@ if (rejectApplication) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1709,31 +2300,57 @@ if (updateApplication) {
                 updateApplication.dataset
                     .applicationId;
 
+
             const application =
                 applications.find(
                     item =>
-                        item.id === id
+                        item.id ===
+                        id
                 );
 
+
             if (!application) {
+
                 return;
+
             }
+
 
             const nextStatuses = {
 
-                new: "review",
-                review: "shortlisted",
-                shortlisted: "interview",
-                interview: "hired",
-                hired: "hired",
-                rejected: "review"
+                new:
+                    "review",
+
+                review:
+                    "shortlisted",
+
+                shortlisted:
+                    "interview",
+
+                interview:
+                    "hired",
+
+                hired:
+                    "hired",
+
+                rejected:
+                    "review"
 
             };
+
 
             const nextStatus =
                 nextStatuses[
                 application.status
                 ];
+
+
+            if (!nextStatus) {
+
+                return;
+
+            }
+
 
             const backendId =
                 application.id.replace(
@@ -1741,27 +2358,48 @@ if (updateApplication) {
                     ""
                 );
 
+
             try {
+
+                updateApplication.disabled =
+                    true;
+
 
                 const response =
                     await fetch(
-                        `http://127.0.0.1:8000/api/admin/applications/${backendId}/status`,
+                        `${API_BASE_URL}/admin/applications/${backendId}/status`,
                         {
-                            method: "PATCH",
 
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json"
-                            },
+                            method:
+                                "PATCH",
 
-                            body: JSON.stringify({
-                                status: nextStatus
-                            })
+                            headers:
+                                getAuthHeaders(),
+
+                            body:
+                                JSON.stringify({
+                                    status:
+                                        nextStatus
+                                })
+
                         }
                     );
 
+
+                if (
+                    handleUnauthorized(
+                        response
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
                 const result =
                     await response.json();
+
 
                 if (!response.ok) {
 
@@ -1772,24 +2410,40 @@ if (updateApplication) {
 
                 }
 
+
                 application.status =
                     nextStatus;
 
+
                 updateStatistics();
 
+
                 filterApplications();
+
 
                 openApplicationModal(
                     application.id
                 );
 
+
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Update application error:",
+                    error
+                );
+
 
                 alert(
-                    error.message
+                    error.message ||
+                    "Unable to update application."
                 );
+
+
+            } finally {
+
+                updateApplication.disabled =
+                    false;
 
             }
 
@@ -1798,6 +2452,38 @@ if (updateApplication) {
 
 }
 
+
+/* ==================================================
+   HTML ESCAPE
+================================================== */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 
 /* ==================================================
@@ -1809,5 +2495,6 @@ async function initializeApplications() {
     await loadApplicationsFromBackend();
 
 }
+
 
 initializeApplications();

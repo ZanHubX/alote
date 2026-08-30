@@ -1,125 +1,318 @@
 /* ==================================================
    ALOTE ADMIN — JOB SUBMISSIONS
-   Temporary frontend data
-   -----------------------------------------------
-   Later:
-   Replace temporary data with API requests.
 ================================================== */
 
 
 /* ==================================================
-   TEMPORARY SUBMISSION DATA
+   API + ADMIN AUTH
+================================================== */
+
+const API_BASE_URL =
+    window.ALOTE_CONFIG.API_BASE_URL;
+
+
+const adminToken =
+    sessionStorage.getItem(
+        "alote-admin-token"
+    );
+
+
+if (!adminToken) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ==================================================
+   AUTH HEADERS
+================================================== */
+
+function getAuthHeaders() {
+
+    return {
+
+        "Accept":
+            "application/json",
+
+        "Content-Type":
+            "application/json",
+
+        "Authorization":
+            `Bearer ${adminToken}`
+
+    };
+
+}
+
+
+/* ==================================================
+   CLEAR ADMIN SESSION
+================================================== */
+
+function clearAdminSession() {
+
+    sessionStorage.removeItem(
+        "alote-admin-token"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-session"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-email"
+    );
+
+    sessionStorage.removeItem(
+        "alote-admin-name"
+    );
+
+}
+
+
+/* ==================================================
+   HANDLE UNAUTHORIZED
+================================================== */
+
+function handleUnauthorized(response) {
+
+    if (
+        response.status !== 401
+    ) {
+
+        return false;
+
+    }
+
+
+    clearAdminSession();
+
+
+    window.location.href =
+        "login.html";
+
+
+    return true;
+
+}
+
+
+/* ==================================================
+   DATA
 ================================================== */
 
 let submissions = [];
 
+
+/* ==================================================
+   LOAD SUBMISSIONS
+================================================== */
+
 async function loadSubmissions() {
+
     try {
-        const response = await fetch(
-            "http://127.0.0.1:8000/api/admin/job-submissions",
-            {
-                headers: {
-                    "Accept": "application/json"
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/admin/job-submissions`,
+                {
+                    method:
+                        "GET",
+
+                    headers:
+                        getAuthHeaders()
                 }
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(
-                result.message || "Failed to load submissions."
             );
+
+
+        if (
+            handleUnauthorized(
+                response
+            )
+        ) {
+
+            return;
+
         }
 
-        submissions = result.data.map(item => ({
-            id: `SUB-${item.id}`,
 
-            jobTitle: item.title,
+        const result =
+            await response.json();
 
-            company:
-                item.employer?.company_name || "Not available",
 
-            contact:
-                item.employer?.contact_name || "Not available",
+        if (!response.ok) {
 
-            email:
-                item.employer?.email ||
-                item.apply_email ||
-                "Not available",
+            throw new Error(
+                result.message ||
+                "Failed to load submissions."
+            );
 
-            phone:
-                item.employer?.phone || "Not available",
+        }
 
-            category:
-                item.category?.name || "Not available",
 
-            location: item.location || "Not specified",
+        const data =
+            Array.isArray(
+                result.data
+            )
+                ? result.data
+                : [];
 
-            workType: item.work_mode || "Not specified",
 
-            employmentType: item.job_type || "Not specified",
+        submissions =
+            data.map(
+                item => ({
 
-            salary:
-                item.salary_text ||
-                "Not specified",
+                    id:
+                        `SUB-${item.id}`,
 
-            paymentStatus: "pending",
+                    jobTitle:
+                        item.title ||
+                        "Untitled Job",
 
-            paymentAmount: "Not available",
+                    company:
+                        item.employer
+                            ?.company_name ||
+                        "Not available",
 
-            paymentReference: "Not available",
+                    contact:
+                        item.employer
+                            ?.contact_name ||
+                        "Not available",
 
-            submittedDate: item.created_at
-                ? item.created_at.split("T")[0]
-                : "",
+                    email:
+                        item.employer
+                            ?.email ||
+                        item.apply_email ||
+                        "Not available",
 
-            submittedText: "Recently",
+                    phone:
+                        item.employer
+                            ?.phone ||
+                        "Not available",
 
-            status: item.status || "pending",
+                    category:
+                        item.category
+                            ?.name ||
+                        "Not available",
 
-            description:
-                item.description || "No description",
+                    location:
+                        item.location ||
+                        "Not specified",
 
-            requirements:
-                Array.isArray(item.requirements) &&
-                    item.requirements.length > 0
-                    ? item.requirements.join("\n")
-                    : "Not available",
-        }));
+                    workType:
+                        item.work_mode ||
+                        "Not specified",
+
+                    employmentType:
+                        item.job_type ||
+                        "Not specified",
+
+                    salary:
+                        item.salary_text ||
+                        "Not specified",
+
+
+                    /* PAYMENT */
+
+                    paymentStatus:
+                        item.payment
+                            ?.status ||
+                        "pending",
+
+                    paymentAmount:
+                        item.payment
+                            ?.amount
+                            ? `${item.payment.amount} ${item.payment.currency || "MMK"}`
+                            : "Not available",
+
+                    paymentReference:
+                        item.payment
+                            ?.transaction_id ||
+                        "Not available",
+
+
+                    submittedDate:
+                        item.created_at
+                            ? item.created_at.split(
+                                "T"
+                            )[0]
+                            : "",
+
+                    submittedText:
+                        "Recently",
+
+                    status:
+                        item.status ||
+                        "pending",
+
+                    description:
+                        item.description ||
+                        "No description",
+
+                    requirements:
+                        Array.isArray(
+                            item.requirements
+                        ) &&
+                            item.requirements.length > 0
+
+                            ? item.requirements.join(
+                                "\n"
+                            )
+
+                            : "Not available"
+
+                })
+            );
+
 
         updateCounts();
+
         renderSubmissions();
 
+
     } catch (error) {
-        console.error(error);
+
+        console.error(
+            "Submission loading error:",
+            error
+        );
+
 
         alert(
             "Cannot load job submissions from ALote backend."
         );
-    }
-}
 
+    }
+
+}
 
 
 /* ==================================================
    STATE
 ================================================== */
 
-let currentStatus = "all";
+let currentStatus =
+    "all";
 
-let currentSearch = "";
+let currentSearch =
+    "";
 
-let currentSort = "newest";
+let currentSort =
+    "newest";
 
-let currentPageNumber = 1;
+let currentPageNumber =
+    1;
 
-const itemsPerPage = 6;
+const itemsPerPage =
+    6;
 
-let selectedSubmission = null;
+let selectedSubmission =
+    null;
 
-let pendingAction = null;
-
+let pendingAction =
+    null;
 
 
 /* ==================================================
@@ -220,7 +413,6 @@ const sortSelect =
     document.getElementById(
         "sortSubmissions"
     );
-
 
 
 /* ==================================================
@@ -341,6 +533,12 @@ const modalPaymentReference =
     );
 
 
+const approvePaymentButton =
+    document.getElementById(
+        "approvePaymentButton"
+    );
+
+
 const modalApproveButton =
     document.getElementById(
         "modalApproveButton"
@@ -351,7 +549,6 @@ const modalRejectButton =
     document.getElementById(
         "modalRejectButton"
     );
-
 
 
 /* ==================================================
@@ -400,26 +597,34 @@ const confirmProceed =
     );
 
 
-
 /* ==================================================
-   HELPER — INITIALS
+   INITIALS
 ================================================== */
 
 function getInitials(name) {
 
     if (!name) {
+
         return "AL";
+
     }
 
 
     const words =
-        name.trim().split(/\s+/);
+        name
+            .trim()
+            .split(/\s+/);
 
 
-    if (words.length === 1) {
+    if (
+        words.length === 1
+    ) {
 
         return words[0]
-            .substring(0, 2)
+            .substring(
+                0,
+                2
+            )
             .toUpperCase();
 
     }
@@ -433,55 +638,63 @@ function getInitials(name) {
 }
 
 
-
 /* ==================================================
-   HELPER — STATUS
+   STATUS LABEL
 ================================================== */
 
 function getStatusLabel(status) {
 
     const labels = {
 
-        pending: "Pending",
+        pending:
+            "Pending",
 
-        approved: "Approved",
+        approved:
+            "Approved",
 
-        rejected: "Rejected"
+        rejected:
+            "Rejected"
 
     };
 
 
-    return labels[status] || status;
+    return labels[status] ||
+        status;
 
 }
 
 
-
 /* ==================================================
-   HELPER — PAYMENT
+   PAYMENT LABEL
 ================================================== */
 
 function getPaymentLabel(status) {
 
     const labels = {
 
-        paid: "Paid",
+        paid:
+            "Paid",
 
-        pending: "Pending",
+        pending:
+            "Pending",
 
-        failed: "Failed"
+        failed:
+            "Failed",
+
+        refunded:
+            "Refunded"
 
     };
 
 
-    return labels[status] || status;
+    return labels[status] ||
+        status;
 
 }
 
 
-
 /* ==================================================
-   FILTER DATA
+   FILTER
 ================================================== */
 
 function getFilteredSubmissions() {
@@ -490,9 +703,10 @@ function getFilteredSubmissions() {
         [...submissions];
 
 
-    /* STATUS */
-
-    if (currentStatus !== "all") {
+    if (
+        currentStatus !==
+        "all"
+    ) {
 
         result =
             result.filter(
@@ -504,12 +718,11 @@ function getFilteredSubmissions() {
     }
 
 
-    /* SEARCH */
-
     if (currentSearch) {
 
         const query =
-            currentSearch.toLowerCase();
+            currentSearch
+                .toLowerCase();
 
 
         result =
@@ -518,66 +731,97 @@ function getFilteredSubmissions() {
 
                     submission.id
                         .toLowerCase()
-                        .includes(query)
+                        .includes(
+                            query
+                        )
 
                     ||
 
                     submission.jobTitle
                         .toLowerCase()
-                        .includes(query)
+                        .includes(
+                            query
+                        )
 
                     ||
 
                     submission.company
                         .toLowerCase()
-                        .includes(query)
+                        .includes(
+                            query
+                        )
 
                     ||
 
                     submission.category
                         .toLowerCase()
-                        .includes(query)
-
+                        .includes(
+                            query
+                        )
             );
 
     }
 
 
-    /* SORT */
-
     result.sort(
         (a, b) => {
 
-            if (currentSort === "newest") {
+            if (
+                currentSort ===
+                "newest"
+            ) {
 
-                return new Date(b.submittedDate)
-                    - new Date(a.submittedDate);
-
-            }
-
-
-            if (currentSort === "oldest") {
-
-                return new Date(a.submittedDate)
-                    - new Date(b.submittedDate);
-
-            }
-
-
-            if (currentSort === "company") {
-
-                return a.company.localeCompare(
-                    b.company
+                return (
+                    new Date(
+                        b.submittedDate
+                    ) -
+                    new Date(
+                        a.submittedDate
+                    )
                 );
 
             }
 
 
-            if (currentSort === "status") {
+            if (
+                currentSort ===
+                "oldest"
+            ) {
 
-                return a.status.localeCompare(
-                    b.status
+                return (
+                    new Date(
+                        a.submittedDate
+                    ) -
+                    new Date(
+                        b.submittedDate
+                    )
                 );
+
+            }
+
+
+            if (
+                currentSort ===
+                "company"
+            ) {
+
+                return a.company
+                    .localeCompare(
+                        b.company
+                    );
+
+            }
+
+
+            if (
+                currentSort ===
+                "status"
+            ) {
+
+                return a.status
+                    .localeCompare(
+                        b.status
+                    );
 
             }
 
@@ -593,9 +837,8 @@ function getFilteredSubmissions() {
 }
 
 
-
 /* ==================================================
-   UPDATE COUNTS
+   COUNTS
 ================================================== */
 
 function updateCounts() {
@@ -603,70 +846,101 @@ function updateCounts() {
     const pending =
         submissions.filter(
             item =>
-                item.status === "pending"
+                item.status ===
+                "pending"
         ).length;
 
 
     const approved =
         submissions.filter(
             item =>
-                item.status === "approved"
+                item.status ===
+                "approved"
         ).length;
 
 
     const rejected =
         submissions.filter(
             item =>
-                item.status === "rejected"
+                item.status ===
+                "rejected"
         ).length;
 
 
-    allCount.textContent =
-        submissions.length;
+    if (allCount) {
+
+        allCount.textContent =
+            submissions.length;
+
+    }
 
 
-    pendingCount.textContent =
-        pending;
+    if (pendingCount) {
+
+        pendingCount.textContent =
+            pending;
+
+    }
 
 
-    pendingFilterCount.textContent =
-        pending;
+    if (pendingFilterCount) {
+
+        pendingFilterCount.textContent =
+            pending;
+
+    }
 
 
-    approvedCount.textContent =
-        approved;
+    if (approvedCount) {
+
+        approvedCount.textContent =
+            approved;
+
+    }
 
 
-    rejectedCount.textContent =
-        rejected;
+    if (rejectedCount) {
+
+        rejectedCount.textContent =
+            rejected;
+
+    }
 
 
-    pendingJobsBadge.textContent =
-        pending;
+    if (pendingJobsBadge) {
+
+        pendingJobsBadge.textContent =
+            pending;
+
+    }
 
 }
 
 
-
 /* ==================================================
-   RENDER DESKTOP TABLE
+   DESKTOP TABLE
 ================================================== */
 
 function renderTable(data) {
 
     if (!tableBody) {
+
         return;
+
     }
 
 
-    tableBody.innerHTML = "";
+    tableBody.innerHTML =
+        "";
 
 
     data.forEach(
         submission => {
 
             const row =
-                document.createElement("tr");
+                document.createElement(
+                    "tr"
+                );
 
 
             row.innerHTML = `
@@ -676,9 +950,11 @@ function renderTable(data) {
                     <div class="table-submission">
 
                         <div class="table-submission-avatar">
+
                             ${getInitials(
-                                submission.company
-                            )}
+                submission.company
+            )}
+
                         </div>
 
 
@@ -725,11 +1001,17 @@ function renderTable(data) {
                         </strong>
 
                         <span>
+
                             ${submission.location}
+
                             ·
+
                             ${submission.workType}
+
                             ·
+
                             ${submission.employmentType}
+
                         </span>
 
                     </div>
@@ -746,8 +1028,8 @@ function renderTable(data) {
                         <span class="payment-dot"></span>
 
                         ${getPaymentLabel(
-                            submission.paymentStatus
-                        )}
+                submission.paymentStatus
+            )}
 
                     </span>
 
@@ -763,9 +1045,11 @@ function renderTable(data) {
                         </strong>
 
                         <span>
+
                             ${formatDate(
-                                submission.submittedDate
-                            )}
+                submission.submittedDate
+            )}
+
                         </span>
 
                     </div>
@@ -780,8 +1064,8 @@ function renderTable(data) {
                     >
 
                         ${getStatusLabel(
-                            submission.status
-                        )}
+                submission.status
+            )}
 
                     </span>
 
@@ -807,7 +1091,9 @@ function renderTable(data) {
             `;
 
 
-            tableBody.appendChild(row);
+            tableBody.appendChild(
+                row
+            );
 
         }
     );
@@ -815,26 +1101,30 @@ function renderTable(data) {
 }
 
 
-
 /* ==================================================
-   RENDER MOBILE CARDS
+   MOBILE
 ================================================== */
 
 function renderMobile(data) {
 
     if (!mobileList) {
+
         return;
+
     }
 
 
-    mobileList.innerHTML = "";
+    mobileList.innerHTML =
+        "";
 
 
     data.forEach(
         submission => {
 
             const card =
-                document.createElement("article");
+                document.createElement(
+                    "article"
+                );
 
 
             card.className =
@@ -845,11 +1135,12 @@ function renderMobile(data) {
 
                 <div class="mobile-submission-top">
 
-
                     <div class="mobile-submission-avatar">
+
                         ${getInitials(
-                            submission.company
-                        )}
+                submission.company
+            )}
+
                     </div>
 
 
@@ -873,20 +1164,17 @@ function renderMobile(data) {
                         >
 
                             ${getStatusLabel(
-                                submission.status
-                            )}
+                submission.status
+            )}
 
                         </span>
 
                     </div>
 
-
                 </div>
 
 
-
                 <div class="mobile-submission-details">
-
 
                     <div class="mobile-detail">
 
@@ -929,8 +1217,8 @@ function renderMobile(data) {
                                 <span class="payment-dot"></span>
 
                                 ${getPaymentLabel(
-                                    submission.paymentStatus
-                                )}
+                submission.paymentStatus
+            )}
 
                             </span>
 
@@ -951,18 +1239,14 @@ function renderMobile(data) {
 
                     </div>
 
-
                 </div>
-
 
 
                 <div class="mobile-submission-footer">
 
-
                     <small>
                         ${submission.id}
                     </small>
-
 
                     <button
                         type="button"
@@ -972,13 +1256,14 @@ function renderMobile(data) {
                         View Details →
                     </button>
 
-
                 </div>
 
             `;
 
 
-            mobileList.appendChild(card);
+            mobileList.appendChild(
+                card
+            );
 
         }
     );
@@ -986,32 +1271,47 @@ function renderMobile(data) {
 }
 
 
-
 /* ==================================================
-   FORMAT DATE
+   DATE
 ================================================== */
 
-function formatDate(dateString) {
+function formatDate(
+    dateString
+) {
+
+    if (!dateString) {
+
+        return "—";
+
+    }
+
 
     const date =
-        new Date(dateString);
+        new Date(
+            dateString
+        );
 
 
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        }
-    );
+    return date
+        .toLocaleDateString(
+            "en-US",
+            {
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                year:
+                    "numeric"
+            }
+        );
 
 }
 
 
-
 /* ==================================================
-   RENDER PAGINATION
+   RENDER
 ================================================== */
 
 function renderSubmissions() {
@@ -1047,7 +1347,8 @@ function renderSubmissions() {
 
 
     const end =
-        start + itemsPerPage;
+        start +
+        itemsPerPage;
 
 
     const pageData =
@@ -1057,9 +1358,14 @@ function renderSubmissions() {
         );
 
 
-    renderTable(pageData);
+    renderTable(
+        pageData
+    );
 
-    renderMobile(pageData);
+
+    renderMobile(
+        pageData
+    );
 
 
     if (emptyState) {
@@ -1117,16 +1423,16 @@ function renderSubmissions() {
     if (nextPage) {
 
         nextPage.disabled =
-            currentPageNumber >= totalPages;
+            currentPageNumber >=
+            totalPages;
 
     }
 
 }
 
 
-
 /* ==================================================
-   OPEN REVIEW MODAL
+   OPEN MODAL
 ================================================== */
 
 function openSubmissionModal(id) {
@@ -1139,7 +1445,9 @@ function openSubmissionModal(id) {
 
 
     if (!submission) {
+
         return;
+
     }
 
 
@@ -1147,129 +1455,255 @@ function openSubmissionModal(id) {
         submission;
 
 
-    modalJobTitle.textContent =
-        submission.jobTitle;
+    if (modalJobTitle) {
+
+        modalJobTitle.textContent =
+            submission.jobTitle;
+
+    }
 
 
-    modalSubmissionId.textContent =
-        submission.id;
+    if (modalSubmissionId) {
+
+        modalSubmissionId.textContent =
+            submission.id;
+
+    }
 
 
-    modalCompany.textContent =
-        submission.company;
+    if (modalCompany) {
+
+        modalCompany.textContent =
+            submission.company;
+
+    }
 
 
-    modalContact.textContent =
-        submission.contact;
+    if (modalContact) {
+
+        modalContact.textContent =
+            submission.contact;
+
+    }
 
 
-    modalEmail.textContent =
-        submission.email;
+    if (modalEmail) {
+
+        modalEmail.textContent =
+            submission.email;
+
+    }
 
 
-    modalPhone.textContent =
-        submission.phone;
+    if (modalPhone) {
+
+        modalPhone.textContent =
+            submission.phone;
+
+    }
 
 
-    modalJob.textContent =
-        submission.jobTitle;
+    if (modalJob) {
+
+        modalJob.textContent =
+            submission.jobTitle;
+
+    }
 
 
-    modalCategory.textContent =
-        submission.category;
+    if (modalCategory) {
+
+        modalCategory.textContent =
+            submission.category;
+
+    }
 
 
-    modalLocation.textContent =
-        submission.location;
+    if (modalLocation) {
+
+        modalLocation.textContent =
+            submission.location;
+
+    }
 
 
-    modalWorkType.textContent =
-        submission.workType;
+    if (modalWorkType) {
+
+        modalWorkType.textContent =
+            submission.workType;
+
+    }
 
 
-    modalEmploymentType.textContent =
-        submission.employmentType;
+    if (modalEmploymentType) {
+
+        modalEmploymentType.textContent =
+            submission.employmentType;
+
+    }
 
 
-    modalSalary.textContent =
-        submission.salary;
+    if (modalSalary) {
+
+        modalSalary.textContent =
+            submission.salary;
+
+    }
 
 
-    modalDescription.textContent =
-        submission.description;
+    if (modalDescription) {
+
+        modalDescription.textContent =
+            submission.description;
+
+    }
 
 
-    modalRequirements.textContent =
-        submission.requirements;
+    if (modalRequirements) {
+
+        modalRequirements.textContent =
+            submission.requirements;
+
+    }
 
 
-    modalPaymentStatus.textContent =
-        getPaymentLabel(
-            submission.paymentStatus
+    /* ------------------------------------------
+       PAYMENT DATA
+    ------------------------------------------ */
+
+    if (modalPaymentStatus) {
+
+        modalPaymentStatus.textContent =
+            getPaymentLabel(
+                submission.paymentStatus
+            );
+
+
+        modalPaymentStatus.className =
+            `payment-status ${submission.paymentStatus}`;
+
+    }
+
+
+    if (modalPaymentAmount) {
+
+        modalPaymentAmount.textContent =
+            submission.paymentAmount;
+
+    }
+
+
+    if (modalPaymentReference) {
+
+        modalPaymentReference.textContent =
+            submission.paymentReference;
+
+    }
+
+
+    /* ------------------------------------------
+       PAYMENT APPROVE BUTTON
+    ------------------------------------------ */
+
+    if (approvePaymentButton) {
+
+        if (
+            submission.paymentStatus ===
+            "paid"
+        ) {
+
+            approvePaymentButton.disabled =
+                true;
+
+
+            approvePaymentButton.textContent =
+                "✓ Payment Approved";
+
+        } else {
+
+            approvePaymentButton.disabled =
+                false;
+
+
+            approvePaymentButton.textContent =
+                "✓ Approve Payment";
+
+        }
+
+    }
+
+
+    /* ------------------------------------------
+       JOB APPROVE BUTTON
+    ------------------------------------------ */
+
+    if (modalApproveButton) {
+
+        if (
+            submission.status ===
+            "approved"
+        ) {
+
+            modalApproveButton.disabled =
+                true;
+
+
+            modalApproveButton.innerHTML =
+                "✓ Already Published";
+
+        } else {
+
+            modalApproveButton.disabled =
+                false;
+
+
+            modalApproveButton.innerHTML =
+                "<span>✓</span> Approve & Publish";
+
+        }
+
+    }
+
+
+    /* ------------------------------------------
+       REJECT BUTTON
+    ------------------------------------------ */
+
+    if (modalRejectButton) {
+
+        if (
+            submission.status ===
+            "rejected"
+        ) {
+
+            modalRejectButton.disabled =
+                true;
+
+
+            modalRejectButton.textContent =
+                "Already Rejected";
+
+        } else {
+
+            modalRejectButton.disabled =
+                false;
+
+
+            modalRejectButton.textContent =
+                "Reject";
+
+        }
+
+    }
+
+
+    if (submissionModal) {
+
+        submissionModal.classList.remove(
+            "hidden"
         );
 
-
-    modalPaymentStatus.className =
-        `payment-status ${submission.paymentStatus}`;
-
-
-    modalPaymentAmount.textContent =
-        submission.paymentAmount;
-
-
-    modalPaymentReference.textContent =
-        submission.paymentReference;
-
-
-    /* APPROVE BUTTON */
-
-    if (
-        submission.status === "approved"
-    ) {
-
-        modalApproveButton.disabled = true;
-
-        modalApproveButton.innerHTML =
-            "✓ Already Published";
-
     }
-
-    else {
-
-        modalApproveButton.disabled = false;
-
-        modalApproveButton.innerHTML =
-            "<span>✓</span> Approve & Publish";
-
-    }
-
-
-    /* REJECT BUTTON */
-
-    if (
-        submission.status === "rejected"
-    ) {
-
-        modalRejectButton.disabled = true;
-
-        modalRejectButton.textContent =
-            "Already Rejected";
-
-    }
-
-    else {
-
-        modalRejectButton.disabled = false;
-
-        modalRejectButton.textContent =
-            "Reject";
-
-    }
-
-
-    submissionModal.classList.remove(
-        "hidden"
-    );
 
 
     document.body.style.overflow =
@@ -1278,21 +1712,23 @@ function openSubmissionModal(id) {
 }
 
 
-
 /* ==================================================
-   CLOSE REVIEW MODAL
+   CLOSE MODAL
 ================================================== */
 
 function closeModal() {
 
-    submissionModal.classList.add(
-        "hidden"
-    );
+    if (submissionModal) {
+
+        submissionModal.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     document.body.style.overflow =
         "";
-
 
 
     selectedSubmission =
@@ -1301,15 +1737,160 @@ function closeModal() {
 }
 
 
-
 /* ==================================================
-   OPEN CONFIRMATION
+   APPROVE PAYMENT
 ================================================== */
 
-function openConfirmation(action) {
+async function approvePayment() {
 
     if (!selectedSubmission) {
+
         return;
+
+    }
+
+
+    if (
+        selectedSubmission
+            .paymentStatus ===
+        "paid"
+    ) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        window.confirm(
+            `Approve payment for "${selectedSubmission.jobTitle}"?`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const submissionId =
+        selectedSubmission.id
+            .replace(
+                "SUB-",
+                ""
+            );
+
+
+    try {
+
+        if (approvePaymentButton) {
+
+            approvePaymentButton.disabled =
+                true;
+
+
+            approvePaymentButton.textContent =
+                "Approving...";
+
+        }
+
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/admin/job-submissions/${submissionId}/payment/approve`,
+                {
+
+                    method:
+                        "POST",
+
+                    headers:
+                        getAuthHeaders()
+
+                }
+            );
+
+
+        if (
+            handleUnauthorized(
+                response
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Unable to approve payment."
+            );
+
+        }
+
+
+        showToast(
+            "Payment approved successfully."
+        );
+
+
+        closeModal();
+
+
+        await loadSubmissions();
+
+
+    } catch (error) {
+
+        console.error(
+            "Payment approval error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to approve payment."
+        );
+
+
+    } finally {
+
+        if (approvePaymentButton) {
+
+            approvePaymentButton.disabled =
+                false;
+
+
+            approvePaymentButton.textContent =
+                "✓ Approve Payment";
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+   CONFIRMATION MODAL
+================================================== */
+
+function openConfirmation(
+    action
+) {
+
+    if (!selectedSubmission) {
+
+        return;
+
     }
 
 
@@ -1317,78 +1898,125 @@ function openConfirmation(action) {
         action;
 
 
-    if (action === "approve") {
+    if (
+        action ===
+        "approve"
+    ) {
 
-        confirmIcon.textContent =
-            "✓";
+        if (confirmIcon) {
 
-
-        confirmIcon.style.background =
-            "#dcfce7";
-
-
-        confirmIcon.style.color =
-            "#15803d";
+            confirmIcon.textContent =
+                "✓";
 
 
-        confirmEyebrow.textContent =
-            "PUBLISH JOB";
+            confirmIcon.style.background =
+                "#dcfce7";
 
 
-        confirmTitle.textContent =
-            "Approve this job?";
+            confirmIcon.style.color =
+                "#15803d";
+
+        }
 
 
-        confirmMessage.textContent =
+        if (confirmEyebrow) {
 
-            `"${selectedSubmission.jobTitle}" will be approved and published on ALote.`;
+            confirmEyebrow.textContent =
+                "PUBLISH JOB";
 
-
-        confirmProceed.textContent =
-            "Approve & Publish";
-
-    }
+        }
 
 
-    else if (action === "reject") {
+        if (confirmTitle) {
 
-        confirmIcon.textContent =
-            "!";
+            confirmTitle.textContent =
+                "Approve this job?";
 
-
-        confirmIcon.style.background =
-            "#fee2e2";
+        }
 
 
-        confirmIcon.style.color =
-            "#dc2626";
+        if (confirmMessage) {
+
+            confirmMessage.textContent =
+                `"${selectedSubmission.jobTitle}" will be approved and published on ALote.`;
+
+        }
 
 
-        confirmEyebrow.textContent =
-            "REJECT SUBMISSION";
+        if (confirmProceed) {
 
+            confirmProceed.textContent =
+                "Approve & Publish";
 
-        confirmTitle.textContent =
-            "Reject this submission?";
-
-
-        confirmMessage.textContent =
-
-            `"${selectedSubmission.jobTitle}" will be marked as rejected.`;
-
-
-        confirmProceed.textContent =
-            "Reject";
+        }
 
     }
 
 
-    confirmModal.classList.remove(
-        "hidden"
-    );
+    else if (
+        action ===
+        "reject"
+    ) {
+
+        if (confirmIcon) {
+
+            confirmIcon.textContent =
+                "!";
+
+
+            confirmIcon.style.background =
+                "#fee2e2";
+
+
+            confirmIcon.style.color =
+                "#dc2626";
+
+        }
+
+
+        if (confirmEyebrow) {
+
+            confirmEyebrow.textContent =
+                "REJECT SUBMISSION";
+
+        }
+
+
+        if (confirmTitle) {
+
+            confirmTitle.textContent =
+                "Reject this submission?";
+
+        }
+
+
+        if (confirmMessage) {
+
+            confirmMessage.textContent =
+                `"${selectedSubmission.jobTitle}" will be marked as rejected.`;
+
+        }
+
+
+        if (confirmProceed) {
+
+            confirmProceed.textContent =
+                "Reject";
+
+        }
+
+    }
+
+
+    if (confirmModal) {
+
+        confirmModal.classList.remove(
+            "hidden"
+        );
+
+    }
 
 }
-
 
 
 /* ==================================================
@@ -1397,9 +2025,13 @@ function openConfirmation(action) {
 
 function closeConfirmation() {
 
-    confirmModal.classList.add(
-        "hidden"
-    );
+    if (confirmModal) {
+
+        confirmModal.classList.add(
+            "hidden"
+        );
+
+    }
 
 
     pendingAction =
@@ -1408,163 +2040,273 @@ function closeConfirmation() {
 }
 
 
-
 /* ==================================================
-   EXECUTE ACTION
+   EXECUTE JOB ACTION
 ================================================== */
 
 async function executeAction() {
 
-    if (!selectedSubmission || !pendingAction) {
+    if (
+        !selectedSubmission ||
+        !pendingAction
+    ) {
+
         return;
+
     }
 
-    const submission = submissions.find(
-        item => item.id === selectedSubmission.id
-    );
+
+    const submission =
+        submissions.find(
+            item =>
+                item.id ===
+                selectedSubmission.id
+        );
+
 
     if (!submission) {
+
         return;
+
     }
 
-    /* ==============================================
-       APPROVE
-    ============================================== */
 
-    if (pendingAction === "approve") {
+    /* ==================================================
+       APPROVE JOB
+    ================================================== */
+
+    if (
+        pendingAction ===
+        "approve"
+    ) {
 
         try {
 
-            confirmProceed.disabled = true;
-            confirmProceed.textContent = "Publishing...";
+            if (confirmProceed) {
 
-            // "SUB-3" → "3"
+                confirmProceed.disabled =
+                    true;
+
+
+                confirmProceed.textContent =
+                    "Publishing...";
+
+            }
+
+
             const submissionId =
-                submission.id.replace("SUB-", "");
+                submission.id
+                    .replace(
+                        "SUB-",
+                        ""
+                    );
 
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/admin/job-submissions/${submissionId}/approve`,
-                {
-                    method: "POST",
 
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/admin/job-submissions/${submissionId}/approve`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers:
+                            getAuthHeaders()
+
                     }
-                }
-            );
+                );
 
-            const result = await response.json();
+
+            if (
+                handleUnauthorized(
+                    response
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const result =
+                await response.json();
+
 
             if (!response.ok) {
-
-                console.error(result);
 
                 throw new Error(
                     result.message ||
                     "Unable to approve job."
                 );
+
             }
 
+
             closeConfirmation();
+
             closeModal();
+
 
             showToast(
                 "Job approved and published."
             );
 
-            // Reload actual database data
+
             await loadSubmissions();
+
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Job approval error:",
+                error
+            );
+
 
             alert(
                 error.message ||
                 "Unable to approve job."
             );
 
+
         } finally {
 
-            confirmProceed.disabled = false;
-            confirmProceed.textContent =
-                "Approve & Publish";
+            if (confirmProceed) {
+
+                confirmProceed.disabled =
+                    false;
+
+
+                confirmProceed.textContent =
+                    "Approve & Publish";
+
+            }
+
         }
 
     }
 
 
-    /* ==============================================
-       REJECT
-    ============================================== */
+    /* ==================================================
+       REJECT JOB
+    ================================================== */
 
-    else if (pendingAction === "reject") {
+    else if (
+        pendingAction ===
+        "reject"
+    ) {
 
         try {
 
-            confirmProceed.disabled = true;
-            confirmProceed.textContent = "Rejecting...";
+            if (confirmProceed) {
+
+                confirmProceed.disabled =
+                    true;
+
+
+                confirmProceed.textContent =
+                    "Rejecting...";
+
+            }
+
 
             const submissionId =
-                submission.id.replace("SUB-", "");
+                submission.id
+                    .replace(
+                        "SUB-",
+                        ""
+                    );
 
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/admin/job-submissions/${submissionId}/reject`,
-                {
-                    method: "POST",
 
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/admin/job-submissions/${submissionId}/reject`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers:
+                            getAuthHeaders()
+
                     }
-                }
-            );
+                );
 
-            const result = await response.json();
+
+            if (
+                handleUnauthorized(
+                    response
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const result =
+                await response.json();
+
 
             if (!response.ok) {
-
-                console.error(result);
 
                 throw new Error(
                     result.message ||
                     "Unable to reject submission."
                 );
+
             }
 
+
             closeConfirmation();
+
             closeModal();
+
 
             showToast(
                 "Submission rejected."
             );
 
+
             await loadSubmissions();
+
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Job rejection error:",
+                error
+            );
+
 
             alert(
                 error.message ||
                 "Unable to reject submission."
             );
 
+
         } finally {
 
-            confirmProceed.disabled = false;
-            confirmProceed.textContent =
-                "Reject";
+            if (confirmProceed) {
+
+                confirmProceed.disabled =
+                    false;
+
+
+                confirmProceed.textContent =
+                    "Reject";
+
+            }
+
         }
 
     }
+
 }
 
 
-
 /* ==================================================
-   TOAST NOTIFICATION
+   TOAST
 ================================================== */
 
 function showToast(message) {
@@ -1646,7 +2388,6 @@ function showToast(message) {
 }
 
 
-
 /* ==================================================
    SEARCH
 ================================================== */
@@ -1658,7 +2399,8 @@ if (searchInput) {
         () => {
 
             currentSearch =
-                searchInput.value.trim();
+                searchInput.value
+                    .trim();
 
 
             currentPageNumber =
@@ -1667,10 +2409,12 @@ if (searchInput) {
 
             if (clearSearchButton) {
 
-                clearSearchButton.classList.toggle(
-                    "visible",
-                    currentSearch.length > 0
-                );
+                clearSearchButton
+                    .classList
+                    .toggle(
+                        "visible",
+                        currentSearch.length > 0
+                    );
 
             }
 
@@ -1681,7 +2425,6 @@ if (searchInput) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1702,9 +2445,11 @@ if (clearSearchButton) {
                 "";
 
 
-            clearSearchButton.classList.remove(
-                "visible"
-            );
+            clearSearchButton
+                .classList
+                .remove(
+                    "visible"
+                );
 
 
             currentPageNumber =
@@ -1720,7 +2465,6 @@ if (clearSearchButton) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -1744,9 +2488,11 @@ document
                         )
                         .forEach(
                             item =>
-                                item.classList.remove(
-                                    "active"
-                                )
+                                item
+                                    .classList
+                                    .remove(
+                                        "active"
+                                    )
                         );
 
 
@@ -1770,7 +2516,6 @@ document
 
         }
     );
-
 
 
 /* ==================================================
@@ -1799,7 +2544,6 @@ if (sortSelect) {
 }
 
 
-
 /* ==================================================
    PAGINATION
 ================================================== */
@@ -1816,6 +2560,7 @@ if (previousPage) {
             ) {
 
                 currentPageNumber--;
+
 
                 renderSubmissions();
 
@@ -1851,6 +2596,7 @@ if (nextPage) {
 
                 currentPageNumber++;
 
+
                 renderSubmissions();
 
             }
@@ -1861,12 +2607,8 @@ if (nextPage) {
 }
 
 
-
 /* ==================================================
-   VIEW BUTTONS
-   -----------------------------------------------
-   Event delegation allows buttons generated
-   dynamically by JavaScript to work.
+   VIEW BUTTON
 ================================================== */
 
 document.addEventListener(
@@ -1880,19 +2622,32 @@ document.addEventListener(
 
 
         if (!viewButton) {
+
             return;
+
         }
 
 
-        const id =
-            viewButton.dataset.id;
-
-
-        openSubmissionModal(id);
+        openSubmissionModal(
+            viewButton.dataset.id
+        );
 
     }
 );
 
+
+/* ==================================================
+   PAYMENT BUTTON
+================================================== */
+
+if (approvePaymentButton) {
+
+    approvePaymentButton.addEventListener(
+        "click",
+        approvePayment
+    );
+
+}
 
 
 /* ==================================================
@@ -1953,9 +2708,8 @@ if (modalRejectButton) {
 }
 
 
-
 /* ==================================================
-   MODAL OVERLAY CLICK
+   MODAL OVERLAY
 ================================================== */
 
 if (submissionModal) {
@@ -1977,7 +2731,6 @@ if (submissionModal) {
     );
 
 }
-
 
 
 /* ==================================================
@@ -2025,7 +2778,6 @@ if (confirmModal) {
 }
 
 
-
 /* ==================================================
    RESET FILTERS
 ================================================== */
@@ -2064,9 +2816,11 @@ if (resetFilters) {
 
             if (clearSearchButton) {
 
-                clearSearchButton.classList.remove(
-                    "visible"
-                );
+                clearSearchButton
+                    .classList
+                    .remove(
+                        "visible"
+                    );
 
             }
 
@@ -2078,11 +2832,13 @@ if (resetFilters) {
                 .forEach(
                     button => {
 
-                        button.classList.toggle(
-                            "active",
-                            button.dataset.status ===
-                            "all"
-                        );
+                        button
+                            .classList
+                            .toggle(
+                                "active",
+                                button.dataset.status ===
+                                "all"
+                            );
 
                     }
                 );
@@ -2096,7 +2852,6 @@ if (resetFilters) {
 }
 
 
-
 /* ==================================================
    ESC KEY
 ================================================== */
@@ -2106,7 +2861,8 @@ document.addEventListener(
     event => {
 
         if (
-            event.key !== "Escape"
+            event.key !==
+            "Escape"
         ) {
 
             return;
@@ -2116,9 +2872,11 @@ document.addEventListener(
 
         if (
             confirmModal &&
-            !confirmModal.classList.contains(
-                "hidden"
-            )
+            !confirmModal
+                .classList
+                .contains(
+                    "hidden"
+                )
         ) {
 
             closeConfirmation();
@@ -2130,9 +2888,11 @@ document.addEventListener(
 
         if (
             submissionModal &&
-            !submissionModal.classList.contains(
-                "hidden"
-            )
+            !submissionModal
+                .classList
+                .contains(
+                    "hidden"
+                )
         ) {
 
             closeModal();
@@ -2141,7 +2901,6 @@ document.addEventListener(
 
     }
 );
-
 
 
 /* ==================================================
@@ -2157,7 +2916,9 @@ function renderCurrentDate() {
 
 
     if (!element) {
+
         return;
+
     }
 
 
@@ -2169,15 +2930,23 @@ function renderCurrentDate() {
         today.toLocaleDateString(
             "en-US",
             {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                year: "numeric"
+
+                weekday:
+                    "short",
+
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                year:
+                    "numeric"
+
             }
         );
 
 }
-
 
 
 /* ==================================================
@@ -2194,7 +2963,7 @@ if (logoutButton) {
 
     logoutButton.addEventListener(
         "click",
-        () => {
+        async () => {
 
             const confirmed =
                 window.confirm(
@@ -2203,28 +2972,49 @@ if (logoutButton) {
 
 
             if (!confirmed) {
+
                 return;
+
             }
 
 
-            /*
-             * This should match the authentication
-             * system used by admin/login.js.
-             */
+            try {
 
-            localStorage.removeItem(
-                "alote-admin-auth"
-            );
+                await fetch(
+                    `${API_BASE_URL}/admin/logout`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers:
+                            getAuthHeaders()
+
+                    }
+                );
 
 
-            window.location.href =
-                "login.html";
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            } finally {
+
+                clearAdminSession();
+
+
+                window.location.href =
+                    "login.html";
+
+            }
 
         }
     );
 
 }
-
 
 
 /* ==================================================

@@ -416,11 +416,9 @@ const translations = {
 let jobs = [];
 
 async function loadJobsFromBackend() {
-
     try {
-
         const response = await fetch(
-            "http://127.0.0.1:8000/api/jobs",
+            `${window.ALOTE_CONFIG.API_BASE_URL}/jobs`,
             {
                 headers: {
                     "Accept": "application/json"
@@ -475,8 +473,8 @@ async function loadJobsFromBackend() {
                 );
 
             return {
-                id: item.id,
-                title: item.title,
+    id: item.public_id,
+    title: item.title,
                 company: company,
                 initials: initials,
                 workStyle:
@@ -514,6 +512,113 @@ async function loadJobsFromBackend() {
     }
 
 }
+
+/* ==================================================
+   DYNAMIC LOCATION FILTER
+================================================== */
+
+function populateLocationFilter() {
+
+    const locationFilter =
+        document.getElementById(
+            "locationFilter"
+        );
+
+
+    if (!locationFilter) {
+
+        return;
+
+    }
+
+
+    const currentValue =
+        locationFilter.value;
+
+
+    const locations =
+        [
+            ...new Set(
+                jobs
+                    .map(job =>
+                        job.location
+                            ?.trim()
+                    )
+                    .filter(location =>
+                        location &&
+                        location !==
+                        "Not specified"
+                    )
+            )
+        ]
+            .sort(
+                (a, b) =>
+                    a.localeCompare(b)
+            );
+
+
+    locationFilter.innerHTML = "";
+
+
+    const allOption =
+        document.createElement(
+            "option"
+        );
+
+
+    allOption.value =
+        "";
+
+
+    allOption.textContent =
+        getTranslation(
+            "allLocations"
+        );
+
+
+    locationFilter.appendChild(
+        allOption
+    );
+
+
+    locations.forEach(
+        location => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                location;
+
+
+            option.textContent =
+                location;
+
+
+            locationFilter.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if (
+        locations.includes(
+            currentValue
+        )
+    ) {
+
+        locationFilter.value =
+            currentValue;
+
+    }
+
+}
+
 
 /* ==================================================
    STATE
@@ -2384,6 +2489,8 @@ document.addEventListener(
         async function initializeJobsPage() {
 
             await loadJobsFromBackend();
+
+            populateLocationFilter();
 
             renderJobs();
 

@@ -1,4 +1,15 @@
+/* =========================================
+   JOB DATA
+========================================= */
+
 let jobs = [];
+let job = null;
+
+
+/* =========================================
+   LOAD JOB DETAILS FROM BACKEND
+========================================= */
+
 async function loadJobDetailsFromBackend() {
 
     try {
@@ -18,7 +29,7 @@ async function loadJobDetailsFromBackend() {
         }
 
         const response = await fetch(
-            `http://127.0.0.1:8000/api/jobs/${jobId}`,
+            `${window.ALOTE_CONFIG.API_BASE_URL}/jobs/${jobId}`,
             {
                 headers: {
                     "Accept": "application/json"
@@ -38,13 +49,14 @@ async function loadJobDetailsFromBackend() {
         const item =
             result.data;
 
-        let salary =
+        const salary =
             item.salary_text ||
             "Not specified";
 
         jobs = [
             {
-                id: item.id,
+                id:
+                    item.public_id,
 
                 title:
                     item.title,
@@ -77,12 +89,16 @@ async function loadJobDetailsFromBackend() {
                     "",
 
                 requirements:
-                    Array.isArray(item.requirements)
+                    Array.isArray(
+                        item.requirements
+                    )
                         ? item.requirements
                         : [],
 
                 responsibilities:
-                    Array.isArray(item.responsibilities)
+                    Array.isArray(
+                        item.responsibilities
+                    )
                         ? item.responsibilities
                         : [],
 
@@ -112,13 +128,9 @@ async function loadJobDetailsFromBackend() {
             error
         );
 
+        jobs = [];
     }
-
 }
-
-let job = null;
-
-
 
 
 /* =========================================
@@ -148,9 +160,11 @@ const translations = {
         category: "Category",
 
         posted: "Posted",
-        applicationDeadline: "Application deadline",
+        applicationDeadline:
+            "Application deadline",
 
-        applyNow: "Apply for this job",
+        applyNow:
+            "Apply for this job",
 
         company: "Company",
 
@@ -159,7 +173,8 @@ const translations = {
         hybrid: "Hybrid",
         onsite: "On-site",
 
-        applicationEmail: "Application email"
+        applicationEmail:
+            "Application email"
     },
 
 
@@ -168,43 +183,77 @@ const translations = {
         employer: "အလုပ်ရှင်",
         findJobs: "အလုပ်အကိုင်များ",
         categories: "အမျိုးအစားများ",
-        whyAlote: "ALote ကို ဘာကြောင့်သုံးမလဲ",
+        whyAlote:
+            "ALote ကို ဘာကြောင့်သုံးမလဲ",
+
         postJob:
             "အလုပ်တင်မည်",
 
-        backToJobs: "အလုပ်အကိုင်များသို့ ပြန်သွားမည်",
+        backToJobs:
+            "အလုပ်အကိုင်များသို့ ပြန်သွားမည်",
 
-        aboutRole: "အလုပ်အကြောင်း",
-        responsibilities: "တာဝန်များ",
-        requirements: "လိုအပ်ချက်များ",
+        aboutRole:
+            "အလုပ်အကြောင်း",
 
-        jobOverview: "အလုပ်အချက်အလက်များ",
-        location: "တည်နေရာ",
-        workStyle: "အလုပ်လုပ်ပုံ",
-        employmentType: "အလုပ်အမျိုးအစား",
-        salary: "လစာ",
-        category: "အမျိုးအစား",
+        responsibilities:
+            "တာဝန်များ",
 
-        posted: "တင်ထားသည့်ရက်",
-        applicationDeadline: "လျှောက်ထားရန် နောက်ဆုံးရက်",
+        requirements:
+            "လိုအပ်ချက်များ",
 
-        applyNow: "ဤအလုပ်ကို လျှောက်ထားမည်",
+        jobOverview:
+            "အလုပ်အချက်အလက်များ",
 
-        company: "ကုမ္ပဏီ",
+        location:
+            "တည်နေရာ",
 
-        fullTime: "အချိန်ပြည့်",
-        remote: "အဝေးမှ",
-        hybrid: "Hybrid",
-        onsite: "ရုံးတက်",
+        workStyle:
+            "အလုပ်လုပ်ပုံ",
 
-        applicationEmail: "လျှောက်လွှာပေးပို့ရန် Email"
+        employmentType:
+            "အလုပ်အမျိုးအစား",
+
+        salary:
+            "လစာ",
+
+        category:
+            "အမျိုးအစား",
+
+        posted:
+            "တင်ထားသည့်ရက်",
+
+        applicationDeadline:
+            "လျှောက်ထားရန် နောက်ဆုံးရက်",
+
+        applyNow:
+            "ဤအလုပ်ကို လျှောက်ထားမည်",
+
+        company:
+            "ကုမ္ပဏီ",
+
+        fullTime:
+            "အချိန်ပြည့်",
+
+        remote:
+            "အဝေးမှ",
+
+        hybrid:
+            "Hybrid",
+
+        onsite:
+            "ရုံးတက်",
+
+        applicationEmail:
+            "လျှောက်လွှာပေးပို့ရန် Email"
     }
 
 };
 
 
 let currentLanguage =
-    localStorage.getItem("alote-language") || "en";
+    localStorage.getItem(
+        "alote-language"
+    ) || "en";
 
 
 /* =========================================
@@ -220,20 +269,25 @@ function changeLanguage(language) {
         return;
     }
 
-    currentLanguage = language;
+    currentLanguage =
+        language;
 
     document.documentElement.lang =
         language;
 
 
     document
-        .querySelectorAll("[data-i18n]")
+        .querySelectorAll(
+            "[data-i18n]"
+        )
         .forEach(element => {
 
             const key =
                 element.dataset.i18n;
 
-            if (selectedLanguage[key]) {
+            if (
+                selectedLanguage[key]
+            ) {
 
                 element.textContent =
                     selectedLanguage[key];
@@ -244,12 +298,15 @@ function changeLanguage(language) {
 
 
     document
-        .querySelectorAll(".language-button")
+        .querySelectorAll(
+            ".language-button"
+        )
         .forEach(button => {
 
             button.classList.toggle(
                 "active",
-                button.dataset.lang === language
+                button.dataset.lang ===
+                language
             );
 
         });
@@ -269,7 +326,9 @@ function changeLanguage(language) {
 
 function translateWorkStyle(value) {
 
-    if (currentLanguage === "en") {
+    if (
+        currentLanguage === "en"
+    ) {
 
         if (value === "WFH") {
             return "Remote";
@@ -284,6 +343,7 @@ function translateWorkStyle(value) {
         }
 
     }
+
 
     if (value === "WFH") {
         return "အဝေးမှ";
@@ -334,10 +394,25 @@ function translateEmploymentType(value) {
 
 function formatDate(dateString) {
 
+    if (!dateString) {
+        return "Not specified";
+    }
+
     const date =
         new Date(dateString);
 
-    if (currentLanguage === "my") {
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "Not specified";
+    }
+
+
+    if (
+        currentLanguage === "my"
+    ) {
 
         return date.toLocaleDateString(
             "my-MM",
@@ -349,6 +424,7 @@ function formatDate(dateString) {
         );
 
     }
+
 
     return date.toLocaleDateString(
         "en-US",
@@ -366,82 +442,163 @@ function formatDate(dateString) {
 ========================================= */
 
 function renderJob() {
+
+    if (!job) {
+        return;
+    }
+
+
     const companyInitials =
         job.company
             .split(" ")
-            .filter(word => word.length > 0)
-            .map(word => word[0])
+            .filter(
+                word =>
+                    word.length > 0
+            )
+            .map(
+                word =>
+                    word[0]
+            )
             .join("")
             .substring(0, 3)
             .toUpperCase();
 
-    document.getElementById(
-        "companyAvatar"
-    ).textContent =
-        companyInitials;
-    document.getElementById(
-        "jobTitle"
-    ).textContent = job.title;
 
-
-    document.getElementById(
-        "companyName"
-    ).textContent = job.company;
-
-
-    document.getElementById(
-        "jobLocation"
-    ).textContent = job.location;
-
-
-    document.getElementById(
-        "workStyleValue"
-    ).textContent =
-        translateWorkStyle(
-            job.workType
+    const companyAvatar =
+        document.getElementById(
+            "companyAvatar"
         );
 
+    if (companyAvatar) {
+        companyAvatar.textContent =
+            companyInitials;
+    }
 
-    document.getElementById(
-        "employmentTypeValue"
-    ).textContent =
-        translateEmploymentType(
-            job.employmentType
+
+    const jobTitle =
+        document.getElementById(
+            "jobTitle"
         );
 
-
-    document.getElementById(
-        "salaryValue"
-    ).textContent =
-        job.salary;
-
-
-    document.getElementById(
-        "categoryValue"
-    ).textContent =
-        job.category;
+    if (jobTitle) {
+        jobTitle.textContent =
+            job.title;
+    }
 
 
-    document.getElementById(
-        "description"
-    ).textContent =
-        job.description;
-
-
-    document.getElementById(
-        "postedDate"
-    ).textContent =
-        formatDate(
-            job.postedDate
+    const companyName =
+        document.getElementById(
+            "companyName"
         );
 
+    if (companyName) {
+        companyName.textContent =
+            job.company;
+    }
 
-    document.getElementById(
-        "deadlineDate"
-    ).textContent =
-        formatDate(
-            job.deadlineDate
+
+    const jobLocation =
+        document.getElementById(
+            "jobLocation"
         );
+
+    if (jobLocation) {
+        jobLocation.textContent =
+            job.location;
+    }
+
+
+    const workStyleValue =
+        document.getElementById(
+            "workStyleValue"
+        );
+
+    if (workStyleValue) {
+
+        workStyleValue.textContent =
+            translateWorkStyle(
+                job.workType
+            );
+
+    }
+
+
+    const employmentTypeValue =
+        document.getElementById(
+            "employmentTypeValue"
+        );
+
+    if (employmentTypeValue) {
+
+        employmentTypeValue.textContent =
+            translateEmploymentType(
+                job.employmentType
+            );
+
+    }
+
+
+    const salaryValue =
+        document.getElementById(
+            "salaryValue"
+        );
+
+    if (salaryValue) {
+        salaryValue.textContent =
+            job.salary;
+    }
+
+
+    const categoryValue =
+        document.getElementById(
+            "categoryValue"
+        );
+
+    if (categoryValue) {
+        categoryValue.textContent =
+            job.category;
+    }
+
+
+    const description =
+        document.getElementById(
+            "description"
+        );
+
+    if (description) {
+        description.textContent =
+            job.description;
+    }
+
+
+    const postedDate =
+        document.getElementById(
+            "postedDate"
+        );
+
+    if (postedDate) {
+
+        postedDate.textContent =
+            formatDate(
+                job.postedDate
+            );
+
+    }
+
+
+    const deadlineDate =
+        document.getElementById(
+            "deadlineDate"
+        );
+
+    if (deadlineDate) {
+
+        deadlineDate.textContent =
+            formatDate(
+                job.deadlineDate
+            );
+
+    }
 
 
     const requirements =
@@ -449,10 +606,17 @@ function renderJob() {
             "requirementsList"
         );
 
-    requirements.innerHTML =
-        job.requirements
-            .map(item => `<li>${item}</li>`)
-            .join("");
+    if (requirements) {
+
+        requirements.innerHTML =
+            job.requirements
+                .map(
+                    item =>
+                        `<li>${item}</li>`
+                )
+                .join("");
+
+    }
 
 
     const responsibilities =
@@ -460,28 +624,69 @@ function renderJob() {
             "responsibilitiesList"
         );
 
-    responsibilities.innerHTML =
-        job.responsibilities
-            .map(item => `<li>${item}</li>`)
-            .join("");
+    if (responsibilities) {
 
-    document.getElementById(
-        "sidebarLocation"
-    ).textContent = job.location;
+        responsibilities.innerHTML =
+            job.responsibilities
+                .map(
+                    item =>
+                        `<li>${item}</li>`
+                )
+                .join("");
 
-    document.getElementById(
-        "sidebarWorkStyle"
-    ).textContent =
-        translateWorkStyle(job.workType);
+    }
 
-    document.getElementById(
-        "sidebarEmploymentType"
-    ).textContent =
-        translateEmploymentType(job.employmentType);
 
-    document.getElementById(
-        "sidebarSalary"
-    ).textContent = job.salary;
+    const sidebarLocation =
+        document.getElementById(
+            "sidebarLocation"
+        );
+
+    if (sidebarLocation) {
+        sidebarLocation.textContent =
+            job.location;
+    }
+
+
+    const sidebarWorkStyle =
+        document.getElementById(
+            "sidebarWorkStyle"
+        );
+
+    if (sidebarWorkStyle) {
+
+        sidebarWorkStyle.textContent =
+            translateWorkStyle(
+                job.workType
+            );
+
+    }
+
+
+    const sidebarEmploymentType =
+        document.getElementById(
+            "sidebarEmploymentType"
+        );
+
+    if (sidebarEmploymentType) {
+
+        sidebarEmploymentType.textContent =
+            translateEmploymentType(
+                job.employmentType
+            );
+
+    }
+
+
+    const sidebarSalary =
+        document.getElementById(
+            "sidebarSalary"
+        );
+
+    if (sidebarSalary) {
+        sidebarSalary.textContent =
+            job.salary;
+    }
 
 }
 
@@ -491,7 +696,9 @@ function renderJob() {
 ========================================= */
 
 document
-    .querySelectorAll(".language-button")
+    .querySelectorAll(
+        ".language-button"
+    )
     .forEach(button => {
 
         button.addEventListener(
@@ -518,28 +725,40 @@ async function initializeJobDetails() {
 
     await loadJobDetailsFromBackend();
 
+
     const urlParams =
         new URLSearchParams(
             window.location.search
         );
 
+
     const jobId =
-        Number(
-            urlParams.get("id")
-        );
+        urlParams.get("id");
+
 
     job =
         jobs.find(
-            item => item.id === jobId
+            item =>
+                item.id === jobId
         );
 
+
     if (!job) {
+
+        console.error(
+            "Job not found."
+        );
 
         window.location.href =
             "jobs.html";
 
         return;
     }
+
+
+    /* =========================================
+       APPLY BUTTON — MAIN
+    ========================================= */
 
     const applyButton =
         document.getElementById(
@@ -553,6 +772,11 @@ async function initializeJobDetails() {
 
     }
 
+
+    /* =========================================
+       APPLY BUTTON — BOTTOM
+    ========================================= */
+
     const applyButtonBottom =
         document.getElementById(
             "applyButtonBottom"
@@ -565,14 +789,27 @@ async function initializeJobDetails() {
 
     }
 
+
+    /* =========================================
+       LANGUAGE + RENDER
+    ========================================= */
+
     document.documentElement.lang =
         currentLanguage;
+
 
     changeLanguage(
         currentLanguage
     );
 
+
     renderJob();
+
 }
+
+
+/* =========================================
+   START
+========================================= */
 
 initializeJobDetails();

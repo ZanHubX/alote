@@ -30,13 +30,14 @@ async function trackVisit() {
     try {
 
         await fetch(
-            "http://127.0.0.1:8000/api/website-visits",
+            `${window.ALOTE_CONFIG.API_BASE_URL}/website-visits`,
             {
                 method: "POST",
 
                 headers: {
                     "Content-Type":
                         "application/json",
+
                     "Accept":
                         "application/json"
                 },
@@ -57,7 +58,9 @@ async function trackVisit() {
             "Visitor tracking error:",
             error
         );
+
     }
+
 }
 
 
