@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class AdminApplicationController extends Controller
 {
@@ -52,30 +52,210 @@ class AdminApplicationController extends Controller
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | GET PRIVATE RESUME SIGNED URL
+    |--------------------------------------------------------------------------
+    */
+
+    public function resume($id)
+    {
+        $application =
+            Application::findOrFail($id);
+
+
+        if (!$application->resume_path) {
+
+            return response()->json([
+                'message' =>
+                'Resume not available.'
+            ], 404);
+        }
+
+
+        $supabaseUrl =
+            rtrim(
+                env('SUPABASE_URL'),
+                '/'
+            );
+
+        $supabaseSecret =
+            env('SUPABASE_SECRET_KEY');
+
+        $bucket =
+            env(
+                'SUPABASE_BUCKET',
+                'resumes'
+            );
+
+
+        if (
+            !$supabaseUrl ||
+            !$supabaseSecret
+        ) {
+
+            return response()->json([
+                'message' =>
+                'Resume storage is not configured.'
+            ], 500);
+        }
+
+
+        $response =
+            Http::withHeaders([
+
+                'Authorization' =>
+                'Bearer ' . $supabaseSecret,
+
+                'apikey' =>
+                $supabaseSecret,
+
+                'Content-Type' =>
+                'application/json',
+
+            ])->post(
+
+                $supabaseUrl
+                    . '/storage/v1/object/sign/'
+                    . $bucket
+                    . '/'
+                    . $application->resume_path,
+
+                [
+                    'expiresIn' => 60
+                ]
+
+            );
+
+
+        if (!$response->successful()) {
+
+            return response()->json([
+                'message' =>
+                'Unable to open resume.'
+            ], 500);
+        }
+
+
+        $signedPath =
+            $response->json(
+                'signedURL'
+            )
+            ?? $response->json(
+                'signedUrl'
+            );
+
+
+        if (!$signedPath) {
+
+            return response()->json([
+                'message' =>
+                'Unable to create resume URL.'
+            ], 500);
+        }
+
+
+        /*
+         * Supabase may return a relative signed URL.
+         */
+
+        if (
+            str_starts_with(
+                $signedPath,
+                'http://'
+            ) ||
+            str_starts_with(
+                $signedPath,
+                'https://'
+            )
+        ) {
+
+            $signedUrl =
+                $signedPath;
+        } else {
+
+            $signedUrl =
+                $supabaseUrl
+                . '/storage/v1'
+                . $signedPath;
+        }
+
+
+        return response()->json([
+            'url' =>
+            $signedUrl,
+
+            'expires_in' =>
+            60
+        ]);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE APPLICATION + SUPABASE RESUME
+    |--------------------------------------------------------------------------
+    */
+
     public function destroy($id)
     {
         $application =
             Application::findOrFail($id);
 
+
+        $supabaseUrl =
+            rtrim(
+                env('SUPABASE_URL'),
+                '/'
+            );
+
+        $supabaseSecret =
+            env('SUPABASE_SECRET_KEY');
+
+        $bucket =
+            env(
+                'SUPABASE_BUCKET',
+                'resumes'
+            );
+
+
         /*
-         * Delete uploaded resume file
-         * before deleting the application.
+         * Delete resume from Supabase Storage
          */
+
         if (
             $application->resume_path &&
-            Storage::disk('public')->exists(
-                $application->resume_path
-            )
+            $supabaseUrl &&
+            $supabaseSecret
         ) {
-            Storage::disk('public')->delete(
-                $application->resume_path
+
+            Http::withHeaders([
+
+                'Authorization' =>
+                'Bearer '
+                    . $supabaseSecret,
+
+                'apikey' =>
+                $supabaseSecret,
+
+            ])->delete(
+
+                $supabaseUrl
+                    . '/storage/v1/object/'
+                    . $bucket
+                    . '/'
+                    . $application->resume_path
+
             );
         }
 
+
         /*
-         * Delete application from database.
+         * Delete application from database
          */
+
         $application->delete();
+
 
         return response()->json([
             'message' =>

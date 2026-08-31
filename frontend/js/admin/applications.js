@@ -1591,8 +1591,8 @@ function openApplicationModal(
 
     if (viewResume) {
 
-        viewResume.dataset.resume =
-            application.resume;
+        viewResume.dataset.applicationId =
+            application.id;
 
     }
 
@@ -1996,42 +1996,119 @@ if (refreshApplications) {
    RESUME BUTTON
 ================================================== */
 
+/* ==================================================
+   RESUME BUTTON
+================================================== */
+
 if (viewResume) {
 
     viewResume.addEventListener(
         "click",
-        () => {
+        async () => {
 
-            const resume =
+            const applicationId =
                 viewResume.dataset
-                    .resume;
+                    .applicationId;
 
 
-            if (!resume) {
+            if (!applicationId) {
 
                 alert(
                     "Resume not available."
                 );
 
-
                 return;
-
             }
 
 
-            const resumeUrl =
-                `${STORAGE_BASE_URL}/${resume}`;
+            const backendId =
+                applicationId.replace(
+                    "APP-",
+                    ""
+                );
 
 
-            window.open(
-                resumeUrl,
-                "_blank",
-                "noopener,noreferrer"
-            );
+            try {
+
+                viewResume.disabled =
+                    true;
+
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/admin/applications/${backendId}/resume`,
+                        {
+
+                            method:
+                                "GET",
+
+                            headers:
+                                getAuthHeaders()
+
+                        }
+                    );
+
+
+                if (
+                    handleUnauthorized(
+                        response
+                    )
+                ) {
+
+                    return;
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to open resume."
+                    );
+                }
+
+
+                if (!result.url) {
+
+                    throw new Error(
+                        "Resume URL not available."
+                    );
+                }
+
+
+                window.open(
+                    result.url,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Resume loading error:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "Unable to open resume."
+                );
+
+
+            } finally {
+
+                viewResume.disabled =
+                    false;
+            }
 
         }
     );
-
 }
 
 /* ==================================================

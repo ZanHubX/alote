@@ -8,6 +8,8 @@ use App\Models\JobPost;
 use App\Models\JobSeeker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class ApplicationController extends Controller
 {
@@ -64,62 +66,181 @@ class ApplicationController extends Controller
             ->firstOrFail();
 
 
-        $application = DB::transaction(
-            function () use (
-                $request,
-                $validated,
-                $job
-            ) {
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Resume to Supabase Storage
+        |--------------------------------------------------------------------------
+        */
 
-                $resumePath =
-                    $request
-                        ->file('resume')
-                        ->store(
-                            'resumes',
-                            'public'
-                        );
+        $resume = $request->file('resume');
 
+        $extension = $resume->getClientOriginalExtension();
 
-                $jobSeeker =
-                    JobSeeker::create([
+        $fileName =
+            Str::uuid()->toString()
+            . '.'
+            . strtolower($extension);
 
-                        'full_name' =>
-                            $validated['full_name'],
-
-                        'email' =>
-                            $validated['email'],
-
-                        'phone' =>
-                            $validated['phone'],
-
-                        'resume_path' =>
-                            $resumePath,
-                    ]);
+        $resumePath =
+            'applications/'
+            . $job->public_id
+            . '/'
+            . $fileName;
 
 
-                return Application::create([
+        $supabaseUrl =
+            rtrim(
+                env('SUPABASE_URL'),
+                '/'
+            );
 
-                    'job_post_id' =>
-                        $job->id,
+        $supabaseSecret =
+            env('SUPABASE_SECRET_KEY');
 
-                    'job_seeker_id' =>
-                        $jobSeeker->id,
+        $bucket =
+            env(
+                'SUPABASE_BUCKET',
+                'resumes'
+            );
 
-                    'cover_letter' =>
-                        $validated['cover_letter']
-                            ?? null,
 
-                    'resume_path' =>
-                        $resumePath,
+        if (
+            !$supabaseUrl ||
+            !$supabaseSecret
+        ) {
+            return response()->json([
+                'message' =>
+                    'Resume storage is not configured.'
+            ], 500);
+        }
 
-                    'status' =>
-                        'pending',
 
-                    'applied_at' =>
-                        now(),
-                ]);
-            }
-        );
+        $uploadResponse =
+            Http::withHeaders([
+
+                'Authorization' =>
+                    'Bearer '
+                    . $supabaseSecret,
+
+                'apikey' =>
+                    $supabaseSecret,
+
+                'Content-Type' =>
+                    $resume->getMimeType(),
+
+            ])
+                ->withBody(
+                    file_get_contents(
+                        $resume->getRealPath()
+                    ),
+                    $resume->getMimeType()
+                )
+                ->post(
+                    $supabaseUrl
+                    . '/storage/v1/object/'
+                    . $bucket
+                    . '/'
+                    . $resumePath
+                );
+
+
+        if (!$uploadResponse->successful()) {
+
+            return response()->json([
+
+                'message' =>
+                    'Resume upload failed.',
+
+            ], 500);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save Application
+        |--------------------------------------------------------------------------
+        */
+
+        try {
+
+            $application =
+                DB::transaction(
+                    function () use (
+                        $validated,
+                        $job,
+                        $resumePath
+                    ) {
+
+                        $jobSeeker =
+                            JobSeeker::create([
+
+                                'full_name' =>
+                                    $validated['full_name'],
+
+                                'email' =>
+                                    $validated['email'],
+
+                                'phone' =>
+                                    $validated['phone'],
+
+                                'resume_path' =>
+                                    $resumePath,
+                            ]);
+
+
+                        return Application::create([
+
+                            'job_post_id' =>
+                                $job->id,
+
+                            'job_seeker_id' =>
+                                $jobSeeker->id,
+
+                            'cover_letter' =>
+                                $validated['cover_letter']
+                                    ?? null,
+
+                            'resume_path' =>
+                                $resumePath,
+
+                            'status' =>
+                                'pending',
+
+                            'applied_at' =>
+                                now(),
+                        ]);
+                    }
+                );
+
+        } catch (\Throwable $exception) {
+
+            /*
+             * Database save failed after upload.
+             * Remove the uploaded resume.
+             */
+
+            Http::withHeaders([
+
+                'Authorization' =>
+                    'Bearer '
+                    . $supabaseSecret,
+
+                'apikey' =>
+                    $supabaseSecret,
+
+            ])->delete(
+
+                $supabaseUrl
+                . '/storage/v1/object/'
+                . $bucket
+                . '/'
+                . $resumePath
+
+            );
+
+
+            throw $exception;
+        }
 
 
         return response()->json([

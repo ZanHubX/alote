@@ -6,7 +6,7 @@ window.ALOTE_CONFIG = {
 
     API_BASE_URL:
         window.location.hostname === "127.0.0.1" ||
-        window.location.hostname === "localhost"
+            window.location.hostname === "localhost"
 
             ? "http://127.0.0.1:8000/api"
 
@@ -15,7 +15,7 @@ window.ALOTE_CONFIG = {
 
     STORAGE_BASE_URL:
         window.location.hostname === "127.0.0.1" ||
-        window.location.hostname === "localhost"
+            window.location.hostname === "localhost"
 
             ? "http://127.0.0.1:8000/storage"
 

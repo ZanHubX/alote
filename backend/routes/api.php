@@ -159,24 +159,24 @@ Route::middleware('auth:sanctum')
         );
 
 
-    /* ==========================================
+        /* ==========================================
    ADMIN PUBLISHED JOBS
 ========================================== */
 
-    Route::get(
-        '/jobs',
-        [AdminJobPostController::class, 'index']
-    );
+        Route::get(
+            '/jobs',
+            [AdminJobPostController::class, 'index']
+        );
 
-    Route::post(
-        '/jobs/{id}/close',
-        [AdminJobPostController::class, 'close']
-    );
+        Route::post(
+            '/jobs/{id}/close',
+            [AdminJobPostController::class, 'close']
+        );
 
-    Route::delete(
-        '/jobs/{id}',
-        [AdminJobPostController::class, 'destroy']
-    );
+        Route::delete(
+            '/jobs/{id}',
+            [AdminJobPostController::class, 'destroy']
+        );
 
 
         /* ==========================================
@@ -186,6 +186,11 @@ Route::middleware('auth:sanctum')
         Route::get(
             '/applications',
             [AdminApplicationController::class, 'index']
+        );
+
+        Route::get(
+            '/applications/{id}/resume',
+            [AdminApplicationController::class, 'resume']
         );
 
         Route::patch(
