@@ -10,6 +10,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
+        'https://alotemm.com',
+        'https://www.alotemm.com',
         'https://alote.vercel.app',
         'http://127.0.0.1:5500',
         'http://localhost:5500',

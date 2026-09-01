@@ -14,16 +14,16 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\AdminAuthController;
 
 
-/* ==================================================
-   TEST API
-================================================== */
+// /* ==================================================
+//    TEST API
+// ================================================== */
 
-Route::get('/test', function () {
+// Route::get('/test', function () {
 
-    return response()->json([
-        'message' => 'ALote API is working!'
-    ]);
-});
+//     return response()->json([
+//         'message' => 'ALote API is working!'
+//     ]);
+// });
 
 
 /* ==================================================
@@ -31,9 +31,9 @@ Route::get('/test', function () {
 ================================================== */
 
 Route::post(
-    '/admin/login',
-    [AdminAuthController::class, 'login']
-);
+    '/applications',
+    [ApplicationController::class, 'store']
+)->middleware('throttle:10,1');
 
 
 /* ==================================================

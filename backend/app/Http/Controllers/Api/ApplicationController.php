@@ -148,17 +148,15 @@ class ApplicationController extends Controller
             Log::error(
                 'Supabase resume upload failed',
                 [
-                    'status' =>
-                    $uploadResponse->status(),
-
-                    'response' =>
-                    $uploadResponse->body(),
+                    'status' => $uploadResponse->status(),
+                    'response' => $uploadResponse->body(),
                 ]
             );
 
             return response()->json([
-                'message' =>
-                'Resume upload failed.'
+                'message' => 'Resume upload failed.',
+                'supabase_status' => $uploadResponse->status(),
+                'supabase_error' => $uploadResponse->body(),
             ], 500);
         }
 

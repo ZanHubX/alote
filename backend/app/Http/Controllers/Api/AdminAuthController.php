@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN LOGIN
+    |--------------------------------------------------------------------------
+    */
+
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -23,12 +29,42 @@ class AdminAuthController extends Controller
             ],
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Only allow the configured admin email
+        |--------------------------------------------------------------------------
+        */
+
+        $adminEmail = config(
+            'services.alote.admin_email'
+        );
+
+        if (
+            !$adminEmail ||
+            strtolower($validated['email']) !==
+            strtolower($adminEmail)
+        ) {
+            return response()->json([
+                'message' => 'Invalid email or password.'
+            ], 401);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find Admin User
+        |--------------------------------------------------------------------------
+        */
 
         $user = User::where(
             'email',
             $validated['email']
         )->first();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Check Password
+        |--------------------------------------------------------------------------
+        */
 
         if (
             !$user ||
@@ -42,14 +78,23 @@ class AdminAuthController extends Controller
             ], 401);
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Remove Old Admin Tokens
+        |--------------------------------------------------------------------------
+        */
 
         $user->tokens()->delete();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Create New Sanctum Token
+        |--------------------------------------------------------------------------
+        */
 
         $token = $user
             ->createToken('admin-token')
             ->plainTextToken;
-
 
         return response()->json([
             'message' => 'Login successful.',
@@ -60,29 +105,42 @@ class AdminAuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-            ]
+            ],
         ]);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN LOGOUT
+    |--------------------------------------------------------------------------
+    */
 
     public function logout(Request $request)
     {
         $request
             ->user()
-            ->currentAccessToken()
+            ?->currentAccessToken()
             ?->delete();
-
 
         return response()->json([
             'message' => 'Logged out successfully.'
         ]);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | CURRENT ADMIN
+    |--------------------------------------------------------------------------
+    */
 
     public function me(Request $request)
     {
         return response()->json([
-            'user' => $request->user()
+            'user' => [
+                'id' => $request->user()->id,
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+            ],
         ]);
     }
 }

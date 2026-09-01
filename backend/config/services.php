@@ -7,10 +7,8 @@ return [
     | Third Party Services
     |--------------------------------------------------------------------------
     |
-    | This file is for storing the credentials for third party services such
-    | as Resend, Postmark, AWS, and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
+    | This file stores configuration for third-party services
+    | and ALote server-side settings.
     |
     */
 
@@ -33,6 +31,20 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | ALote Admin
+    |--------------------------------------------------------------------------
+    |
+    | Only the email configured as ADMIN_EMAIL can log in
+    | to the ALote admin panel.
+    |
+    */
+
+    'alote' => [
+        'admin_email' => env('ADMIN_EMAIL'),
     ],
 
 ];
