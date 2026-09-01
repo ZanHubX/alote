@@ -14,26 +14,14 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\AdminAuthController;
 
 
-// /* ==================================================
-//    TEST API
-// ================================================== */
-
-// Route::get('/test', function () {
-
-//     return response()->json([
-//         'message' => 'ALote API is working!'
-//     ]);
-// });
-
-
 /* ==================================================
    ADMIN AUTH — PUBLIC LOGIN
 ================================================== */
 
 Route::post(
-    '/applications',
-    [ApplicationController::class, 'store']
-)->middleware('throttle:10,1');
+    '/admin/login',
+    [AdminAuthController::class, 'login']
+)->middleware('throttle:5,1');
 
 
 /* ==================================================
@@ -43,7 +31,7 @@ Route::post(
 Route::post(
     '/job-submissions',
     [JobSubmissionController::class, 'store']
-);
+)->middleware('throttle:10,1');
 
 
 /* ==================================================
@@ -54,7 +42,6 @@ Route::get(
     '/jobs',
     [JobPostController::class, 'index']
 );
-
 
 Route::get(
     '/jobs/{publicId}',
@@ -69,7 +56,7 @@ Route::get(
 Route::post(
     '/applications',
     [ApplicationController::class, 'store']
-);
+)->middleware('throttle:10,1');
 
 
 /* ==================================================
@@ -100,7 +87,6 @@ Route::middleware('auth:sanctum')
     ->prefix('admin')
     ->group(function () {
 
-
         /* ==========================================
            ADMIN AUTH
         ========================================== */
@@ -109,7 +95,6 @@ Route::middleware('auth:sanctum')
             '/me',
             [AdminAuthController::class, 'me']
         );
-
 
         Route::post(
             '/logout',
@@ -136,12 +121,10 @@ Route::middleware('auth:sanctum')
             [AdminJobSubmissionController::class, 'index']
         );
 
-
         Route::post(
             '/job-submissions/{id}/approve',
             [AdminJobSubmissionController::class, 'approve']
         );
-
 
         Route::post(
             '/job-submissions/{id}/reject',
@@ -160,8 +143,8 @@ Route::middleware('auth:sanctum')
 
 
         /* ==========================================
-   ADMIN PUBLISHED JOBS
-========================================== */
+           ADMIN PUBLISHED JOBS
+        ========================================== */
 
         Route::get(
             '/jobs',
@@ -181,7 +164,7 @@ Route::middleware('auth:sanctum')
 
         /* ==========================================
            ADMIN APPLICATIONS
-========================================== */
+        ========================================== */
 
         Route::get(
             '/applications',
