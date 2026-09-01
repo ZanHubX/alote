@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\JobPost;
@@ -74,7 +75,8 @@ class ApplicationController extends Controller
 
         $resume = $request->file('resume');
 
-        $extension = $resume->getClientOriginalExtension();
+        $extension =
+            $resume->getClientOriginalExtension();
 
         $fileName =
             Str::uuid()->toString()
@@ -108,9 +110,10 @@ class ApplicationController extends Controller
             !$supabaseUrl ||
             !$supabaseSecret
         ) {
+
             return response()->json([
                 'message' =>
-                    'Resume storage is not configured.'
+                'Resume storage is not configured.'
             ], 500);
         }
 
@@ -118,39 +121,44 @@ class ApplicationController extends Controller
         $uploadResponse =
             Http::withHeaders([
 
-                'Authorization' =>
-                    'Bearer '
-                    . $supabaseSecret,
-
                 'apikey' =>
-                    $supabaseSecret,
+                $supabaseSecret,
 
                 'Content-Type' =>
-                    $resume->getMimeType(),
+                $resume->getMimeType(),
 
             ])
-                ->withBody(
-                    file_get_contents(
-                        $resume->getRealPath()
-                    ),
-                    $resume->getMimeType()
-                )
-                ->post(
-                    $supabaseUrl
+            ->withBody(
+                file_get_contents(
+                    $resume->getRealPath()
+                ),
+                $resume->getMimeType()
+            )
+            ->post(
+                $supabaseUrl
                     . '/storage/v1/object/'
                     . $bucket
                     . '/'
                     . $resumePath
-                );
+            );
 
 
         if (!$uploadResponse->successful()) {
 
+            Log::error(
+                'Supabase resume upload failed',
+                [
+                    'status' =>
+                    $uploadResponse->status(),
+
+                    'response' =>
+                    $uploadResponse->body(),
+                ]
+            );
+
             return response()->json([
-
                 'message' =>
-                    'Resume upload failed.',
-
+                'Resume upload failed.'
             ], 500);
         }
 
@@ -175,67 +183,61 @@ class ApplicationController extends Controller
                             JobSeeker::create([
 
                                 'full_name' =>
-                                    $validated['full_name'],
+                                $validated['full_name'],
 
                                 'email' =>
-                                    $validated['email'],
+                                $validated['email'],
 
                                 'phone' =>
-                                    $validated['phone'],
+                                $validated['phone'],
 
                                 'resume_path' =>
-                                    $resumePath,
+                                $resumePath,
                             ]);
 
 
                         return Application::create([
 
                             'job_post_id' =>
-                                $job->id,
+                            $job->id,
 
                             'job_seeker_id' =>
-                                $jobSeeker->id,
+                            $jobSeeker->id,
 
                             'cover_letter' =>
-                                $validated['cover_letter']
-                                    ?? null,
+                            $validated['cover_letter']
+                                ?? null,
 
                             'resume_path' =>
-                                $resumePath,
+                            $resumePath,
 
                             'status' =>
-                                'pending',
+                            'pending',
 
                             'applied_at' =>
-                                now(),
+                            now(),
                         ]);
                     }
                 );
-
         } catch (\Throwable $exception) {
 
             /*
-             * Database save failed after upload.
-             * Remove the uploaded resume.
-             */
+            |--------------------------------------------------------------------------
+            | Remove uploaded resume if database save fails
+            |--------------------------------------------------------------------------
+            */
 
             Http::withHeaders([
 
-                'Authorization' =>
-                    'Bearer '
-                    . $supabaseSecret,
-
                 'apikey' =>
-                    $supabaseSecret,
+                $supabaseSecret,
 
             ])->delete(
-
                 $supabaseUrl
-                . '/storage/v1/object/'
-                . $bucket
-                . '/'
-                . $resumePath
-
+                    . '/storage/v1/object/'
+                    . $bucket
+                    . '/'
+                    . $resumePath
             );
 
 
@@ -246,10 +248,10 @@ class ApplicationController extends Controller
         return response()->json([
 
             'message' =>
-                'Application submitted successfully.',
+            'Application submitted successfully.',
 
             'data' =>
-                $application
+            $application
 
         ], 201);
     }
