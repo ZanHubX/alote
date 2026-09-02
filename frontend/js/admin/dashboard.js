@@ -603,15 +603,17 @@ function renderPendingSubmissions() {
                     <article
                         class="submission-item"
                         data-id="${escapeHTML(
-                            submission.id
-                        )}"
+                    submission.id
+                )}"
                     >
 
                         <div class="submission-company-avatar">
 
-                            ${getInitials(
-                                submission.company
-                            )}
+                            ${escapeHTML(
+                    getInitials(
+                        submission.company
+                    )
+                )}
 
                         </div>
 
@@ -621,8 +623,8 @@ function renderPendingSubmissions() {
                             <strong>
 
                                 ${escapeHTML(
-                                    submission.title
-                                )}
+                    submission.title
+                )}
 
                             </strong>
 
@@ -630,8 +632,8 @@ function renderPendingSubmissions() {
                             <span class="submission-company">
 
                                 ${escapeHTML(
-                                    submission.company
-                                )}
+                    submission.company
+                )}
 
                             </span>
 
@@ -639,20 +641,20 @@ function renderPendingSubmissions() {
                             <span class="submission-meta">
 
                                 ${escapeHTML(
-                                    submission.location
-                                )}
+                    submission.location
+                )}
 
                                 ·
 
                                 ${escapeHTML(
-                                    submission.workType
-                                )}
+                    submission.workType
+                )}
 
                                 ·
 
                                 ${escapeHTML(
-                                    submission.employmentType
-                                )}
+                    submission.employmentType
+                )}
 
                             </span>
 
@@ -664,8 +666,8 @@ function renderPendingSubmissions() {
                             <span class="status-pill pending">
 
                                 ${escapeHTML(
-                                    submission.status
-                                )}
+                    submission.status
+                )}
 
                             </span>
 
@@ -673,8 +675,8 @@ function renderPendingSubmissions() {
                             <span class="submission-time">
 
                                 ${escapeHTML(
-                                    submission.submitted
-                                )}
+                    submission.submitted
+                )}
 
                             </span>
 
@@ -756,9 +758,11 @@ function renderRecentApplications() {
 
                         <div class="application-avatar">
 
-                            ${getInitials(
-                                application.name
-                            )}
+                           ${escapeHTML(
+                               getInitials(
+                                   application.name
+                               )
+                           )}
 
                         </div>
 
@@ -768,8 +772,8 @@ function renderRecentApplications() {
                             <strong>
 
                                 ${escapeHTML(
-                                    application.name
-                                )}
+                    application.name
+                )}
 
                             </strong>
 
@@ -781,8 +785,8 @@ function renderRecentApplications() {
                                 <b>
 
                                     ${escapeHTML(
-                                        application.job
-                                    )}
+                    application.job
+                )}
 
                                 </b>
 
@@ -792,8 +796,8 @@ function renderRecentApplications() {
                             <small>
 
                                 ${escapeHTML(
-                                    application.company
-                                )}
+                    application.company
+                )}
 
                             </small>
 
@@ -803,14 +807,16 @@ function renderRecentApplications() {
                         <div class="application-right">
 
                             <span
-                                class="status-pill ${getStatusClass(
-                                    application.status
+                                class="status-pill ${escapeHTML(
+                                    getStatusClass(
+                                        application.status
+                                    )
                                 )}"
                             >
 
                                 ${escapeHTML(
-                                    application.status
-                                )}
+                    application.status
+                )}
 
                             </span>
 
@@ -818,8 +824,8 @@ function renderRecentApplications() {
                             <time>
 
                                 ${escapeHTML(
-                                    application.time
-                                )}
+                    application.time
+                )}
 
                             </time>
 
@@ -1120,7 +1126,7 @@ function setActivePage() {
                 link.classList.toggle(
                     "active",
                     linkPage ===
-                        currentPage
+                    currentPage
                 );
 
             }

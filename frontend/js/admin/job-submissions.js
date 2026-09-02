@@ -596,7 +596,20 @@ const confirmProceed =
         "confirmProceed"
     );
 
+/* ==================================================
+   SECURITY — ESCAPE HTML
+================================================== */
 
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
 /* ==================================================
    INITIALS
 ================================================== */
@@ -930,8 +943,7 @@ function renderTable(data) {
     }
 
 
-    tableBody.innerHTML =
-        "";
+    tableBody.innerHTML = "";
 
 
     data.forEach(
@@ -951,8 +963,10 @@ function renderTable(data) {
 
                         <div class="table-submission-avatar">
 
-                            ${getInitials(
-                submission.company
+                            ${escapeHTML(
+                getInitials(
+                    submission.company
+                )
             )}
 
                         </div>
@@ -961,11 +975,15 @@ function renderTable(data) {
                         <div class="table-submission-info">
 
                             <strong>
-                                ${submission.jobTitle}
+                                ${escapeHTML(
+                submission.jobTitle
+            )}
                             </strong>
 
                             <span>
-                                ${submission.id}
+                                ${escapeHTML(
+                submission.id
+            )}
                             </span>
 
                         </div>
@@ -980,11 +998,15 @@ function renderTable(data) {
                     <div class="table-employer">
 
                         <strong>
-                            ${submission.company}
+                            ${escapeHTML(
+                submission.company
+            )}
                         </strong>
 
                         <span>
-                            ${submission.contact}
+                            ${escapeHTML(
+                submission.contact
+            )}
                         </span>
 
                     </div>
@@ -997,20 +1019,28 @@ function renderTable(data) {
                     <div class="table-job">
 
                         <strong>
-                            ${submission.category}
+                            ${escapeHTML(
+                submission.category
+            )}
                         </strong>
 
                         <span>
 
-                            ${submission.location}
+                            ${escapeHTML(
+                submission.location
+            )}
 
                             ·
 
-                            ${submission.workType}
+                            ${escapeHTML(
+                submission.workType
+            )}
 
                             ·
 
-                            ${submission.employmentType}
+                            ${escapeHTML(
+                submission.employmentType
+            )}
 
                         </span>
 
@@ -1022,13 +1052,17 @@ function renderTable(data) {
                 <td>
 
                     <span
-                        class="payment-pill ${submission.paymentStatus}"
+                        class="payment-pill ${escapeHTML(
+                submission.paymentStatus
+            )}"
                     >
 
                         <span class="payment-dot"></span>
 
-                        ${getPaymentLabel(
-                submission.paymentStatus
+                        ${escapeHTML(
+                getPaymentLabel(
+                    submission.paymentStatus
+                )
             )}
 
                     </span>
@@ -1041,13 +1075,17 @@ function renderTable(data) {
                     <div class="table-date">
 
                         <strong>
-                            ${submission.submittedText}
+                            ${escapeHTML(
+                submission.submittedText
+            )}
                         </strong>
 
                         <span>
 
-                            ${formatDate(
-                submission.submittedDate
+                            ${escapeHTML(
+                formatDate(
+                    submission.submittedDate
+                )
             )}
 
                         </span>
@@ -1060,11 +1098,15 @@ function renderTable(data) {
                 <td>
 
                     <span
-                        class="status-badge ${submission.status}"
+                        class="status-badge ${escapeHTML(
+                submission.status
+            )}"
                     >
 
-                        ${getStatusLabel(
-                submission.status
+                        ${escapeHTML(
+                getStatusLabel(
+                    submission.status
+                )
             )}
 
                     </span>
@@ -1079,7 +1121,9 @@ function renderTable(data) {
                         <button
                             type="button"
                             class="view-button"
-                            data-id="${submission.id}"
+                            data-id="${escapeHTML(
+                submission.id
+            )}"
                         >
                             View
                         </button>
@@ -1101,6 +1145,186 @@ function renderTable(data) {
 }
 
 
+// function renderTable(data) {
+
+//     if (!tableBody) {
+
+//         return;
+
+//     }
+
+
+//     tableBody.innerHTML =
+//         "";
+
+
+//     data.forEach(
+//         submission => {
+
+//             const row =
+//                 document.createElement(
+//                     "tr"
+//                 );
+
+
+//             row.innerHTML = `
+
+//                 <td>
+
+//                     <div class="table-submission">
+
+//                         <div class="table-submission-avatar">
+
+//                             ${getInitials(
+//                 submission.company
+//             )}
+
+//                         </div>
+
+
+//                         <div class="table-submission-info">
+
+//                             <strong>
+//                                 ${submission.jobTitle}
+//                             </strong>
+
+//                             <span>
+//                                 ${submission.id}
+//                             </span>
+
+//                         </div>
+
+//                     </div>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <div class="table-employer">
+
+//                         <strong>
+//                             ${submission.company}
+//                         </strong>
+
+//                         <span>
+//                             ${submission.contact}
+//                         </span>
+
+//                     </div>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <div class="table-job">
+
+//                         <strong>
+//                             ${submission.category}
+//                         </strong>
+
+//                         <span>
+
+//                             ${submission.location}
+
+//                             ·
+
+//                             ${submission.workType}
+
+//                             ·
+
+//                             ${submission.employmentType}
+
+//                         </span>
+
+//                     </div>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <span
+//                         class="payment-pill ${submission.paymentStatus}"
+//                     >
+
+//                         <span class="payment-dot"></span>
+
+//                         ${getPaymentLabel(
+//                 submission.paymentStatus
+//             )}
+
+//                     </span>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <div class="table-date">
+
+//                         <strong>
+//                             ${submission.submittedText}
+//                         </strong>
+
+//                         <span>
+
+//                             ${formatDate(
+//                 submission.submittedDate
+//             )}
+
+//                         </span>
+
+//                     </div>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <span
+//                         class="status-badge ${submission.status}"
+//                     >
+
+//                         ${getStatusLabel(
+//                 submission.status
+//             )}
+
+//                     </span>
+
+//                 </td>
+
+
+//                 <td>
+
+//                     <div class="table-actions">
+
+//                         <button
+//                             type="button"
+//                             class="view-button"
+//                             data-id="${submission.id}"
+//                         >
+//                             View
+//                         </button>
+
+//                     </div>
+
+//                 </td>
+
+//             `;
+
+
+//             tableBody.appendChild(
+//                 row
+//             );
+
+//         }
+//     );
+
+// }
+
+
 /* ==================================================
    MOBILE
 ================================================== */
@@ -1114,8 +1338,7 @@ function renderMobile(data) {
     }
 
 
-    mobileList.innerHTML =
-        "";
+    mobileList.innerHTML = "";
 
 
     data.forEach(
@@ -1137,8 +1360,10 @@ function renderMobile(data) {
 
                     <div class="mobile-submission-avatar">
 
-                        ${getInitials(
-                submission.company
+                        ${escapeHTML(
+                getInitials(
+                    submission.company
+                )
             )}
 
                     </div>
@@ -1147,11 +1372,15 @@ function renderMobile(data) {
                     <div class="mobile-submission-title">
 
                         <strong>
-                            ${submission.jobTitle}
+                            ${escapeHTML(
+                submission.jobTitle
+            )}
                         </strong>
 
                         <span>
-                            ${submission.company}
+                            ${escapeHTML(
+                submission.company
+            )}
                         </span>
 
                     </div>
@@ -1160,11 +1389,15 @@ function renderMobile(data) {
                     <div class="mobile-submission-status">
 
                         <span
-                            class="status-badge ${submission.status}"
+                            class="status-badge ${escapeHTML(
+                submission.status
+            )}"
                         >
 
-                            ${getStatusLabel(
-                submission.status
+                            ${escapeHTML(
+                getStatusLabel(
+                    submission.status
+                )
             )}
 
                         </span>
@@ -1183,7 +1416,9 @@ function renderMobile(data) {
                         </span>
 
                         <strong>
-                            ${submission.category}
+                            ${escapeHTML(
+                submission.category
+            )}
                         </strong>
 
                     </div>
@@ -1196,7 +1431,9 @@ function renderMobile(data) {
                         </span>
 
                         <strong>
-                            ${submission.location}
+                            ${escapeHTML(
+                submission.location
+            )}
                         </strong>
 
                     </div>
@@ -1211,13 +1448,17 @@ function renderMobile(data) {
                         <strong>
 
                             <span
-                                class="payment-pill ${submission.paymentStatus}"
+                                class="payment-pill ${escapeHTML(
+                submission.paymentStatus
+            )}"
                             >
 
                                 <span class="payment-dot"></span>
 
-                                ${getPaymentLabel(
-                submission.paymentStatus
+                                ${escapeHTML(
+                getPaymentLabel(
+                    submission.paymentStatus
+                )
             )}
 
                             </span>
@@ -1234,7 +1475,9 @@ function renderMobile(data) {
                         </span>
 
                         <strong>
-                            ${submission.submittedText}
+                            ${escapeHTML(
+                submission.submittedText
+            )}
                         </strong>
 
                     </div>
@@ -1245,13 +1488,17 @@ function renderMobile(data) {
                 <div class="mobile-submission-footer">
 
                     <small>
-                        ${submission.id}
+                        ${escapeHTML(
+                submission.id
+            )}
                     </small>
 
                     <button
                         type="button"
                         class="view-button"
-                        data-id="${submission.id}"
+                        data-id="${escapeHTML(
+                submission.id
+            )}"
                     >
                         View Details →
                     </button>
@@ -1269,6 +1516,171 @@ function renderMobile(data) {
     );
 
 }
+
+// function renderMobile(data) {
+
+//     if (!mobileList) {
+
+//         return;
+
+//     }
+
+
+//     mobileList.innerHTML =
+//         "";
+
+
+//     data.forEach(
+//         submission => {
+
+//             const card =
+//                 document.createElement(
+//                     "article"
+//                 );
+
+
+//             card.className =
+//                 "mobile-submission-card";
+
+
+//             card.innerHTML = `
+
+//                 <div class="mobile-submission-top">
+
+//                     <div class="mobile-submission-avatar">
+
+//                         ${getInitials(
+//                 submission.company
+//             )}
+
+//                     </div>
+
+
+//                     <div class="mobile-submission-title">
+
+//                         <strong>
+//                             ${submission.jobTitle}
+//                         </strong>
+
+//                         <span>
+//                             ${submission.company}
+//                         </span>
+
+//                     </div>
+
+
+//                     <div class="mobile-submission-status">
+
+//                         <span
+//                             class="status-badge ${submission.status}"
+//                         >
+
+//                             ${getStatusLabel(
+//                 submission.status
+//             )}
+
+//                         </span>
+
+//                     </div>
+
+//                 </div>
+
+
+//                 <div class="mobile-submission-details">
+
+//                     <div class="mobile-detail">
+
+//                         <span>
+//                             Category
+//                         </span>
+
+//                         <strong>
+//                             ${submission.category}
+//                         </strong>
+
+//                     </div>
+
+
+//                     <div class="mobile-detail">
+
+//                         <span>
+//                             Location
+//                         </span>
+
+//                         <strong>
+//                             ${submission.location}
+//                         </strong>
+
+//                     </div>
+
+
+//                     <div class="mobile-detail">
+
+//                         <span>
+//                             Payment
+//                         </span>
+
+//                         <strong>
+
+//                             <span
+//                                 class="payment-pill ${submission.paymentStatus}"
+//                             >
+
+//                                 <span class="payment-dot"></span>
+
+//                                 ${getPaymentLabel(
+//                 submission.paymentStatus
+//             )}
+
+//                             </span>
+
+//                         </strong>
+
+//                     </div>
+
+
+//                     <div class="mobile-detail">
+
+//                         <span>
+//                             Submitted
+//                         </span>
+
+//                         <strong>
+//                             ${submission.submittedText}
+//                         </strong>
+
+//                     </div>
+
+//                 </div>
+
+
+//                 <div class="mobile-submission-footer">
+
+//                     <small>
+//                         ${submission.id}
+//                     </small>
+
+//                     <button
+//                         type="button"
+//                         class="view-button"
+//                         data-id="${submission.id}"
+//                     >
+//                         View Details →
+//                     </button>
+
+//                 </div>
+
+//             `;
+
+
+//             mobileList.appendChild(
+//                 card
+//             );
+
+//         }
+//     );
+
+// }
 
 
 /* ==================================================
@@ -2334,17 +2746,34 @@ function showToast(message) {
         "admin-toast";
 
 
-    toast.innerHTML = `
+    const icon =
+        document.createElement(
+            "span"
+        );
 
-        <span class="toast-icon">
-            ✓
-        </span>
 
-        <span>
-            ${message}
-        </span>
+    icon.className =
+        "toast-icon";
 
-    `;
+
+    icon.textContent =
+        "✓";
+
+
+    const text =
+        document.createElement(
+            "span"
+        );
+
+
+    text.textContent =
+        String(message ?? "");
+
+
+    toast.append(
+        icon,
+        text
+    );
 
 
     document.body.appendChild(
@@ -2386,6 +2815,85 @@ function showToast(message) {
     );
 
 }
+
+
+// function showToast(message) {
+
+//     const existing =
+//         document.querySelector(
+//             ".admin-toast"
+//         );
+
+
+//     if (existing) {
+
+//         existing.remove();
+
+//     }
+
+
+//     const toast =
+//         document.createElement(
+//             "div"
+//         );
+
+
+//     toast.className =
+//         "admin-toast";
+
+
+//     toast.innerHTML = `
+
+//         <span class="toast-icon">
+//             ✓
+//         </span>
+
+//         <span>
+//             ${message}
+//         </span>
+
+//     `;
+
+
+//     document.body.appendChild(
+//         toast
+//     );
+
+
+//     setTimeout(
+//         () => {
+
+//             toast.classList.add(
+//                 "show"
+//             );
+
+//         },
+//         10
+//     );
+
+
+//     setTimeout(
+//         () => {
+
+//             toast.classList.remove(
+//                 "show"
+//             );
+
+
+//             setTimeout(
+//                 () => {
+
+//                     toast.remove();
+
+//                 },
+//                 250
+//             );
+
+//         },
+//         2800
+//     );
+
+// }
 
 
 /* ==================================================

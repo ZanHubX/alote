@@ -1252,7 +1252,7 @@ function createJobCard(job) {
 
         <article
             class="job-card"
-            data-job-id="${job.id}"
+            data-job-id="${escapeHTML(job.id)}"
         >
 
             <div class="job-card-top">
@@ -1261,7 +1261,7 @@ function createJobCard(job) {
                     ${escapeHTML(job.initials)}
                 </div>
 
-                <span class="work-badge ${workStyleClass}">
+                <span class="work-badge ${escapeHTML(workStyleClass)}"">
                     ${escapeHTML(workStyleText)}
                 </span>
 
@@ -1307,7 +1307,9 @@ function createJobCard(job) {
                     href="job-details.html?id=${encodeURIComponent(job.id)}"
                     class="view-job"
                 >
-                    ${getTranslation("viewJob")}
+                   ${escapeHTML(
+                       getTranslation("viewJob")
+                   )}
                 </a>
 
             </div>

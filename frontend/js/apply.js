@@ -36,7 +36,7 @@ async function loadJobFromBackend() {
 
         const response =
             await fetch(
-                `${window.ALOTE_CONFIG.API_BASE_URL}/jobs/${jobId}`,
+                `${window.ALOTE_CONFIG.API_BASE_URL}/jobs/${encodeURIComponent(jobId)}`,
                 {
                     headers: {
                         "Accept": "application/json"

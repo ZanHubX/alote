@@ -1080,10 +1080,12 @@ function renderTableRow(
 
                     <div class="applicant-avatar">
 
-                        ${getInitials(
-        application
-            .applicant
-            .name
+                        ${escapeHTML(
+        getInitials(
+            application
+                .applicant
+                .name
+        )
     )}
 
                     </div>
@@ -1156,8 +1158,10 @@ function renderTableRow(
 
                 <span class="application-date">
 
-                    ${formatDate(
-        application.appliedDate
+                    ${escapeHTML(
+        formatDate(
+            application.appliedDate
+        )
     )}
 
                 </span>
@@ -1186,31 +1190,31 @@ function renderTableRow(
 
             <td>
 
-    <div class="application-actions">
+                <div class="application-actions">
 
-        <button
-            type="button"
-            class="application-action"
-            data-application-id="${escapeHTML(
-                application.id
-            )}"
-        >
-            View
-        </button>
+                    <button
+                        type="button"
+                        class="application-action"
+                        data-application-id="${escapeHTML(
+        application.id
+    )}"
+                    >
+                        View
+                    </button>
 
-        <button
-            type="button"
-            class="application-delete-action"
-            data-delete-application="${escapeHTML(
-                application.id
-            )}"
-        >
-            Delete
-        </button>
+                    <button
+                        type="button"
+                        class="application-delete-action"
+                        data-delete-application="${escapeHTML(
+        application.id
+    )}"
+                    >
+                        Delete
+                    </button>
 
-    </div>
+                </div>
 
-</td>
+            </td>
 
         </tr>
 
@@ -2080,8 +2084,23 @@ if (viewResume) {
                 }
 
 
+                const resumeUrl =
+                    new URL(result.url);
+
+
+                if (
+                    resumeUrl.protocol !== "https:"
+                ) {
+
+                    throw new Error(
+                        "Invalid resume URL."
+                    );
+
+                }
+
+
                 window.open(
-                    result.url,
+                    resumeUrl.href,
                     "_blank",
                     "noopener,noreferrer"
                 );

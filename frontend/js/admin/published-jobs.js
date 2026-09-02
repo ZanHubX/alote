@@ -621,170 +621,188 @@ function renderTable() {
             .map(
                 job => `
 
-            <tr>
+        <tr>
 
-                <td>
+            <td>
 
-                    <div class="table-job-cell">
+                <div class="table-job-cell">
 
-                        <div class="table-job-avatar">
+                    <div class="table-job-avatar">
 
-                            ${getInitials(
-                    job.title
+                        ${escapeHtml(
+                    getInitials(
+                        job.title
+                    )
                 )}
-
-                        </div>
-
-                        <div class="table-job-info">
-
-                            <strong>
-
-                                ${escapeHtml(
-                    job.title
-                )}
-
-                            </strong>
-
-                            <span>
-                                ${job.id}
-                            </span>
-
-                        </div>
 
                     </div>
 
-                </td>
-
-
-                <td>
-
-                    <div class="table-company">
+                    <div class="table-job-info">
 
                         <strong>
 
                             ${escapeHtml(
+                    job.title
+                )}
+
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(
+                    job.id
+                )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div class="table-company">
+
+                    <strong>
+
+                        ${escapeHtml(
                     job.company
                 )}
 
-                        </strong>
+                    </strong>
 
-                        <span>
+                    <span>
 
-                            ${escapeHtml(
+                        ${escapeHtml(
                     job.contact
                 )}
 
-                        </span>
+                    </span>
 
-                    </div>
+                </div>
 
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-                    <span class="category-pill">
+                <span class="category-pill">
 
-                        ${escapeHtml(
+                    ${escapeHtml(
                     job.category
                 )}
 
-                    </span>
+                </span>
 
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-                    <span class="table-location">
+                <span class="table-location">
 
-                        ${escapeHtml(
+                    ${escapeHtml(
                     job.location
                 )}
 
-                    </span>
+                </span>
 
-                </td>
-
-
-                <td>
-
-                    <span class="application-count">
-
-                        ${job.applications}
-
-                    </span>
-
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-                    <div class="table-date">
+                <span class="application-count">
 
-                        <strong>
-
-                            ${formatDate(
-                    job.publishedAt
+                    ${escapeHtml(
+                    job.applications
                 )}
 
-                        </strong>
+                </span>
 
-                        <span>
+            </td>
 
-                            ${getRelativeDate(
-                    job.publishedAt
+
+            <td>
+
+                <div class="table-date">
+
+                    <strong>
+
+                        ${escapeHtml(
+                    formatDate(
+                        job.publishedAt
+                    )
                 )}
 
-                        </span>
+                    </strong>
 
-                    </div>
+                    <span>
 
-                </td>
+                        ${escapeHtml(
+                    getRelativeDate(
+                        job.publishedAt
+                    )
+                )}
+
+                    </span>
+
+                </div>
+
+            </td>
 
 
-                <td>
+            <td>
 
-                    <span
-                        class="job-status ${job.status}"
-                    >
-
-                        ${getStatusLabel(
+                <span
+                    class="job-status ${escapeHtml(
                     job.status
+                )}"
+                >
+
+                    ${escapeHtml(
+                    getStatusLabel(
+                        job.status
+                    )
                 )}
 
-                    </span>
+                </span>
 
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-    <div class="table-actions">
+                <div class="table-actions">
 
-        <button
-            type="button"
-            class="table-action"
-            data-view-job="${job.id}"
-        >
-            View
-        </button>
+                    <button
+                        type="button"
+                        class="table-action"
+                        data-view-job="${escapeHtml(
+                    job.id
+                )}"
+                    >
+                        View
+                    </button>
 
-        <button
-            type="button"
-            class="table-action delete-action"
-            data-delete-job="${job.id}"
-        >
-            Delete
-        </button>
+                    <button
+                        type="button"
+                        class="table-action delete-action"
+                        data-delete-job="${escapeHtml(
+                    job.id
+                )}"
+                    >
+                        Delete
+                    </button>
 
-    </div>
+                </div>
 
-</td>
+            </td>
 
-            </tr>
+        </tr>
 
-        `
+    `
             )
             .join("");
 
@@ -826,133 +844,145 @@ function renderMobileCards() {
             .map(
                 job => `
 
-            <article class="mobile-job-card">
+        <article class="mobile-job-card">
 
 
-                <div class="mobile-job-header">
+            <div class="mobile-job-header">
 
-                    <div class="mobile-job-identity">
+                <div class="mobile-job-identity">
 
-                        <div class="table-job-avatar">
+                    <div class="table-job-avatar">
 
-                            ${getInitials(
+                        ${escapeHtml(
+                    getInitials(
+                        job.title
+                    )
+                )}
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+
+                            ${escapeHtml(
                     job.title
                 )}
 
-                        </div>
+                        </strong>
 
-                        <div>
+                        <span>
 
-                            <strong>
-
-                                ${escapeHtml(
-                    job.title
-                )}
-
-                            </strong>
-
-                            <span>
-
-                                ${escapeHtml(
+                            ${escapeHtml(
                     job.company
                 )}
 
-                            </span>
-
-                        </div>
+                        </span>
 
                     </div>
-
-
-                    <span
-                        class="job-status ${job.status}"
-                    >
-
-                        ${getStatusLabel(
-                    job.status
-                )}
-
-                    </span>
 
                 </div>
 
 
+                <span
+                    class="job-status ${escapeHtml(
+                    job.status
+                )}"
+                >
 
-                <div class="mobile-job-meta">
+                    ${escapeHtml(
+                    getStatusLabel(
+                        job.status
+                    )
+                )}
 
-                    <span>
+                </span>
 
-                        ${escapeHtml(
+            </div>
+
+
+
+            <div class="mobile-job-meta">
+
+                <span>
+
+                    ${escapeHtml(
                     job.category
                 )}
 
-                    </span>
+                </span>
 
-                    <span>
+                <span>
 
-                        ${escapeHtml(
+                    ${escapeHtml(
                     job.location
                 )}
 
-                    </span>
+                </span>
 
-                    <span>
+                <span>
 
-                        ${escapeHtml(
+                    ${escapeHtml(
                     job.workType
                 )}
 
+                </span>
+
+            </div>
+
+
+
+            <div class="mobile-job-bottom">
+
+                <div>
+
+                    <span>
+                        Applications
                     </span>
 
+                    <strong>
+                        ${escapeHtml(
+                    job.applications
+                )}
+                    </strong>
+
                 </div>
 
 
+                <div>
 
-                <div class="mobile-job-bottom">
+                    <span>
+                        Published
+                    </span>
 
-                    <div>
+                    <strong>
 
-                        <span>
-                            Applications
-                        </span>
-
-                        <strong>
-                            ${job.applications}
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Published
-                        </span>
-
-                        <strong>
-
-                            ${formatDate(
-                    job.publishedAt
+                        ${escapeHtml(
+                    formatDate(
+                        job.publishedAt
+                    )
                 )}
 
-                        </strong>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="table-action"
-                        data-view-job="${job.id}"
-                    >
-                        View
-                    </button>
+                    </strong>
 
                 </div>
 
-            </article>
 
-        `
+                <button
+                    type="button"
+                    class="table-action"
+                    data-view-job="${escapeHtml(
+                    job.id
+                )}"
+                >
+                    View
+                </button>
+
+            </div>
+
+        </article>
+
+    `
             )
             .join("");
 

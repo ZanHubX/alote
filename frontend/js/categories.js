@@ -397,76 +397,141 @@ function renderCategories() {
     }
 
 
-    grid.innerHTML = categories
-        .map(category => {
-
-            const name =
-                currentLanguage === "my"
-                    ? category.my
-                    : category.name;
+    grid.replaceChildren();
 
 
-            const description =
-                currentLanguage === "my"
-                    ? category.descriptionMy
-                    : category.description;
+    categories.forEach(category => {
+
+        const name =
+            currentLanguage === "my"
+                ? category.my
+                : category.name;
 
 
-            return `
-
-                <a
-                    href="jobs.html?category=${category.id}"
-                    class="category-card"
-                >
-
-                    <div class="category-card-top">
-
-                        <div class="category-icon">
-                            ${category.icon}
-                        </div>
-
-                        <span class="category-arrow">
-                            →
-                        </span>
-
-                    </div>
+        const description =
+            currentLanguage === "my"
+                ? category.descriptionMy
+                : category.description;
 
 
-                    <div class="category-card-content">
-
-                        <h3>
-                            ${name}
-                        </h3>
-
-                        <p>
-                            ${description}
-                        </p>
-
-                    </div>
+        const card =
+            document.createElement("a");
 
 
-                    <div class="category-card-footer">
+        card.className =
+            "category-card";
 
-                        <span>
-                            ${
-                                translations[
-                                    currentLanguage
-                                ].exploreJobs
-                            }
-                        </span>
 
-                        <span>
-                            →
-                        </span>
+        card.href =
+            `jobs.html?category=${encodeURIComponent(
+                String(category.id ?? "")
+            )}`;
 
-                    </div>
 
-                </a>
+        const top =
+            document.createElement("div");
 
-            `;
+        top.className =
+            "category-card-top";
 
-        })
-        .join("");
+
+        const icon =
+            document.createElement("div");
+
+        icon.className =
+            "category-icon";
+
+        icon.textContent =
+            String(category.icon ?? "");
+
+
+        const topArrow =
+            document.createElement("span");
+
+        topArrow.className =
+            "category-arrow";
+
+        topArrow.textContent =
+            "→";
+
+
+        top.append(
+            icon,
+            topArrow
+        );
+
+
+        const content =
+            document.createElement("div");
+
+        content.className =
+            "category-card-content";
+
+
+        const title =
+            document.createElement("h3");
+
+        title.textContent =
+            String(name ?? "");
+
+
+        const paragraph =
+            document.createElement("p");
+
+        paragraph.textContent =
+            String(description ?? "");
+
+
+        content.append(
+            title,
+            paragraph
+        );
+
+
+        const footer =
+            document.createElement("div");
+
+        footer.className =
+            "category-card-footer";
+
+
+        const exploreText =
+            document.createElement("span");
+
+        exploreText.textContent =
+            String(
+                translations[
+                    currentLanguage
+                ]?.exploreJobs ??
+                translations.en.exploreJobs
+            );
+
+
+        const footerArrow =
+            document.createElement("span");
+
+        footerArrow.textContent =
+            "→";
+
+
+        footer.append(
+            exploreText,
+            footerArrow
+        );
+
+
+        card.append(
+            top,
+            content,
+            footer
+        );
+
+
+        grid.appendChild(
+            card
+        );
+
+    });
 
 }
 

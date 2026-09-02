@@ -347,6 +347,16 @@ const savedLanguage =
 
 changeLanguage(savedLanguage);
 
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
 async function loadLatestJobs() {
 
     const grid =
@@ -443,50 +453,54 @@ async function loadLatestJobs() {
                 "job-card";
 
             card.innerHTML = `
-                <div class="job-card-top">
 
-                    <div class="company-logo">
-                        ${companyLogo}
-                    </div>
+    <div class="job-card-top">
 
-                    <span class="job-badge ${badgeClass}">
-                        ${badgeText}
-                    </span>
+        <div class="company-logo">
+            ${escapeHTML(companyLogo)}
+        </div>
 
-                </div>
+        <span class="job-badge ${escapeHTML(badgeClass)}">
+            ${escapeHTML(badgeText)}
+        </span>
 
-                <h3>
-                    ${item.title}
-                </h3>
+    </div>
 
-                <p class="company-name">
-                    ${companyName}
-                </p>
+    <h3>
+        ${escapeHTML(item.title)}
+    </h3>
 
-                <div class="job-info">
+    <p class="company-name">
+        ${escapeHTML(companyName)}
+    </p>
 
-                    <span>
-                        ${item.job_type}
-                    </span>
+    <div class="job-info">
 
-                    <span>
-                        ${salary}
-                    </span>
+        <span>
+            ${escapeHTML(item.job_type)}
+        </span>
 
-                </div>
+        <span>
+            ${escapeHTML(salary)}
+        </span>
 
-                <div class="job-card-footer">
+    </div>
 
-                    <span>
-                        Posted ${postedDate}
-                    </span>
+    <div class="job-card-footer">
 
-                    <a href="job-details.html?id=${item.id}">
-                        View job →
-                    </a>
+        <span>
+            Posted ${escapeHTML(postedDate)}
+        </span>
 
-                </div>
-            `;
+        <a href="job-details.html?id=${encodeURIComponent(
+                String(item.id ?? "")
+            )}">
+            View job →
+        </a>
+
+    </div>
+
+`;
 
             grid.appendChild(card);
         });

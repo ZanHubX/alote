@@ -608,13 +608,19 @@ function renderJob() {
 
     if (requirements) {
 
-        requirements.innerHTML =
-            job.requirements
-                .map(
-                    item =>
-                        `<li>${item}</li>`
-                )
-                .join("");
+        requirements.replaceChildren();
+
+        job.requirements.forEach(item => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent =
+                String(item ?? "");
+
+            requirements.appendChild(li);
+
+        });
 
     }
 
@@ -626,13 +632,19 @@ function renderJob() {
 
     if (responsibilities) {
 
-        responsibilities.innerHTML =
-            job.responsibilities
-                .map(
-                    item =>
-                        `<li>${item}</li>`
-                )
-                .join("");
+        responsibilities.replaceChildren();
+
+        job.responsibilities.forEach(item => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent =
+                String(item ?? "");
+
+            responsibilities.appendChild(li);
+
+        });
 
     }
 
