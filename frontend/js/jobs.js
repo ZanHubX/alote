@@ -2000,6 +2000,7 @@ function applyUrlFilter() {
     ------------------------------------------ */
 
     const mode =
+        params.get("workStyle") ||
         params.get("mode");
 
 
@@ -2013,22 +2014,10 @@ function applyUrlFilter() {
 
 
     const workStyleMap = {
-
-        Remote:
-            "Remote",
-
-        remote:
-            "Remote",
-
-        hybrid:
-            "Hybrid",
-
-        onsite:
-            "On-site",
-
-        "on-site":
-            "On-site"
-
+        remote: "Remote",
+        hybrid: "Hybrid",
+        onsite: "On-site",
+        "on-site": "On-site"
     };
 
 
