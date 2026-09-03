@@ -858,7 +858,7 @@ function filterJobs() {
         const matchesWorkStyle =
             normalize(filters.workStyle) === "all" ||
             normalize(job.workStyle) ===
-                normalize(filters.workStyle);
+            normalize(filters.workStyle);
 
         const matchesCategory =
             filters.categories.length === 0 ||
@@ -871,7 +871,7 @@ function filterJobs() {
         const matchesLocation =
             !filters.location ||
             normalize(job.location) ===
-                normalize(filters.location);
+            normalize(filters.location);
 
         return (
             matchesSearch &&
