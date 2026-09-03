@@ -820,15 +820,16 @@ function getFilters() {
 
 function filterJobs() {
 
-    const filters =
-        getFilters();
+    const filters = getFilters();
 
+    const normalize = value =>
+        String(value ?? "")
+            .trim()
+            .toLowerCase();
 
     return jobs.filter(job => {
 
-
         const searchableText = [
-
             job.title,
             job.company,
             job.category,
@@ -836,67 +837,48 @@ function filterJobs() {
             job.salary,
             job.workStyle,
             job.workType
-
         ]
             .join(" ")
             .toLowerCase();
 
-
         const matchesSearch =
-
             !filters.search ||
-
             searchableText.includes(
-                filters.search
+                normalize(filters.search)
             );
-
 
         const matchesWorkType =
-
             filters.workTypes.length === 0 ||
-
-            filters.workTypes.includes(
-                job.workType
-            );
-
+            filters.workTypes
+                .map(normalize)
+                .includes(
+                    normalize(job.workType)
+                );
 
         const matchesWorkStyle =
-
-            filters.workStyle === "All" ||
-
-            job.workStyle ===
-                filters.workStyle;
-
+            normalize(filters.workStyle) === "all" ||
+            normalize(job.workStyle) ===
+                normalize(filters.workStyle);
 
         const matchesCategory =
-
             filters.categories.length === 0 ||
-
-            filters.categories.includes(
-                job.category
-            );
-
+            filters.categories
+                .map(normalize)
+                .includes(
+                    normalize(job.category)
+                );
 
         const matchesLocation =
-
             !filters.location ||
-
-            job.location ===
-                filters.location;
-
+            normalize(job.location) ===
+                normalize(filters.location);
 
         return (
-
             matchesSearch &&
-
             matchesWorkType &&
-
             matchesWorkStyle &&
-
             matchesCategory &&
-
             matchesLocation
-
         );
 
     });
