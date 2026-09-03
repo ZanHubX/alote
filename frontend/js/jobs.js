@@ -1206,9 +1206,9 @@ function createJobCard(job) {
 
     const workStyleClass =
 
-        job.workStyle === "WFH"
+        job.workStyle === "Remote"
 
-            ? "wfh"
+            ? "Remote"
 
             : job.workStyle === "Hybrid"
 
@@ -1338,7 +1338,7 @@ function translateDynamicValue(value) {
         "Internship":
             "အလုပ်သင်",
 
-        "WFH":
+        "Remote":
             "အဝေးမှ",
 
         "Hybrid":
@@ -1518,7 +1518,7 @@ function translateFilterLabel(value) {
         "Internship":
             "internship",
 
-        "WFH":
+        "Remote":
             "remote",
 
         "Hybrid":
@@ -2014,11 +2014,11 @@ function applyUrlFilter() {
 
     const workStyleMap = {
 
-        wfh:
-            "WFH",
+        Remote:
+            "Remote",
 
         remote:
-            "WFH",
+            "Remote",
 
         hybrid:
             "Hybrid",
