@@ -822,10 +822,20 @@ function filterJobs() {
 
     const filters = getFilters();
 
-    const normalize = value =>
-        String(value ?? "")
-            .trim()
-            .toLowerCase();
+    const normalize = value => {
+
+        const normalized =
+            String(value ?? "")
+                .trim()
+                .toLowerCase();
+
+        if (normalized === "wfh") {
+            return "remote";
+        }
+
+        return normalized;
+
+    };
 
     return jobs.filter(job => {
 
